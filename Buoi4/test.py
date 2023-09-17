@@ -29,8 +29,30 @@ else:
     print("Đây là số 0.")
     
 print("---------------------===Test - 4 | thập cẩm - tùm lum===---------------------")
+a1 = 5
+b1 = 10
+c1 = a1 > b1 - 5
+print(c)
+
 a = 5
 b = 10
-c = a > b - 5
+c = a * a + b * b <= 100
 print(c)
+
+A = 5
+B = 10
+C = ( A < B) and (A + 5 != B)
+D = not ( A * A + B * B <= 100)
+E = ( 3 * A > B) or (2 * A == B)
+print(C , D, E)
+
+A1 = 3
+B1 = 7
+C1 = 12
+if not A1 + B1 < C1:
+    print("condition 1")
+elif A1 * B1 <= B1 + C1:
+    print("condition 2")
+else:
+    print("condition 3")
 
