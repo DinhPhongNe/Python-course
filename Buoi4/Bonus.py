@@ -18,8 +18,11 @@ elif khoi_3 > khoi_1 and khoi_3 > khoi_2 and khoi_3 > khoi_4 and khoi_3 > khoi_5
     print(f"số học sinh khối 3 đông nhất trong tổng số {tong_hoc_sinh} em học sinh")
 elif khoi_4 > khoi_1 and khoi_4 > khoi_2 and khoi_4 > khoi_3 and khoi_4 > khoi_5:
     print(f"số học sinh 4 một đông nhất trong tổng số {tong_hoc_sinh} em học sinh")
-else:
+elif khoi_5 > khoi_1 and khoi_5 > khoi_2 and khoi_5 > khoi_3 and khoi_5 > khoi_4:
     print(f"số học sinh 5 một đông nhất trong tổng số {tong_hoc_sinh} em học sinh")
+else:
+    print(f"tổng số học sinh của tất cả các khối bằng nhau")
+
 
 # tính chênh lệch mỗi khối
 chenh_lech_1 = abs(khoi_1 - (tong_hoc_sinh / 5))
