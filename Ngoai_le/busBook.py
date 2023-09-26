@@ -18,12 +18,13 @@ for k,v in vali.items():
   print(k, "kg -", v, "VND")
   
 # Nhập thông tin chuyến đi
-loai_xe = input("Loại xe: ")
+loai_xe = int(input("Loại xe: "))
 so_nguoi = int(input("Số người: ")) 
 so_kg_vali = int(input("Số kg vali: "))
 
 # Tính giá 
-gia_xe = xe[loai_xe]*so_nguoi
+gia_xe = loai_xe*so_nguoi
+
 if so_kg_vali <= 10:
   gia_vali = vali[so_kg_vali]
 else: 
