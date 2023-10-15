@@ -67,11 +67,6 @@ anh = float(input("Nhập điểm môn Anh: "))
 if anh < 0 or anh > 10:
     print("Điểm môn Anh không hợp lệ. Vui lòng nhập lại!")
     anh = float(input("Nhập lại điểm môn Anh: "))
-    
-su = float(input("Nhập điểm môn Sử: "))
-if su < 0 or su > 10:
-    print("Điểm môn Sử không hợp lệ. Vui lòng nhập lại!")
-    su = float(input("Nhập lại điểm môn Sử: "))
 
 print("="*50)
 # Nhập điểm môn chuyên
@@ -80,11 +75,10 @@ print("Chọn môn chuyên của bạn:")
 print("1. Toán")
 print("2. Văn")
 print("3. Anh")
-print("4. Sử")
 
 mon_chuyen = input("Nhập lựa chọn của bạn (1-4): ")
-while mon_chuyen not in ["1", "2", "3", "4"]:
-    mon_chuyen = input("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-4): ")
+while mon_chuyen not in ["1", "2", "3"]:
+    mon_chuyen = input("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-3): ")
 if mon_chuyen == "1":
     ten_mon_chuyen = "Toán"
 elif mon_chuyen == "2":
@@ -96,7 +90,7 @@ else:
 diem_mon_chuyen = float(input(f"Nhập điểm môn {ten_mon_chuyen}: "))
 
 # Tính tổng điểm
-tong_diem = toan + van + anh + su + diem_mon_chuyen
+tong_diem = toan + van + anh + diem_mon_chuyen
 print("="*50)
 # Nhập thông tin nguyện vọng
 print("=== NGUYỆN VỌNG VÀ ĐIỂM CHUẨN ===")
