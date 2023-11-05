@@ -13,7 +13,7 @@ ngay_chi_cao_nhat = ""
 
 for i in range(1,8):
   if i == 7:
-    continue
+    continue 
   print("Nhập chi tiêu ngày thứ ", i, end=": ")
   tien = float(input())
   tong_chi += tien
