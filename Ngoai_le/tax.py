@@ -33,6 +33,11 @@ else:
     thue_suat = 0.35
     tien_thue = thu_nhap_tinh_thue * thue_suat
 
+# làm tròn các kết quả, dùng hàm round()
+tien_giam_tru = int(round(tien_giam_tru))
+thu_nhap_tinh_thue = int(round(thu_nhap_tinh_thue))
+tien_thue = int(round(tien_thue))
+
 # Xuất kết quả
 print("--------------------------------------")
 print(f"Số tiền giảm trừ: {tien_giam_tru} triệu đồng")

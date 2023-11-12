@@ -37,6 +37,13 @@ ti_le_3 = chenh_lech_3 / (tong_hoc_sinh / 5) * 100
 ti_le_4 = chenh_lech_4 / (tong_hoc_sinh / 5) * 100
 ti_le_5 = chenh_lech_5 / (tong_hoc_sinh / 5) * 100
 
+# làm trò tỉ lệ
+ti_le_1 = int(round(ti_le_1))
+ti_le_2 = int(round(ti_le_2))
+ti_le_3 = int(round(ti_le_3))
+ti_le_4 = int(round(ti_le_4))
+ti_le_5 = int(round(ti_le_5)) 
+
 print(f"Phần trăm chênh lệch số học sinh khối 1: {ti_le_1}%")
 print(f"Phần trăm chênh lệch số học sinh khối 2: {ti_le_2}%")
 print(f"Phần trăm chênh lệch số học sinh khối 3: {ti_le_3}%")

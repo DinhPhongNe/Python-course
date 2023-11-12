@@ -2,6 +2,7 @@
 # Hãy kiểm tra xem trong danh sách điểm số vừa nhập có tồn tại điểm 10 hay không, nếu có thì in ra số lượng điểm 10, 
 # nếu không thì xuất ra màn hình thông báo "Bạn chưa có điểm 10".
 
+print("hãy làm tròn điểm trước khi nhập, tránh báo lỗi")
 scores = input("Nhập danh sách điểm: ").split() 
 
 count = 0

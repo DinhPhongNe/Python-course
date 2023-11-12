@@ -20,6 +20,7 @@ hour, minute, second = time_string.split(":")
 
 # hàm round() để làm tròn, giây để phẩy nhìn xấu=)))
 second = round(float(second)) 
+
 print("-"*10)
 print(f"Bây giờ là {hour} giờ {minute} phút {second} giây - ngày {ngay} tháng {thang} năm {nam}")
 print("-"*10)
