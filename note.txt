@@ -1,0 +1,15 @@
+- Kiểu dữ liệu, biến, print, input, int, float
+- Câu điều kiện
+- Vòng lặp (while, for), break, continue
+- Danh sách (CRUD - Create, Read, Update, Delete), sử dụng vòng lặp để duyệt qua các phần tử trong danh sách
+- Hàm
++ Hàm có tham số hoặc không có tham số
++ Hàm có hoặc không có giá trị trả về
++ Các hàm có sẵn của python: print, input. int, float,... 
++ Biến cục bộ: là biến khai báo trong hàm và chỉ có tác dụng trong phạm vi của hàm đó.
++ Biến toàn cục: là biến có tác dụng trong phạm vi toàn bộ code của mình, biến toàn cục được khai báo ở ngoài cùng.
+- Ví dụ: trong trường hợp tính toán xử lý biến toàn cục (thay đổi giá trị) thì trong hàm cần khai báo thêm biến đó là global
+a = 10
+def tang_a():
+    global a
+    a += 1
