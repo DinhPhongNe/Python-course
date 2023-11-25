@@ -46,6 +46,7 @@ print(f"Chu vi hình tròn là: {C_HinhTron}")
 
 
 
+
 # Hình chữ nhật
 print("------------=======Diện tích - Chu vi hình chữ nhật=======------------")
 def S_hcn(cd, cr):
@@ -64,7 +65,103 @@ C_hcn = C_hcn(cd, cr)
 
 print(f"Diện tích hình chữ nhật là: {S_hcn}")
 print(f"Chu vi hình chữ nhật là: {C_hcn}")
-    
+
+
+
+
+# Hình bình hành
+print("------------=======Diện tích hình bình hành=======------------")
+def S_hbh(a, h):
+    S_hbh = a*h
+    return S_hbh
+
+a = float(input("Hãy nhập chiều dài: "))
+h = float(input("Hãy nhập chiều cao: "))
+
+S_hbh = S_hbh(a,h)
+
+print(f"Diện tích hình bình hành là: {S_hbh}")
+
+
+
+
+# Hình hình thoi
+print("------------=======Diện tích hình thoi=======------------")
+def S_HinhThoi(cd_thoi, cr_thoi):
+    S_HinhThoi = (cd_thoi * cr_thoi)/2
+    return S_HinhThoi
+
+cd_thoi = float(input("Hãy nhập chiều dài hình thoi: "))
+cr_thoi = float(input("Hãy nhập chiều rộng hình thoi: "))
+
+S_HinhThoi(cd_thoi, cr_thoi)
+
+print(f"Diện tích hình thoi là: {S_HinhThoi}")
+
+
+
+
+# Hình thang
+print("------------=======Diện tích - hình thang=======------------")
+def S_hinhThang(daylon, daybe, chieucao):
+    S_hbh = (((daylon + daybe)*chieucao)/2)
+    return S_hbh
+
+daylon = float(input("Hãy nhập chiều dài đáy lớn: "))
+daybe = float(input("Hãy nhập chiều dài đáy bé: "))
+chieucao = float(input("Hãy nhập chiều cao: "))
+
+S_hinhThang = S_hinhThang(daylon, daybe, chieucao)
+
+print(f"Diện tích hình bình hành là: {S_hinhThang}")
+
+
+
+
+
+# Hình hộp chữ nhật
+print("------------=======Diện tích xung quanh - thể tích hộp chữ nhật=======------------")
+def Sqx_HHCN(acd, acr, ah):
+    Sqx_HHCN = 2(acd * acr)*ah
+    return Sqx_HHCN
+
+def V_HHCN(acd, acr, ah):
+    V_HHCN = acd*acr*ah
+    return V_HHCN
+
+acd = float(input("Hãy nhập chiều dài: "))
+acr = float(input("Hãy nhập chiều rộng:"))
+ah = float(input("Hãy nhập chiều cao: "))
+
+Sqx_HHCN = Sqx_HHCN(acd, acr, ah)
+V_HHCN = V_HHCN(acd, acr, ah)
+
+print(f"Diện tích xung quanh hộp chữ nhật là: {Sqx_HHCN}")
+print(f"Thể tích hình hộp chữ nhật là: {V_HHCN}")
+
+
+
+
+# Hình lập phương
+print("------------=======Diện tích xung quanh - thể tích lập phương=======------------")
+def Sxq_HLP(canh_a):
+    Sxq_HLP = 4*canh_a**2
+    return Sxq_HLP
+
+def V_HLP(canh_a):
+    V_HLP = canh_a**3
+    return V_HLP
+
+canh_a = float(input("Hãy nhập cạnh a: "))
+
+Sxq_HLP = Sxq_HLP(canh_a)
+V_HLP = V_HLP(canh_a)
+
+print(f"Diện tích xung quanh lập phương là: {Sxq_HLP}")
+print(f"Thể tích hình lập phương là: {V_HLP}")
+
+
+
 
 
 # Lũy thừa
@@ -80,6 +177,9 @@ B = int(input("Nhập số nguyên B: "))
 ket_qua = luy_thua(A, B)
 print(f"Lũy thừa của {A} mũ {B} là: {ket_qua}")
 
+
+
+
 # trị tuyệt đối
 print("------------=======Tính giá trị tuyệt đối=======------------")
 def gia_tri_tuyet_doi(n):
@@ -94,6 +194,9 @@ so_nguyen = int(input("Nhập một số nguyên: "))
 ket_qua = gia_tri_tuyet_doi(so_nguyen)
 print(f"Gía trị tuyệt đối của {so_nguyen} là {ket_qua}")
 
+
+
+
 # tính tổng danh sách
 print("------------=======Tính tổng phần tử trong danh sách=======------------")
 def tinh_tong_danh_sach(danh_sach):
@@ -104,6 +207,9 @@ def tinh_tong_danh_sach(danh_sach):
 danh_sach = [1,2,3,4,5,6,7,8,9,10]
 ket_qua = tinh_tong_danh_sach(danh_sach)
 print(f"Tổng các phần tử trong danh sách là {ket_qua}")
+
+
+
 
 print("------------=======Thực hành 1=======------------")
 def S_Can_Phong(canh):
@@ -122,6 +228,9 @@ so_tam_gach = tinh_tam_gach(S_Can_Phong, S_Tam_Gach)
 print(f"Diện tích căn phòng là: {S_Can_Phong} m^2")
 print(f"số gạch cần là: {so_tam_gach} tấm")
 
+
+
+
 print("------------=======Thực hành 2=======------------")
 def tinhluong(giolam, luonggio):
   tongluong = giolam * luonggio
@@ -136,6 +245,9 @@ def inthongtin(ten, giolam, luonggio, tongluong):
 tongluong = tinhluong(8, 100000) 
 
 inthongtin("Nguyễn Văn A", 8, 100000, tongluong)
+
+
+
 
 print("------------=======Thực hành 3=======------------")
 def check_password_length(password):
