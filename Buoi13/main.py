@@ -210,6 +210,165 @@ print(f"Tổng các phần tử trong danh sách là {ket_qua}")
 
 
 
+# chuyển chữ thường sang full in hoa
+print("------------=======chuyển chữ thường sang full in hoa=======------------")
+def chuyen_viethoa(chuoi):
+    return chuoi.upper()
+
+x = input("Hãy nhập một đoạn chuỗi chữ thường: ")
+ket_qua = chuyen_viethoa(x)
+print(f"Chuỗi viết hoa: {ket_qua}")
+
+
+
+# dãy fibonnancy
+print("------------=======tạo ra dãy fibonacci=======------------")
+def tao_danh_sach_fibonacci(n):
+    danh_sach = [0, 1]
+    while len(danh_sach) < n:
+        so_moi = danh_sach[-1] + danh_sach[-2]
+        danh_sach.append(so_moi)
+    return danh_sach
+
+inter = int(input("Hãy nhập số nguyên bất kỳ: "))
+ket_qua = tao_danh_sach_fibonacci(inter)
+print(f"Danh sách {inter} số Fibonacci đầu tiên: {ket_qua}")
+
+
+
+#năm nhuận
+print("------------=======in ra năm nhuận=======------------")
+def la_nam_nhuan(nam):
+    if nam % 4 == 0:
+        if nam % 100 == 0:
+            if nam % 400 == 0:
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+nam = int(input("Hãy nhập một năm bất kì: "))
+if la_nam_nhuan(nam):
+    print(f"{nam}là năm nhuận")
+else:
+    print(f"{nam} không là năm nhuận")
+
+
+
+#tính tổng mũ
+print("------------=======tính tổng các số mũ=======------------")
+def tinh_tong_cac_chu_so_mu(n):
+    tong = 0
+    for i in range(1, n + 1):
+        so_mu = i**i
+        chu_so = so_mu % 10
+        tong += chu_so
+    return tong
+
+tong_mu = int(input("Hãy nhập một số bất kỳ: "))
+ket_qua = tinh_tong_cac_chu_so_mu(tong_mu)
+print(f"Tổng các chữ số mũ từ 1 đến {tong_mu} là {ket_qua}")
+
+
+
+#tìm từ giống nhau
+print("------------=======tìm từ giống nhau=======------------")
+def tim_kiem_tu_giong_nhau(danh_sach_chuoi):
+    tu_giong_nhau = []
+    for i in range(len(danh_sach_chuoi)):
+        for j in range(i + 1, len(danh_sach_chuoi)):
+            if danh_sach_chuoi[i] == danh_sach_chuoi[j]:
+                if danh_sach_chuoi[i] not in tu_giong_nhau:
+                    tu_giong_nhau.append(danh_sach_chuoi[i])
+    return tu_giong_nhau
+
+def sap_xep_tang_dan(danh_sach_chuoi):
+    for i in range(len(danh_sach_chuoi)):
+        for j in range(len(danh_sach_chuoi) - i - 1):
+            if danh_sach_chuoi[j] > danh_sach_chuoi[j + 1]:
+                danh_sach_chuoi[j], danh_sach_chuoi[j + 1] = danh_sach_chuoi[j + 1], danh_sach_chuoi[j]
+    return danh_sach_chuoi
+
+def tach_chuoi_thanh_tu(danh_sach_chuoi):
+    tu = []
+    for chuoi in danh_sach_chuoi:
+        tu.extend(chuoi.split())
+    return tu
+
+def in_cac_tu_theo_chu_so(tu):
+    tu_sap_xep = sap_xep_tang_dan(tu)
+    for i in range(1, 10):
+        tu_theo_chu_so = [tu for tu in tu_sap_xep if tu.startswith(str(i))]
+        if tu_theo_chu_so:
+            print("Các từ bắt đầu bằng chữ số", i, ":")
+            print(tu_theo_chu_so)
+            print()
+
+chuoi_1 = "hello world"
+chuoi_2 = "hi there"
+chuoi_3 = "how are you"
+chuoi_4 = "hello python"
+chuoi_5 = "hi there"
+danh_sach_chuoi = [chuoi_1, chuoi_2, chuoi_3, chuoi_4, chuoi_5]
+
+tu_giong_nhau = tim_kiem_tu_giong_nhau(danh_sach_chuoi)
+print("Các từ giống nhau trong danh sách chuỗi:")
+print(tu_giong_nhau)
+print()
+
+tu = tach_chuoi_thanh_tu(danh_sach_chuoi)
+print("Các từ trong danh sách chuỗi:")
+print(tu)
+print()
+
+in_cac_tu_theo_chu_so(tu)
+
+
+
+#tổng đường chéo ma trận
+print("------------=======tính tổng đường chéo ma trận=======------------")
+def tinh_tong_tu_duong_cheo_ma_tran(ma_tran):
+    tong = 0
+    for i in range(len(ma_tran)):
+        for j in range(len(ma_tran[i])):
+            if i == j:
+                tong += ma_tran[i][j]
+    return tong
+
+def kiem_tra_so_nguyen_to(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def tim_so_nguyen_to_lon_nhat(mang):
+    so_nguyen_to_max = None
+    for so in mang:
+        if kiem_tra_so_nguyen_to(so):
+            if so_nguyen_to_max is None or so > so_nguyen_to_max:
+                so_nguyen_to_max = so
+    return so_nguyen_to_max
+
+ma_tran = [[1, 2, 3],
+           [4, 5, 6],
+           [7, 8, 9]]
+
+tong_duong_cheo = tinh_tong_tu_duong_cheo_ma_tran(ma_tran)
+print("Tổng các phần tử trên đường chéo chính của ma trận:")
+print(tong_duong_cheo)
+print()
+
+mang_so = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+so_nguyen_to_lon_nhat = tim_so_nguyen_to_lon_nhat(mang_so)
+print("Số nguyên tố lớn nhất trong mảng:")
+print(so_nguyen_to_lon_nhat)
+
+
 
 print("------------=======Thực hành 1=======------------")
 def S_Can_Phong(canh):
