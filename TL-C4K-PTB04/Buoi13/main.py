@@ -122,22 +122,23 @@ print(f"Diện tích hình bình hành là: {S_hinhThang}")
 # Hình hộp chữ nhật
 print("------------=======Diện tích xung quanh - thể tích hộp chữ nhật=======------------")
 def Sqx_HHCN(acd, acr, ah):
-    Sqx_HHCN = 2(acd * acr)*ah
+    Sqx_HHCN = 2 * (acd * acr + acr * ah + acd * ah)  # Corrected the multiplication operation
     return Sqx_HHCN
 
 def V_HHCN(acd, acr, ah):
-    V_HHCN = acd*acr*ah
+    V_HHCN = acd * acr * ah
     return V_HHCN
 
 acd = float(input("Hãy nhập chiều dài: "))
-acr = float(input("Hãy nhập chiều rộng:"))
+acr = float(input("Hãy nhập chiều rộng: "))
 ah = float(input("Hãy nhập chiều cao: "))
 
-Sqx_HHCN = Sqx_HHCN(acd, acr, ah)
-V_HHCN = V_HHCN(acd, acr, ah)
+Sqx_HHCN_result = Sqx_HHCN(acd, acr, ah)
+V_HHCN_result = V_HHCN(acd, acr, ah)
 
-print(f"Diện tích xung quanh hộp chữ nhật là: {Sqx_HHCN}")
-print(f"Thể tích hình hộp chữ nhật là: {V_HHCN}")
+print(f"Diện tích xung quanh hộp chữ nhật là: {Sqx_HHCN_result}")
+print(f"Thể tích hình hộp chữ nhật là: {V_HHCN_result}")
+
 
 
 

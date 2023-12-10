@@ -1,0 +1,8 @@
+--=== Chọn 1 trong 4 ===--
+1. Ứng dụng quản lý tiền bạc cá nhân (thu chi, danh mục khoản mục, biểu đồ thống kê...)
+
+2. App quản lý cơ sở dữ liệu sinh viên, học sinh với thông tin cá nhân
+
+3.Chương trình quản lý kho hàng với thông tin sản phẩm, đơn đặt hàng
+
+4. Quản lý nhân sự: Thông tin tài khoản nhân viên, ca làm việc, lương,...
