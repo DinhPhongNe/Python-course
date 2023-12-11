@@ -1,13 +1,23 @@
-now = str(input("Hay nhap ngay thang nam (dd/mm/yyyy): "))
-date_time = now.split("/")
+# Nhập họ và tên đầy đủ từ người dùng
+full_name = input("Nhập họ và tên đầy đủ: ")
 
-ngay = date_time[0]
-thang = date_time[1]  
-nam = date_time[2]
+# Tách họ và tên thành danh sách các từ
+name_parts = full_name.split()
 
-if int(ngay) <= 30 and 31:
-    print("Ngày hợp lệ")
-if int(thang) <= 12:
-    print("Tháng hợp lệ")
-if 1900 <= int(nam):
-    print("năm Hợp lệ")
+# Kiểm tra xem có đủ hai từ hay không (họ và tên)
+if len(name_parts) >= 2:
+    # Xuất họ, tên đệm và tên
+    print("Họ:", name_parts[0][0].upper() + name_parts[0][1:])
+    
+    # Nếu có tên đệm
+    if len(name_parts) > 2:
+        middle_name = " ".join(name_parts[1:-1])
+        print("Tên đệm:", middle_name)
+    
+    # Xuất tên
+    last_name = name_parts[-1]
+    print("Tên:", last_name)
+else:
+    # Nếu chỉ có hai chữ (không có tên đệm)
+    print("Họ:", name_parts[0][0].upper() + name_parts[0][1:])
+    print("Tên:", name_parts[1])

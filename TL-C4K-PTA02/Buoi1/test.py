@@ -1,6 +1,8 @@
-classname = "TL C4K PTB04"
+def calculate(numbers):
+    total = sum(numbers)
+    average = total / len(numbers)
+    return average
 
-# split -> tách một xâu thành mảng ký tự => ['TL', 'C4K', 'PTA02']
-o = classname.split()
-print(o[2])
-
+data = [5, 10, 15, 20, 25]
+result = int(calculate(data))
+print(result)
