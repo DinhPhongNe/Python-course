@@ -1,136 +1,124 @@
 import time
 import random
 
-print("=== CHƯƠNG TRÌNH TÍNH ĐIỂM CHUẨN ĐẬU VÀO TRƯỜNG CẤP 3 ===\n")
-time.sleep(1)
+class StudentAdmissionSystem:
+    def __init__(self):
+        print("=== CHƯƠNG TRÌNH TÍNH ĐIỂM CHUẨN ĐẬU VÀO TRƯỜNG CẤP 3 ===\n")
+        time.sleep(1)
+        self.nguyen_vong = []
 
-# đăng nhập
-print(" === VUI LÒNG ĐĂNG NHẬP === ")
-def generate_captcha():
-    # Generate a random string of letters and digits
-    captcha = ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=7))
-    
-    # Display the CAPTCHA and ask the user to enter it
-    print('Hãy nhập theo CAPTCHA sau đây: ' + captcha)
-    user_input = input('Nhập nó ở đây -->: ')
-    
-    # Check if the user entered the correct CAPTCHA
-    if user_input == captcha:
-        print('Duyệt thành công CAPTCHA')
-        return True
-    else:
-        print('Duyệt không thành công CAPTCHA')
-        return False
+    def generate_captcha(self):
+        captcha = ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=7))
+        print('Hãy nhập theo CAPTCHA sau đây: ' + captcha)
+        user_input = input('Nhập nó ở đây -->: ')
+        return user_input == captcha
 
-def login():
-    # Ask the user for their username and password
-    username = input('Nhập tên tài khoản: ')
-    password = input('Nhập mật khẩu tài khoản: ')
-    
-    # Verify the CAPTCHA
-    while not generate_captcha():
-        pass
-    
-    # Verify the username and password
-    if username == 'student1' and password == 'password1':
-        print('Đăng nhập thành công')
-    else:
-        print('Đăng nhập không thành công')
+    def login(self):
+        print(" === VUI LÒNG ĐĂNG NHẬP === ")
+        while True:
+            if self.generate_captcha():
+                username = input('Nhập tên tài khoản: ')
+                password = input('Nhập mật khẩu tài khoản: ')
+                if username == 'student1' and password == 'password1':
+                    print('Đăng nhập thành công')
+                    break
+                else:
+                    print('Đăng nhập không thành công')
 
-login()
+    def input_student_info(self):
+        print(" === Vui lòng nhập thông tin thí sinh === ")
+        self.so_bao_danh = input("Nhập số báo danh: ")
+        self.ten = input("Nhập họ và tên: ")
+        self.tinh_thanh = input("Nhập tỉnh/ Thành phố: ")
+        self.truong_du_thi = input("Nhập tên trường dự thi: ")
+        self.phong_du_thi = input("Nhập số phòng dự thi: ")
 
-print("="*50)
+    def input_scores(self):
+        print("="*50)
+        print("\n=== ĐIỂM MÔN THƯỜNG ===")
+        print(" === Vui lòng nhập điểm từng môn === ")
+        self.toan = self.get_valid_score("Toán")
+        self.van = self.get_valid_score("Văn")
+        self.anh = self.get_valid_score("Anh")
 
-# Nhập thông tin thí sinh
-print(" === Vui lòng nhập thông tin thí sinh === ")
-so_bao_danh = input("Nhập số báo danh: ")
-ten = input("Nhập họ và tên: ")
-tinh_thanh = input("Nhập tỉnh/ Thành phố: ")
-truong_du_thi = input("Nhập tên trường dự thi: ")
-phong_du_thi = input("Nhập số phòng dự thi: ")
+    def get_valid_score(self, subject):
+        while True:
+            score = float(input(f"Nhập điểm môn {subject}: "))
+            if 0 <= score <= 10:
+                return score
+            else:
+                print(f"Điểm môn {subject} không hợp lệ. Vui lòng nhập lại!")
 
-print("="*50)
-print("\n=== ĐIỂM MÔN THƯỜNG ===")
-# Nhập điểm các môn học
-print(" === Vui lòng nhập điểm từng môn === ")
-toan = float(input("Nhập điểm môn Toán: "))
-if toan < 0 or toan > 10:
-    print("Điểm môn Toán không hợp lệ. Vui lòng nhập lại!")
-    toan = float(input("Nhập lại điểm môn Toán: "))
-    
-van = float(input("Nhập điểm môn Văn: "))
-if van < 0 or van > 10:
-    print("Điểm môn Văn không hợp lệ. Vui lòng nhập lại!")
-    van = float(input("Nhập lại điểm môn Văn: "))
-    
-anh = float(input("Nhập điểm môn Anh: "))
-if anh < 0 or anh > 10:
-    print("Điểm môn Anh không hợp lệ. Vui lòng nhập lại!")
-    anh = float(input("Nhập lại điểm môn Anh: "))
+    def input_specialized_subject(self):
+        print("="*50)
+        print("=== ĐIỂM MÔN CHUYÊN ===")
+        print("Chọn môn chuyên của bạn:")
+        print("1. Toán")
+        print("2. Văn")
+        print("3. Anh")
+        choices = {'1': 'Toán', '2': 'Văn', '3': 'Anh'}
+        while True:
+            choice = input("Nhập lựa chọn của bạn (1-3): ")
+            if choice in choices:
+                self.ten_mon_chuyen = choices[choice]
+                self.diem_mon_chuyen = float(input(f"Nhập điểm môn {self.ten_mon_chuyen}: "))
+                break
+            else:
+                print("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-3): ")
 
-print("="*50)
-# Nhập điểm môn chuyên
-print("=== ĐIỂM MÔN CHUYÊN ===")
-print("Chọn môn chuyên của bạn:")
-print("1. Toán")
-print("2. Văn")
-print("3. Anh")
+    def input_desired_schools(self):
+        print("="*50)
+        print("=== NGUYỆN VỌNG VÀ ĐIỂM CHUẨN ===")
+        for i in range(3):
+            ten_nv = input(f"Nhập tên trường nguyện vọng {i+1}: ")
+            diem_chuan_nv = float(input(f"Nhập điểm chuẩn nguyện vọng {i+1}: "))
+            self.nguyen_vong.append({"ten": ten_nv, "diem_chuan": diem_chuan_nv})
 
-mon_chuyen = input("Nhập lựa chọn của bạn (1-4): ")
-while mon_chuyen not in ["1", "2", "3"]:
-    mon_chuyen = input("Lựa chọn không hợp lệ. Vui lòng nhập lại (1-3): ")
-if mon_chuyen == "1":
-    ten_mon_chuyen = "Toán"
-elif mon_chuyen == "2":
-    ten_mon_chuyen = "Văn"
-elif mon_chuyen == "3":
-    ten_mon_chuyen = "Anh"
-else:
-    ten_mon_chuyen = "S"
-diem_mon_chuyen = float(input(f"Nhập điểm môn {ten_mon_chuyen}: "))
+    def calculate_total_score(self):
+        return self.toan + self.van + self.anh + (self.diem_mon_chuyen * 2)
 
-# Tính tổng điểm
-tong_diem = toan + van + anh + diem_mon_chuyen
-print("="*50)
-# Nhập thông tin nguyện vọng
-print("=== NGUYỆN VỌNG VÀ ĐIỂM CHUẨN ===")
-nguyen_vong = []
-for i in range(3):
-    ten_nv = input(f"Nhập tên trường nguyện vọng {i+1}: ")
-    diem_chuan_nv = float(input(f"Nhập điểm chuẩn nguyện vọng {i+1}: "))
-    print("="*25)
-    nguyen_vong.append({"ten": ten_nv, "diem_chuan": diem_chuan_nv})
+    def check_admission(self):
+        tong_diem = self.calculate_total_score()
+        print("="*50)
+        print("\n=== THÔNG TIN - KẾT QUẢ THI ===")
+        print(f"Số báo danh: {self.so_bao_danh}")
+        print(f"Họ và tên: {self.ten}")
+        print(f"Tỉnh/ Thành phố: {self.tinh_thanh}")
+        print(f"Trường dự thi: {self.truong_du_thi}")
+        print(f"Số phòng dự thi: {self.phong_du_thi}")
+        print(f"Điểm môn chuyên: {self.diem_mon_chuyen}")
+        print(f"Điểm tổng: {tong_diem}")
 
-print("Chúng tôi đang chuẩn bị kết quả cho bạn")
-time.sleep(3)
-# Hiển thị kết quả
+        for i, nv in enumerate(self.nguyen_vong):
+            print(f"Nguyện vọng {i+1}: {nv['ten']} (Điểm chuẩn: {nv['diem_chuan']})")
+            if tong_diem >= nv["diem_chuan"]:
+                print(f"Kết quả xét tuyển: Đậu nguyện vọng {i+1}!")
+                break
+        else:
+            print("Kết quả xét tuyển: Không đậu vào bất kỳ nguyện vọng nào!")
+            print("Hẹn gặp bạn vào kì thi năm sau, chúc may mắn!")
 
-print("\n=== THÔNG TIN - KẾT QUẢ THI ===")
-print(f"Số báo danh: {so_bao_danh}")
-print(f"Họ và tên: {ten}")
-print(f"Tỉnh/ Thành phố: {tinh_thanh}")
-print(f"Trường dự thi: {truong_du_thi}")
-print(f"Số phòng dự thi: {phong_du_thi}")
-print(f"Điểm môn chuyên: {diem_mon_chuyen}")
-print(f"Điểm tổng: {tong_diem}")
+    def calculate_score_difference(self):
+        for nv in self.nguyen_vong:
+            chenh_lech = nv["diem_chuan"] - self.calculate_total_score()
+            print(f"Điểm chênh lệch với nguyện vọng {nv['ten']}: {chenh_lech}")
 
-# Kiểm tra xem thí sinh đậu vào nguyện vọng nào
-for i, nv in enumerate(nguyen_vong):
-    print(f"Nguyện vọng {i+1}: {nv['ten']} (Điểm chuẩn: {nv['diem_chuan']})")
-    if tong_diem >= nv["diem_chuan"]:
-        print(f"Kết quả xét tuyển: Đậu nguyện vọng {i+1}!")
-        break
-else:
-    print("Kết quả xét tuyển: Không đậu vào bất kỳ nguyện vọng nào!")
-    print("Hẹn gặp bạn vào kì thi năm sau, chúc may mắn!")
+    def sort_desired_schools(self):
+        self.nguyen_vong.sort(key=lambda x: x["diem_chuan"], reverse=True)
+        print("\n=== THÔNG TIN NGUYỆN VỌNG ===")
+        for i, nv in enumerate(self.nguyen_vong):
+            print(f"{i+1}. {nv['ten']} (Điểm chuẩn: {nv['diem_chuan']})")
 
-# Tính và hiển thị điểm chênh lệch giữa điểm chuẩn và tổng điểm của thí sinh
-for nv in nguyen_vong:
-    chenh_lech = nv["diem_chuan"] - tong_diem
-    print(f"Điểm chênh lệch với nguyện vọng {nv['ten']}: {chenh_lech}")
+    def run(self):
+        self.login()
+        self.input_student_info()
+        self.input_scores()
+        self.input_specialized_subject()
+        self.input_desired_schools()
+        self.check_admission()
+        self.calculate_score_difference()
+        self.sort_desired_schools()
 
-# Sắp xếp nguyện vọng theo thứ tự giảm dần của điểm chuẩn
-nguyen_vong.sort(key=lambda x: x["diem_chuan"], reverse=True)
-print("\n=== THÔNG TIN NGUYỆN VỌNG ===")
-for i, nv in enumerate(nguyen_vong):
-    print(f"{i+1}. {nv['ten']} (Điểm chuẩn: {nv['diem_chuan']})")
+if __name__ == "__main__":
+    admission_system = StudentAdmissionSystem()
+    admission_system.run()

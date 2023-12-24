@@ -15,12 +15,12 @@ hdt_select = int(input("Hãy chọn 1 trong 7 hằng đẳng thức ở trên: "
 # Khai báo biến chữ cái
 A, B = symbols('A B')
 
-he_a = input("Hãy nhập vào biến A của hằng đẳng thức bạn chọn (ví dụ: 2x): ")
-he_b = input("Hãy nhập vào biến B của hằng đẳng thức bạn chọn (ví dụ: 3y): ")
+he_a = input("Hãy nhập vào biến A của hằng đẳng thức bạn chọn (ví dụ: 2*x): ")
+he_b = input("Hãy nhập vào biến B của hằng đẳng thức bạn chọn (ví dụ: 3*y): ")
 
 # Thay thế các biến chữ cái bằng biểu thức sympy
-he_a_expr = eval(he_a.replace('x', '*A').replace('y', '*B').replace('z', '*C'))
-he_b_expr = eval(he_b.replace('x', '*A').replace('y', '*B').replace('z', '*C'))
+he_a_expr = eval(he_a.replace('*', ''))
+he_b_expr = eval(he_b.replace('*', ''))
 
 # Tạo biểu thức hằng đẳng thức dựa trên lựa chọn của người dùng
 if hdt_select == 1:
