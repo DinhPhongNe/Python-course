@@ -20,11 +20,9 @@ class HocSinh:
         print(f"Cân nặng: {self.can_nang} kg")
         print(f"Học lực: {self.hoc_luc}")
 
-# Sử dụng lớp HocSinh
 hs = HocSinh("Dinh Phong", "Thành phố Hồ Chí Minh", 170, 60, "Giỏi")
 hs.xuat_thong_tin()
 
-# Cập nhật thông tin và xuất lại
 print("===Cập nhật lại thông tin===")
 hs.cap_nhat_dia_chi("dưới lòng đất")
 hs.cap_nhat_chieu_cao_can_nang(175, 65)
