@@ -2,4 +2,5 @@
 1. App nhập điểm của giáo viên
 Tính năng
 - Nhập thông tin học sinh ( số thứ tự - tên )
-- Nhập điểm ( nhập điểm )
+- Nhập điểm ( nhập điểm từng môn cho học sinh )
+- Giao bài tập cho học sinh ( file word/pdf )
