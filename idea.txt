@@ -1,6 +1,9 @@
 --=== Idea bài cuối khóa ===--
 1. App nhập điểm của giáo viên
 Tính năng
+- đăng nhập cho giáo viên
 - Nhập thông tin học sinh ( số thứ tự - tên )
 - Nhập điểm ( nhập điểm từng môn cho học sinh )
+- tự động tính điểm trung bình mỗi môn
+- xếp loại học lực dựa trên điểm trung bình
 - Giao bài tập cho học sinh ( file word/pdf )
