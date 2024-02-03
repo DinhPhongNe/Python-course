@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1352</width>
-    <height>624</height>
+    <width>1347</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>332</y>
+      <y>340</y>
       <width>1350</width>
       <height>286</height>
      </rect>
@@ -698,9 +698,9 @@ border-radius:5px;</string>
     <property name="geometry">
      <rect>
       <x>940</x>
-      <y>20</y>
+      <y>10</y>
       <width>191</width>
-      <height>153</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -816,7 +816,7 @@ border-radius:5px;</string>
     <property name="geometry">
      <rect>
       <x>1140</x>
-      <y>20</y>
+      <y>10</y>
       <width>191</width>
       <height>111</height>
      </rect>
@@ -912,9 +912,9 @@ border-radius:5px;</string>
     <property name="geometry">
      <rect>
       <x>1140</x>
-      <y>140</y>
+      <y>130</y>
       <width>191</width>
-      <height>153</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1027,7 +1027,7 @@ border-radius:5px;</string>
     <property name="geometry">
      <rect>
       <x>940</x>
-      <y>180</y>
+      <y>150</y>
       <width>191</width>
       <height>71</height>
      </rect>
@@ -1119,8 +1119,8 @@ border-radius:5px;</string>
    <widget class="QFrame" name="info_frame_6">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>260</y>
+      <x>1140</x>
+      <y>270</y>
       <width>191</width>
       <height>71</height>
      </rect>
@@ -1178,6 +1178,83 @@ color: #F8F2EC;</string>
         <string>Giao bài tập</string>
        </property>
       </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QFrame" name="info_frame_7">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>230</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_32">
+     <property name="leftMargin">
+      <number>30</number>
+     </property>
+     <property name="topMargin">
+      <number>20</number>
+     </property>
+     <property name="rightMargin">
+      <number>30</number>
+     </property>
+     <property name="bottomMargin">
+      <number>20</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>20</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_33">
+       <property name="horizontalSpacing">
+        <number>10</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="font">
+          <font>
+           <family>Segoe UI Semibold</family>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0,0,0);</string>
+         </property>
+         <property name="text">
+          <string>Học lực</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit_34">
+         <property name="styleSheet">
+          <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1352</width>
-    <height>183</height>
+    <height>263</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,43 +36,6 @@
      <enum>QFrame::Raised</enum>
     </property>
     <layout class="QGridLayout" name="gridLayout_14"/>
-   </widget>
-   <widget class="QFrame" name="frame_3">
-    <property name="geometry">
-     <rect>
-      <x>91</x>
-      <y>12</y>
-      <width>921</width>
-      <height>68</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_8">
-     <item>
-      <widget class="QLabel" name="title_label_4">
-       <property name="font">
-        <font>
-         <family>Script MT Bold</family>
-         <pointsize>30</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(68, 35, 255);</string>
-       </property>
-       <property name="text">
-        <string>Students Information System</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </widget>
    <widget class="QFrame" name="info_frame_5">
     <property name="geometry">
@@ -174,7 +137,7 @@ border-radius:5px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>170</y>
       <width>1330</width>
       <height>81</height>
      </rect>
@@ -567,6 +530,108 @@ color: #F8F2EC;</string>
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QFrame" name="info_frame_7">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>90</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_32">
+     <property name="leftMargin">
+      <number>30</number>
+     </property>
+     <property name="topMargin">
+      <number>20</number>
+     </property>
+     <property name="rightMargin">
+      <number>30</number>
+     </property>
+     <property name="bottomMargin">
+      <number>20</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>20</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_33">
+       <property name="horizontalSpacing">
+        <number>10</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="font">
+          <font>
+           <family>Segoe UI Semibold</family>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0,0,0);</string>
+         </property>
+         <property name="text">
+          <string>Học lực</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit_34">
+         <property name="styleSheet">
+          <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="title_label_4">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>901</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>30</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(68, 35, 255);</string>
+    </property>
+    <property name="text">
+     <string>Students Information System</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
  </widget>
