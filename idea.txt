@@ -1,9 +1,20 @@
 --=== Idea bài cuối khóa ===--
-1. App nhập điểm của giáo viên
+App nhập điểm của giáo viên - xem điểm cho học sinh
+
 Tính năng
++ cho giáo viên:
 - đăng nhập cho giáo viên
 - Nhập thông tin học sinh ( số thứ tự - tên )
 - Nhập điểm ( nhập điểm từng môn cho học sinh )
-- tự động tính điểm trung bình mỗi môn
-- xếp loại học lực dựa trên điểm trung bình
 - Giao bài tập cho học sinh ( file word/pdf )
+
++ cho học sinh:
+- đăng nhập cho học sinh
+- học sinh xem điểm - không chỉnh sửa được
+- xem được file bài tập giáo viên gửi
+
++ tự động:
+- tự động tính điểm trung bình mỗi môn
+- xếp loại học lực dựa trên tổng điểm trung bình các môn
+
+
