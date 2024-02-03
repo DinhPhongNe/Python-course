@@ -155,7 +155,7 @@ color:rgb(129, 201, 255);</string>
      <string>Chào mừng thầy cô trở lại!</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="loginButton">
+   <widget class="QPushButton" name="GiaoVienLogin_btn">
     <property name="geometry">
      <rect>
       <x>10</x>
