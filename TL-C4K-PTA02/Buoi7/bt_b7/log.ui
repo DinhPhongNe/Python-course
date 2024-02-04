@@ -282,7 +282,7 @@ color: #F8F2EC;</string>
    <widget class="QPushButton" name="loginButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>130</x>
       <y>450</y>
       <width>75</width>
       <height>21</height>
