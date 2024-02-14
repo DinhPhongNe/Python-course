@@ -41,7 +41,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout"/>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="PassTC">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -107,7 +107,7 @@ border-radius: 10px;</string>
      <string>Nhập số điện thoại</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="PhoneTC">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -152,10 +152,10 @@ background-color:none;
 color:rgb(129, 201, 255);</string>
     </property>
     <property name="text">
-     <string>Chào mừng học sinh trở lại!</string>
+     <string>Chào mừng thầy cô trở lại!</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="HocSinhLogin_btn">
+   <widget class="QPushButton" name="GiaoVienLogin_btn">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -227,7 +227,7 @@ background-color: none;
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>icons/user-st.png</pixmap>
+     <pixmap>icons/user.webp</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

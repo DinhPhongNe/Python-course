@@ -189,7 +189,6 @@ border-radius: 10px;</string>
       <family>Bahnschrift</family>
       <pointsize>20</pointsize>
       <italic>false</italic>
-      <fontweight>DemiBold</fontweight>
      </font>
     </property>
     <property name="styleSheet">
