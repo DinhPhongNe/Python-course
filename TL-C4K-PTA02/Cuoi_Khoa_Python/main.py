@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QMessageBox, QPushButton
 from PyQt6 import uic
 
 
@@ -12,29 +12,29 @@ class Main(QMainWindow):
         self.HocSinh_btn.clicked.connect(self.Login_hs)
         self.GiaoVien_btn.clicked.connect(self.Login_tc)
         
-    def Login_hs(self):
-        uic.loadUi("gui/login-student.ui", self)
-            
+        
+    #==--Phần của giáo viên--==
+    #Login của giáo viên
     def Login_tc(self):
         uic.loadUi("gui/login-teacher.ui", self)
+        self.GiaoVienLogin_btn.clicked.connect(self.GiaoVienClicked)
+
+    def GiaoVienClicked(self):
+        uic.loadUi("gui/main-tc.ui", self)
+    
+    
+    
+    #==--Phần của học sinh--== 
+    #Login của học sinh
+    def Login_hs(self):
+        uic.loadUi("gui/login-student.ui", self)
+        self.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked) 
         
-
-class Main_ST(QMainWindow):
-    pass
-
-class Main_TC(QMainWindow):
-    pass
-
+    def HocSinhClicked(self):
+        uic.loadUi("gui/main-st.ui", self)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Main()
-    st_page = Main_ST()
-    tc_page = Main_TC()
-    
-    #thông báo lỗi
-    msg_box = QMessageBox()
-    msg_box.setWindowTitle("Lỗi")
-    msg_box.setIcon(QMessageBox.Icon.Warning)
-    msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
+    window.show()
     sys.exit(app.exec())
