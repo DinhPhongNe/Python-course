@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>349</width>
-    <height>580</height>
+    <height>585</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -186,34 +186,6 @@ color: #F8F2EC;</string>
      <string>Đăng Nhập</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>550</y>
-      <width>171</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color:rgb(129, 201, 255);
-background-color: none;
-</string>
-    </property>
-    <property name="text">
-     <string>Quên mật khẩu?</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -231,6 +203,72 @@ background-color: none;
     </property>
     <property name="scaledContents">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="forgo_pass_hs">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>550</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Bahnschrift</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 15px;
+font: 600 16pt &quot;Bahnschrift&quot;;
+background-color:none;
+color: rgb(129, 201, 255);
+font-size: 16px;
+</string>
+    </property>
+    <property name="text">
+     <string>Quên mật khẩu</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="goback_hs_btn">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>550</y>
+      <width>98</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Bahnschrift</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 15px;
+font: 600 16pt &quot;Bahnschrift&quot;;
+background-color:none;
+color: rgb(129, 201, 255);
+font-size: 16px;
+</string>
+    </property>
+    <property name="text">
+     <string>Quay lại</string>
     </property>
    </widget>
   </widget>
