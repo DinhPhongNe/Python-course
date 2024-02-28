@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import  QMainWindow, QApplication, QWidget, QMessageBox, QPushButton
+from PyQt6.QtWidgets import  QMainWindow, QApplication, QWidget, QMessageBox, QPushButton, QLineEdit
 from PyQt6 import uic
 
 
@@ -28,13 +28,35 @@ class Main(QMainWindow):
     def Login_tc(self):
         if not self.teacher_login:
             self.teacher_login = uic.loadUi("gui/login-teacher.ui")
-            self.teacher_login.GiaoVienLogin_btn.clicked.connect(self.GiaoVienClicked)
+                # Assign PhoneTC and PassTC
+            self.PhoneTC = self.teacher_login.findChild(QLineEdit, "PhoneTC")
+            self.PassTC = self.teacher_login.findChild(QLineEdit, "PassTC")
+            
+            self.teacher_login.GiaoVienLogin_btn.clicked.connect(self.check_login)
             self.teacher_login.goback_tc_btn.clicked.connect(self.goback_tc_Clicked)
             self.teacher_login.forgo_pass_tc.clicked.connect(self.renew)
 
         self.teacher_login.show()
         self.hide()
 
+    def check_login(self):
+        Phone = self.PhoneTC.text()
+        password = self.PassTC.text()
+        
+        if not Phone:
+            msg_box.setText("vui lòng nhập số điện thoại!")
+            msg_box.exec()
+            return
+        if not password:
+            msg_box.setText("vui lòng nhập mật khẩu!")
+            msg_box.exec()
+            return
+        
+        if Phone == "1234567890" and password == "admin":
+            self.close()
+            self.GiaoVienClicked()
+            
+        
     def GiaoVienClicked(self):
         if not self.teacher_main:
             self.teacher_main = uic.loadUi("gui/main-tc.ui")
@@ -53,12 +75,31 @@ class Main(QMainWindow):
     def Login_hs(self):
         if not self.student_login:
             self.student_login = uic.loadUi("gui/login-student.ui")
-            self.student_login.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked)
+            self.Phone_HS = self.student_login.findChild(QLineEdit, "Phone_HS")
+            self.pass_HS = self.student_login.findChild(QLineEdit, "pass_HS")
+            self.student_login.HocSinhLogin_btn.clicked.connect(self.check_login_hs)
             self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
             self.student_login.forgo_pass_hs.clicked.connect(self.renew)
 
         self.student_login.show()
         self.hide()
+        
+    def check_login_hs(self):
+        Phone = self.Phone_HS.text()
+        password = self.pass_HS.text()
+        
+        if not Phone:
+            msg_box.setText("vui lòng nhập số điện thoại!")
+            msg_box.exec()
+            return
+        if not password:
+            msg_box.setText("vui lòng nhập mật khẩu!")
+            msg_box.exec()
+            return
+        
+        if Phone == "1234567890" and password == "admin":
+            self.close()
+            self.HocSinhClicked()
 
     def HocSinhClicked(self):
         if not self.student_main:
@@ -101,4 +142,11 @@ if __name__ == "__main__":
     app = QApplication([])
     window = Main()
     window.show()
+    
+    # Thiết lập hộp thoại thông báo lỗi
+    msg_box = QMessageBox()
+    msg_box.setWindowTitle("Lỗi")
+    msg_box.setIcon(QMessageBox.Icon.Warning)
+    msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
+    
     app.exec()
