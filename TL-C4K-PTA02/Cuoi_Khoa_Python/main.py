@@ -1,8 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import  QMainWindow, QApplication, QWidget, QMessageBox, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit
 from PyQt6 import uic
-
 
 class Main(QMainWindow):
     def __init__(self) -> None:
@@ -20,18 +19,20 @@ class Main(QMainWindow):
         self.teacher_main = None
         self.student_main = None
         self.renewpass = None
-        
-        
-        
-        
+
+        # Thiết lập hộp thoại thông báo lỗi
+        self.msg_box = QMessageBox()
+        self.msg_box.setWindowTitle("Lỗi")
+        self.msg_box.setIcon(QMessageBox.Icon.Warning)
+        self.msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
+
     # Phần của giáo viên
     def Login_tc(self):
         if not self.teacher_login:
             self.teacher_login = uic.loadUi("gui/login-teacher.ui")
-                # Assign PhoneTC and PassTC
+            # Assign PhoneTC and PassTC
             self.PhoneTC = self.teacher_login.findChild(QLineEdit, "PhoneTC")
             self.PassTC = self.teacher_login.findChild(QLineEdit, "PassTC")
-            
             self.teacher_login.GiaoVienLogin_btn.clicked.connect(self.check_login)
             self.teacher_login.goback_tc_btn.clicked.connect(self.goback_tc_Clicked)
             self.teacher_login.forgo_pass_tc.clicked.connect(self.renew)
@@ -44,32 +45,38 @@ class Main(QMainWindow):
         password = self.PassTC.text()
         
         if not Phone:
-            msg_box.setText("vui lòng nhập số điện thoại!")
-            msg_box.exec()
+            self.msg_box.setText("vui lòng nhập số điện thoại!")
+            self.msg_box.exec()
             return
         if not password:
-            msg_box.setText("vui lòng nhập mật khẩu!")
-            msg_box.exec()
+            self.msg_box.setText("vui lòng nhập mật khẩu!")
+            self.msg_box.exec()
             return
         
+        # Check credentials
         if Phone == "1234567890" and password == "admin":
             self.close()
             self.GiaoVienClicked()
+        else:
+            self.msg_box.setText("Số điện thoại hoặc mật khẩu sai")
+            self.msg_box.exec()
             
         
     def GiaoVienClicked(self):
         if not self.teacher_main:
             self.teacher_main = uic.loadUi("gui/main-tc.ui")
+            self.teacher_main.logOut_btn_tc.clicked.connect(self.GiaoVienMain_Return)
         
         self.teacher_main.show()
-        self.hide()
+        self.teacher_login.hide()
+        
+    def GiaoVienMain_Return(self):
+        self.teacher_login.show()
+        self.teacher_main.hide()
         
     def goback_tc_Clicked(self):
         self.teacher_login.hide()
         self.show()
-
-
-
 
     # Phần của học sinh
     def Login_hs(self):
@@ -89,36 +96,86 @@ class Main(QMainWindow):
         password = self.pass_HS.text()
         
         if not Phone:
-            msg_box.setText("vui lòng nhập số điện thoại!")
-            msg_box.exec()
+            self.msg_box.setText("vui lòng nhập số điện thoại!")
+            self.msg_box.exec()
             return
         if not password:
-            msg_box.setText("vui lòng nhập mật khẩu!")
-            msg_box.exec()
+            self.msg_box.setText("vui lòng nhập mật khẩu!")
+            self.msg_box.exec()
             return
         
+        # Check credentials
         if Phone == "1234567890" and password == "admin":
-            self.close()
+            self.close()  # Close main window
             self.HocSinhClicked()
+        else:
+            self.msg_box.setText("Số điện thoại hoặc mật khẩu sai")
+            self.msg_box.exec()  # Execute the message box
 
     def HocSinhClicked(self):
         if not self.student_main:
             self.student_main = uic.loadUi("gui/main-st.ui")
+            self.student_main.logOut_btn_hs.clicked.connect(self.HocSinhMain_Return)
         
         self.student_main.show()
-        self.hide()
+        self.student_login.hide()
+        
+    def HocSinhMain_Return(self):
+        self.student_login.show()
+        self.student_main.hide()
         
     def goback_hs_Clicked(self):
         self.student_login.hide()
         self.show()
 
-
+    #Phần renew pass
     def renew(self):
         if not self.renewpass:
             self.renewpass = uic.loadUi("gui/renewpass.ui")
+            self.renewpass.reNew_btn.clicked.connect(self.renewClicked)
             
         self.renewpass.show()
-        self.hide
+        
+    def renewClicked(self):
+        # Ẩn tất cả các giao diện cũ trước khi quay lại menu
+        if self.teacher_login:
+            self.teacher_login.hide()
+        if self.student_login:
+            self.student_login.hide()
+        if self.register:
+            self.register.hide()
+        if self.teacher_main:
+            self.teacher_main.hide()
+        if self.student_main:
+            self.student_main.hide()
+        if self.renewpass:
+            self.renewpass.hide()
+        
+        self.newpass_Phone = self.renewpass.findChild(QLineEdit, "renewpass_phone")
+        self.newpass = self.renewpass.findChild(QLineEdit, "renewpass_newpass")
+        self.retypepass = self.renewpass.findChild(QLineEdit, "reTypeNewPass")
+            
+        newpass_Phone = self.renewpass_phone.text()
+        newpass = self.renewpass_newpass.text()
+        retypepass = self.reTypeNewPass.text()
+        
+        if not newpass_Phone:
+            self.msg_box.setText("vui lòng nhập số điện thoại!")
+            self.msg_box.exec()
+            return
+        if not newpass:
+            self.msg_box.setText("vui lòng nhập mật khẩu mới!")
+            self.msg_box.exec()
+            return
+        if not retypepass:
+            self.msg_box.setText("vui lòng nhập lại mật khẩu mới!")
+            self.msg_box.exec()
+
+        self.menu_return()
+
+        # Hiển thị thông báo cần đăng nhập lại
+        self.msg_box.setText("Vui lòng đăng nhập lại.")
+        self.msg_box.exec()
 
     # Phần đăng ký
     def regis(self):
@@ -129,24 +186,15 @@ class Main(QMainWindow):
         
         self.register.show()
         self.hide()
-        
     
-        
-        
-        
     def menu_return(self):
-        self.register.hide()
+        if self.register:
+            self.register.hide()
         self.show()
 
 if __name__ == "__main__":
     app = QApplication([])
     window = Main()
     window.show()
-    
-    # Thiết lập hộp thoại thông báo lỗi
-    msg_box = QMessageBox()
-    msg_box.setWindowTitle("Lỗi")
-    msg_box.setIcon(QMessageBox.Icon.Warning)
-    msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
     
     app.exec()

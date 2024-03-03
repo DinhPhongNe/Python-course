@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1347</width>
-    <height>583</height>
+    <width>1450</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,8 +21,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>340</y>
-      <width>1350</width>
+      <y>440</y>
+      <width>1461</width>
       <height>286</height>
      </rect>
     </property>
@@ -368,8 +368,8 @@ color:black;</string>
    <widget class="QFrame" name="function_frame">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>260</y>
+      <x>10</x>
+      <y>280</y>
       <width>914</width>
       <height>56</height>
      </rect>
@@ -417,6 +417,15 @@ background-color: rgb(132,232,246);</string>
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -545,8 +554,8 @@ background-color: rgb(255,129,132);</string>
    <widget class="QFrame" name="info_frame">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>93</y>
+      <x>10</x>
+      <y>120</y>
       <width>914</width>
       <height>153</height>
      </rect>
@@ -663,7 +672,7 @@ border-radius:5px;</string>
       <x>12</x>
       <y>12</y>
       <width>914</width>
-      <height>68</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -694,412 +703,6 @@ border-radius:5px;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="info_frame_2">
-    <property name="geometry">
-     <rect>
-      <x>940</x>
-      <y>10</y>
-      <width>191</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_21">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_22">
-       <property name="horizontalSpacing">
-        <number>10</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>15</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_31">
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Toán</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_23">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_24">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_32">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Anh</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_25">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_33">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Văn</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QFrame" name="info_frame_3">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>10</y>
-      <width>191</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_23">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_24">
-       <property name="horizontalSpacing">
-        <number>10</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>15</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_34">
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Địa</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_26">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_36">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Sử</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_28">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QFrame" name="info_frame_4">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>130</y>
-      <width>191</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_25">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_26">
-       <property name="horizontalSpacing">
-        <number>10</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>15</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_35">
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Lý</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_27">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_29">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_37">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Sinh</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_30">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_38">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm Hóa</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QFrame" name="info_frame_5">
-    <property name="geometry">
-     <rect>
-      <x>940</x>
-      <y>150</y>
-      <width>191</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_27">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_28">
-       <property name="horizontalSpacing">
-        <number>10</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>15</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_39">
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Điểm trung bình</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_32">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -1116,147 +719,687 @@ border-radius:5px;</string>
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="info_frame_6">
+   <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>1140</x>
-      <y>270</y>
-      <width>191</width>
-      <height>71</height>
+      <x>930</x>
+      <y>0</y>
+      <width>511</width>
+      <height>441</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_29">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="loginButton">
-       <property name="font">
-        <font>
-         <family>Bahnschrift</family>
-         <pointsize>16</pointsize>
-         <weight>75</weight>
-         <italic>false</italic>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QFrame" name="info_frame_6">
        <property name="styleSheet">
-        <string notr="true">border-radius: 10px;
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_29">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="loginButton">
+          <property name="font">
+           <font>
+            <family>Bahnschrift</family>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
 font: 600 16pt &quot;Bahnschrift&quot;;
 background-color:rgb(129, 201, 255);
 color: #F8F2EC;</string>
+          </property>
+          <property name="text">
+           <string>Giao bài tập</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QFrame" name="info_frame_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
        </property>
-       <property name="text">
-        <string>Giao bài tập</string>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_30">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="logOut_btn_tc">
+          <property name="font">
+           <font>
+            <family>Bahnschrift</family>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
+font: 600 16pt &quot;Bahnschrift&quot;;
+background-color:rgb(129, 201, 255);
+color: #F8F2EC;</string>
+          </property>
+          <property name="text">
+           <string>Đăng xuất</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QFrame" name="info_frame_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_23">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_24">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Địa</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_26">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Sử</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_28">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QFrame" name="info_frame_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_21">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_22">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_23">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_31">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Toán</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_25">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_24">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_32">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Anh</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Văn</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QFrame" name="info_frame_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_27">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_28">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm trung bình</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_32">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QFrame" name="info_frame_7">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_32">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_33">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_34">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_41">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Học lực</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QFrame" name="info_frame_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_25">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_26">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_27">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Lý</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_29">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEdit_30">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Sinh</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Điểm Hóa</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QFrame" name="info_frame_9">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_34">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_35">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>15</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_35">
+            <property name="styleSheet">
+             <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_42">
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0,0,0);</string>
+            </property>
+            <property name="text">
+             <string>Hạnh kiểm</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="info_frame_7">
+   <widget class="QLabel" name="title_label_5">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>230</y>
-      <width>191</width>
-      <height>71</height>
+      <x>310</x>
+      <y>400</y>
+      <width>411</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>30</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
+     <string notr="true">color: rgb(68, 35, 255);</string>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="text">
+     <string>Student Dashboard</string>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
-    <layout class="QGridLayout" name="gridLayout_32">
-     <property name="leftMargin">
-      <number>30</number>
-     </property>
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <property name="rightMargin">
-      <number>30</number>
-     </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>20</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
-     <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout_33">
-       <property name="horizontalSpacing">
-        <number>10</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>15</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_41">
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>Học lực</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_34">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
    </widget>
   </widget>
  </widget>
