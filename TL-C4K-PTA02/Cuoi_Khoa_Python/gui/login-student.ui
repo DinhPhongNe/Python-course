@@ -26,6 +26,13 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Giữ tôi đăng nhập</string>
     </property>
@@ -76,7 +83,9 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>8</pointsize>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -97,7 +106,9 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>9</pointsize>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">

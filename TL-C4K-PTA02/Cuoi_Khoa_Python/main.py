@@ -137,25 +137,11 @@ class Main(QMainWindow):
         self.renewpass.show()
         
     def renewClicked(self):
-        # Ẩn tất cả các giao diện cũ trước khi quay lại menu
-        if self.teacher_login:
-            self.teacher_login.hide()
-        if self.student_login:
-            self.student_login.hide()
-        if self.register:
-            self.register.hide()
-        if self.teacher_main:
-            self.teacher_main.hide()
-        if self.student_main:
-            self.student_main.hide()
-        if self.renewpass:
-            self.renewpass.hide()
-        
-        self.newpass_Phone = self.renewpass.findChild(QLineEdit, "renewpass_phone")
-        self.newpass = self.renewpass.findChild(QLineEdit, "renewpass_newpass")
-        self.retypepass = self.renewpass.findChild(QLineEdit, "reTypeNewPass")
+        self.newpass_Phone = self.renewpass.findChild(QLineEdit, "newpass_Phone")
+        self.renewpass_newpass = self.renewpass.findChild(QLineEdit, "renewpass_newpass")
+        self.reTypeNewPass = self.renewpass.findChild(QLineEdit, "reTypeNewPass")
             
-        newpass_Phone = self.renewpass_phone.text()
+        newpass_Phone = self.newpass_Phone.text()
         newpass = self.renewpass_newpass.text()
         retypepass = self.reTypeNewPass.text()
         
@@ -170,10 +156,28 @@ class Main(QMainWindow):
         if not retypepass:
             self.msg_box.setText("vui lòng nhập lại mật khẩu mới!")
             self.msg_box.exec()
+            
+            
+        # Ẩn tất cả các giao diện cũ trước khi quay lại menu
+        if self.teacher_login:
+            self.teacher_login.hide()
+        if self.student_login:
+            self.student_login.hide()
+        if self.register:
+            self.register.hide()
+        if self.teacher_main:
+            self.teacher_main.hide()
+        if self.student_main:
+            self.student_main.hide()
+        if self.renewpass:
+            self.renewpass.hide()
 
         self.menu_return()
 
         # Hiển thị thông báo cần đăng nhập lại
+        self.msg_box.setText("Mật khẩu đã được thay đổi")
+        self.msg_box.exec()
+        
         self.msg_box.setText("Vui lòng đăng nhập lại.")
         self.msg_box.exec()
 
@@ -183,13 +187,40 @@ class Main(QMainWindow):
             self.register = uic.loadUi("gui/register.ui")
             self.register.register_btn.clicked.connect(self.menu_return)
             self.register.goback_reg.clicked.connect(self.menu_return)
+            
+
+    def regis_check(self):
+        self.Phone_reg = self.renewpass.findChild(QLineEdit, "Phone_reg")
+        self.pass_reg = self.renewpass.findChild(QLineEdit, "pass_reg")
+        self.re_pass_reg = self.renewpass.findChild(QLineEdit, "re_pass_reg")
+            
+        Phone_reg = self.Phone_reg.text()
+        pass_reg = self.pass_reg.text()
+        re_pass_reg = self.re_pass_reg.text()
         
+        if not Phone_reg:
+            self.msg_box.setText("vui lòng nhập số điện thoại!")
+            self.msg_box.exec()
+            return
+        if not pass_reg:
+            self.msg_box.setText("vui lòng nhập mật khẩu!")
+            self.msg_box.exec()
+            return
+        if not re_pass_reg:
+            self.msg_box.setText("vui lòng nhập lại mật khẩu!")
+            self.msg_box.exec()
+    
         self.register.show()
         self.hide()
     
     def menu_return(self):
         if self.register:
             self.register.hide()
+            self.msg_box.setText("đã tạo tài khoản mới")
+            self.msg_box.exec()
+        
+            self.msg_box.setText("Vui lòng đăng nhập vào tài khoản mới của bạn.")
+            self.msg_box.exec()
         self.show()
 
 if __name__ == "__main__":
