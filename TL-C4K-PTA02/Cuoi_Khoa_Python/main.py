@@ -185,7 +185,7 @@ class Main(QMainWindow):
     def regis(self):
         if not self.register:
             self.register = uic.loadUi("gui/register.ui")
-            self.register.register_btn.clicked.connect(self.menu_return)
+            self.register.register_btn.clicked.connect(self.regis_check)
             self.register.goback_reg.clicked.connect(self.menu_return)
             
 
