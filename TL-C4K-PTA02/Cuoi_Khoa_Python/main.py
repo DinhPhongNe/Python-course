@@ -19,6 +19,7 @@ class Main(QMainWindow):
         self.teacher_main = None
         self.student_main = None
         self.renewpass = None
+        self.btvn_upload = None
 
         # Thiết lập hộp thoại thông báo lỗi
         self.msg_box = QMessageBox()
@@ -65,10 +66,18 @@ class Main(QMainWindow):
     def GiaoVienClicked(self):
         if not self.teacher_main:
             self.teacher_main = uic.loadUi("gui/main-tc.ui")
+            self.teacher_main.btvn_upload.clicked.connect(self.upload_btvn)
             self.teacher_main.logOut_btn_tc.clicked.connect(self.GiaoVienMain_Return)
         
         self.teacher_main.show()
         self.teacher_login.hide()
+        
+    def upload_btvn(self):
+        if not self.teacher_main:
+            self.teacher_main = uic.loadUi("gui/btvn-upload.ui")
+            self.teacher_main.show()
+        else:
+            self.teacher_main.show()
         
     def GiaoVienMain_Return(self):
         self.teacher_login.show()
@@ -106,11 +115,11 @@ class Main(QMainWindow):
         
         # Check credentials
         if Phone == "1234567890" and password == "admin":
-            self.close()  # Close main window
+            self.close()
             self.HocSinhClicked()
         else:
             self.msg_box.setText("Số điện thoại hoặc mật khẩu sai")
-            self.msg_box.exec()  # Execute the message box
+            self.msg_box.exec()
 
     def HocSinhClicked(self):
         if not self.student_main:
@@ -187,17 +196,19 @@ class Main(QMainWindow):
             self.register = uic.loadUi("gui/register.ui")
             self.register.register_btn.clicked.connect(self.regis_check)
             self.register.goback_reg.clicked.connect(self.menu_return)
-            
+
+        self.register.show()
+        self.hide()
 
     def regis_check(self):
-        self.Phone_reg = self.renewpass.findChild(QLineEdit, "Phone_reg")
-        self.pass_reg = self.renewpass.findChild(QLineEdit, "pass_reg")
-        self.re_pass_reg = self.renewpass.findChild(QLineEdit, "re_pass_reg")
+        self.Phone_reg = self.register.findChild(QLineEdit, "Phone_reg")
+        self.pass_reg = self.register.findChild(QLineEdit, "pass_reg")
+        self.re_pass_reg = self.register.findChild(QLineEdit, "re_pass_reg")
             
         Phone_reg = self.Phone_reg.text()
         pass_reg = self.pass_reg.text()
         re_pass_reg = self.re_pass_reg.text()
-        
+    
         if not Phone_reg:
             self.msg_box.setText("vui lòng nhập số điện thoại!")
             self.msg_box.exec()
@@ -209,18 +220,20 @@ class Main(QMainWindow):
         if not re_pass_reg:
             self.msg_box.setText("vui lòng nhập lại mật khẩu!")
             self.msg_box.exec()
-    
-        self.register.show()
-        self.hide()
-    
+            return
+
+
+        self.msg_box.setText("đã tạo tài khoản mới")
+        self.msg_box.exec()
+
+        self.msg_box.setText("Vui lòng đăng nhập vào tài khoản mới của bạn.")
+        self.msg_box.exec()
+        self.register.hide()
+        self.show()
+
     def menu_return(self):
         if self.register:
             self.register.hide()
-            self.msg_box.setText("đã tạo tài khoản mới")
-            self.msg_box.exec()
-        
-            self.msg_box.setText("Vui lòng đăng nhập vào tài khoản mới của bạn.")
-            self.msg_box.exec()
         self.show()
 
 if __name__ == "__main__":

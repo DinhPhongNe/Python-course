@@ -761,7 +761,7 @@ border-radius: 20px;</string>
          <number>10</number>
         </property>
         <item row="0" column="0">
-         <widget class="QPushButton" name="loginButton">
+         <widget class="QPushButton" name="btvn_upload">
           <property name="font">
            <font>
             <family>Bahnschrift</family>
