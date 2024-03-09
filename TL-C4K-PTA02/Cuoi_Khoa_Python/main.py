@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton
 from PyQt6 import uic
 
 class Main(QMainWindow):
@@ -66,7 +66,8 @@ class Main(QMainWindow):
     def GiaoVienClicked(self):
         if not self.teacher_main:
             self.teacher_main = uic.loadUi("gui/main-tc.ui")
-            self.teacher_main.btvn_upload.clicked.connect(self.upload_btvn)
+            self.btvn_upload_btn = self.teacher_main.findChild(QPushButton, "btvn_upload_btn")
+            self.teacher_main.btvn_upload_btn.clicked.connect(self.upload_btvn)
             self.teacher_main.logOut_btn_tc.clicked.connect(self.GiaoVienMain_Return)
         
         self.teacher_main.show()
@@ -74,8 +75,8 @@ class Main(QMainWindow):
         
     def upload_btvn(self):
         if not self.teacher_main:
-            self.teacher_main = uic.loadUi("gui/btvn-upload.ui")
-            self.teacher_main.show()
+            self.btvn_upload = uic.loadUi("gui/btvn-upload.ui")
+            self.btvn_upload.show()
         else:
             self.teacher_main.show()
         

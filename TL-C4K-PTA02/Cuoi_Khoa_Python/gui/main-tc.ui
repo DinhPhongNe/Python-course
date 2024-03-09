@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1450</width>
-    <height>680</height>
+    <width>1451</width>
+    <height>743</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -703,22 +703,6 @@ border-radius:5px;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>700</y>
-      <width>71</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-   </widget>
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
@@ -761,7 +745,16 @@ border-radius: 20px;</string>
          <number>10</number>
         </property>
         <item row="0" column="0">
-         <widget class="QPushButton" name="btvn_upload">
+         <widget class="QPushButton" name="btvn_upload_btn">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <family>Bahnschrift</family>
@@ -821,6 +814,12 @@ border-radius: 20px;</string>
         </property>
         <item row="0" column="0">
          <widget class="QPushButton" name="logOut_btn_tc">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <family>Bahnschrift</family>

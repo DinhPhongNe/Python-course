@@ -100,7 +100,7 @@ border-radius: 10px;</string>
      <rect>
       <x>20</x>
       <y>300</y>
-      <width>171</width>
+      <width>211</width>
       <height>31</height>
      </rect>
     </property>
@@ -108,7 +108,10 @@ border-radius: 10px;</string>
      <font>
       <pointsize>11</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="styleSheet">
