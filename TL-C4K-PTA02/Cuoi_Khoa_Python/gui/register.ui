@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+color: white;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background-color: #356a9c;</string>
@@ -28,7 +32,11 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -104,15 +112,17 @@ color:rgb(129, 201, 255);</string>
      <rect>
       <x>10</x>
       <y>620</y>
-      <width>141</width>
-      <height>20</height>
+      <width>181</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -130,13 +140,15 @@ color:rgb(129, 201, 255);</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: white;</string>
     </property>
     <property name="text">
      <string>Nhập số điện thoại</string>
@@ -172,7 +184,11 @@ color:rgb(129, 201, 255);</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -193,9 +209,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -216,9 +234,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -239,7 +259,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -296,7 +320,11 @@ font-size: 16px;
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="currentIndex">
@@ -323,15 +351,17 @@ font-size: 16px;
      <rect>
       <x>10</x>
       <y>550</y>
-      <width>171</width>
-      <height>21</height>
+      <width>191</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">

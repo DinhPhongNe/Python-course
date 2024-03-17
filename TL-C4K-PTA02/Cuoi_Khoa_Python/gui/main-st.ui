@@ -46,26 +46,56 @@
      <font>
       <family>黑体</family>
       <pointsize>10</pointsize>
+      <strikeout>false</strikeout>
+      <stylestrategy>NoAntialias</stylestrategy>
      </font>
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>ForbiddenCursor</cursorShape>
     </property>
     <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
+     <enum>Qt::TabFocus</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: white;
-color:black;</string>
+color:black;
+align-item: center;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="autoScroll">
+     <bool>true</bool>
+    </property>
+    <property name="dragDropOverwriteMode">
+     <bool>false</bool>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>false</bool>
     </property>
     <property name="selectionMode">
      <enum>QAbstractItemView::ExtendedSelection</enum>
     </property>
     <property name="selectionBehavior">
-     <enum>QAbstractItemView::SelectRows</enum>
+     <enum>QAbstractItemView::SelectColumns</enum>
+    </property>
+    <property name="textElideMode">
+     <enum>Qt::ElideMiddle</enum>
+    </property>
+    <property name="verticalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <property name="horizontalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
     </property>
     <property name="showGrid">
      <bool>false</bool>
@@ -74,7 +104,7 @@ color:black;</string>
      <enum>Qt::NoPen</enum>
     </property>
     <property name="sortingEnabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -245,7 +275,7 @@ color:black;</string>
       </font>
      </property>
      <property name="textAlignment">
-      <set>AlignLeading|AlignVCenter</set>
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
@@ -253,7 +283,7 @@ color:black;</string>
       <string>Tên</string>
      </property>
      <property name="textAlignment">
-      <set>AlignLeading|AlignVCenter</set>
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
@@ -261,7 +291,7 @@ color:black;</string>
       <string>Điểm Toán</string>
      </property>
      <property name="textAlignment">
-      <set>AlignLeading|AlignVCenter</set>
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
@@ -269,7 +299,7 @@ color:black;</string>
       <string>Điểm Văn</string>
      </property>
      <property name="textAlignment">
-      <set>AlignLeading|AlignVCenter</set>
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
@@ -277,32 +307,47 @@ color:black;</string>
       <string>Điểm Anh</string>
      </property>
      <property name="textAlignment">
-      <set>AlignLeading|AlignVCenter</set>
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Điểm Sử</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Điểm Địa</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Điểm Lý</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Điểm Hóa</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </column>
     <column>
      <property name="text">
       <string>Điểm Sinh</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </column>
     <item row="0" column="0">
@@ -324,40 +369,64 @@ color:black;</string>
      <property name="text">
       <string>9</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </item>
     <item row="0" column="4">
      <property name="text">
       <string>7</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </item>
     <item row="0" column="5">
      <property name="text">
       <string>10</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </item>
     <item row="0" column="6">
      <property name="text">
       <string>10</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </item>
     <item row="0" column="7">
      <property name="text">
       <string>10</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </item>
     <item row="0" column="8">
      <property name="text">
       <string>7</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </item>
     <item row="0" column="9">
      <property name="text">
       <string>8</string>
      </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
     </item>
     <item row="0" column="10">
      <property name="text">
       <string>7</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
      </property>
     </item>
     <item row="20" column="0">

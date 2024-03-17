@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1451</width>
-    <height>743</height>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -227,7 +227,7 @@ color:black;</string>
          </font>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
@@ -241,7 +241,7 @@ color:black;</string>
          </font>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
@@ -249,7 +249,7 @@ color:black;</string>
          <string>Tên</string>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
@@ -257,7 +257,7 @@ color:black;</string>
          <string>Điểm Toán</string>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
@@ -265,7 +265,7 @@ color:black;</string>
          <string>Điểm Văn</string>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
@@ -273,42 +273,63 @@ color:black;</string>
          <string>Điểm Anh</string>
         </property>
         <property name="textAlignment">
-         <set>AlignLeading|AlignVCenter</set>
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
         <property name="text">
          <string>Điểm Sử</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </column>
        <column>
         <property name="text">
          <string>Điểm Địa</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
         <property name="text">
          <string>Điểm Lý</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </column>
        <column>
         <property name="text">
          <string>Điểm Hóa</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </column>
        <column>
         <property name="text">
          <string>Điểm Sinh</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </column>
        <item row="0" column="0">
         <property name="text">
          <string>41</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignLeading|AlignVCenter</set>
+        </property>
        </item>
        <item row="0" column="1">
         <property name="text">
          <string>Võ</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignLeading|AlignVCenter</set>
         </property>
        </item>
        <item row="0" column="2">
@@ -320,40 +341,64 @@ color:black;</string>
         <property name="text">
          <string>9</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </item>
        <item row="0" column="4">
         <property name="text">
          <string>7</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </item>
        <item row="0" column="5">
         <property name="text">
          <string>10</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </item>
        <item row="0" column="6">
         <property name="text">
          <string>10</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </item>
        <item row="0" column="7">
         <property name="text">
          <string>10</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </item>
        <item row="0" column="8">
         <property name="text">
          <string>7</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </item>
        <item row="0" column="9">
         <property name="text">
          <string>8</string>
         </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
        </item>
        <item row="0" column="10">
         <property name="text">
          <string>7</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
         </property>
        </item>
        <item row="20" column="0">
@@ -901,7 +946,7 @@ border-radius: 20px;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_26">
+           <widget class="QLineEdit" name="diem_su">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -920,7 +965,7 @@ border-radius:5px;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_28">
+           <widget class="QLineEdit" name="diem_dia">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -976,7 +1021,7 @@ border-radius: 20px;</string>
            <number>15</number>
           </property>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_23">
+           <widget class="QLineEdit" name="diem_van">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -1003,7 +1048,7 @@ border-radius:5px;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_25">
+           <widget class="QLineEdit" name="diem_toan">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -1015,7 +1060,7 @@ border-radius:5px;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_24">
+           <widget class="QLineEdit" name="diem_anh">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -1230,7 +1275,7 @@ border-radius: 20px;</string>
            <number>15</number>
           </property>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_27">
+           <widget class="QLineEdit" name="diem_hoa">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -1257,7 +1302,7 @@ border-radius:5px;</string>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_29">
+           <widget class="QLineEdit" name="diem_ly">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);
@@ -1269,7 +1314,7 @@ border-radius:5px;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_30">
+           <widget class="QLineEdit" name="diem_sinh">
             <property name="styleSheet">
              <string notr="true">color: black;
 background-color:rgb(220,220,220);

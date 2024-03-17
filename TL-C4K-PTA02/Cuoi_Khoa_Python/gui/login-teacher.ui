@@ -14,7 +14,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #356a9c;</string>
+   <string notr="true">background-color: #356a9c;
+font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+color:rgb(129, 201, 255);
+color: white;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QCheckBox" name="checkBox">
@@ -22,15 +25,17 @@
      <rect>
       <x>10</x>
       <y>470</y>
-      <width>141</width>
+      <width>181</width>
       <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>9</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -59,7 +64,11 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -83,9 +92,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -106,12 +117,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
       <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -132,7 +142,11 @@ border-radius: 10px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>15</pointsize>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
