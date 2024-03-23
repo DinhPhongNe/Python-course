@@ -466,7 +466,7 @@ align-item: center;</string>
       <x>780</x>
       <y>10</y>
       <width>646</width>
-      <height>221</height>
+      <height>224</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -544,66 +544,6 @@ border-radius:5px;</string>
        </layout>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QFrame" name="info_frame_8">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;
-width: 218px;</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_30">
-        <property name="leftMargin">
-         <number>30</number>
-        </property>
-        <property name="topMargin">
-         <number>20</number>
-        </property>
-        <property name="rightMargin">
-         <number>30</number>
-        </property>
-        <property name="bottomMargin">
-         <number>20</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>20</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>10</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="logOut_btn_hs">
-          <property name="font">
-           <font>
-            <family>Bahnschrift</family>
-            <pointsize>13</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 10px;
-font: 600 13pt &quot;Bahnschrift&quot;;
-background-color:rgb(129, 201, 255);
-color: #F8F2EC;</string>
-          </property>
-          <property name="text">
-           <string>Đăng xuất</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QFrame" name="info_frame_7">
        <property name="styleSheet">
@@ -676,65 +616,6 @@ border-radius:5px;</string>
        </layout>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QFrame" name="info_frame_6">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255,255,255);
-border-radius: 20px;</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_29">
-        <property name="leftMargin">
-         <number>30</number>
-        </property>
-        <property name="topMargin">
-         <number>20</number>
-        </property>
-        <property name="rightMargin">
-         <number>30</number>
-        </property>
-        <property name="bottomMargin">
-         <number>20</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>20</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>10</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="loginButton">
-          <property name="font">
-           <font>
-            <family>Bahnschrift</family>
-            <pointsize>13</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-radius: 10px;
-font: 600 13pt &quot;Bahnschrift&quot;;
-background-color:rgb(129, 201, 255);
-color: #F8F2EC;</string>
-          </property>
-          <property name="text">
-           <string>Bài tập</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
      <item row="3" column="0">
       <widget class="QFrame" name="info_frame_9">
        <property name="styleSheet">
@@ -803,6 +684,125 @@ border-radius:5px;</string>
            </widget>
           </item>
          </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QFrame" name="info_frame_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+width: 218px;
+border-radius: 20px;
+font: 600 20pt &quot;Bahnschrift&quot;;
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_30">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="logOut_btn_hs">
+          <property name="font">
+           <font>
+            <family>Bahnschrift</family>
+            <pointsize>20</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
+font: 600 20pt &quot;Bahnschrift&quot;;
+color: rgb(129, 201, 255);</string>
+          </property>
+          <property name="text">
+           <string>Đăng xuất</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QFrame" name="info_frame_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_29">
+        <property name="leftMargin">
+         <number>30</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>30</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>20</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="loginButton">
+          <property name="font">
+           <font>
+            <family>Bahnschrift</family>
+            <pointsize>20</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
+font: 600 20pt &quot;Bahnschrift&quot;;
+color: rgb(129, 201, 255);</string>
+          </property>
+          <property name="text">
+           <string>Bài tập</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

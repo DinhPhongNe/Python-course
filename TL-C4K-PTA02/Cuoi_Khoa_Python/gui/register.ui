@@ -309,7 +309,7 @@ font-size: 16px;
      <string>Quay lại</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="your_roles">
+   <widget class="QComboBox" name="vai_tro">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -332,7 +332,7 @@ font-size: 16px;
     </property>
     <item>
      <property name="text">
-      <string>None</string>
+      <string>- chon vai tro cua ban - </string>
      </property>
     </item>
     <item>

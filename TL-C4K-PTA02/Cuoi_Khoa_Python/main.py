@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QComboBox
 from PyQt6 import uic
 
 class Main(QMainWindow):
@@ -222,6 +222,7 @@ class Main(QMainWindow):
             self.msg_box.setText("vui lòng nhập lại mật khẩu!")
             self.msg_box.exec()
             return
+        
 
 
         self.msg_box.setText("đã tạo tài khoản mới")
