@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QComboBox
 from PyQt6 import uic
 
@@ -7,7 +8,9 @@ class Main(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         uic.loadUi("gui/menu.ui", self)
-        
+        self.phone_validator = QIntValidator()
+        self.phone_validator.setBottom(0)  # Đặt giá trị tối thiểu là 0
+        self.phone_validator.setTop(999999999)  # Đặt giá trị tối đa là 999999999 (9 chữ số)
         self.HocSinh_btn.clicked.connect(self.Login_hs)
         self.GiaoVien_btn.clicked.connect(self.Login_tc)
         self.Register_btn.clicked.connect(self.regis)
@@ -33,6 +36,7 @@ class Main(QMainWindow):
             self.teacher_login = uic.loadUi("gui/login-teacher.ui")
             # Assign PhoneTC and PassTC
             self.PhoneTC = self.teacher_login.findChild(QLineEdit, "PhoneTC")
+            self.PhoneTC.setValidator(self.phone_validator)
             self.PassTC = self.teacher_login.findChild(QLineEdit, "PassTC")
             self.teacher_login.GiaoVienLogin_btn.clicked.connect(self.check_login)
             self.teacher_login.goback_tc_btn.clicked.connect(self.goback_tc_Clicked)
@@ -52,10 +56,15 @@ class Main(QMainWindow):
         if not password:
             self.msg_box.setText("vui lòng nhập mật khẩu!")
             self.msg_box.exec()
+            
+        phone_number = self.PhoneTC.text()
+        if len(phone_number) != 10 or not phone_number.startswith('0'):
+            self.msg_box.setText("Số điện thoại không hợp lệ!")
+            self.msg_box.exec()
             return
         
         # Check credentials
-        if Phone == "1234567890" and password == "admin":
+        if Phone == "0987654321" and password == "admin":
             self.close()
             self.GiaoVienClicked()
         else:
@@ -112,10 +121,15 @@ class Main(QMainWindow):
         if not password:
             self.msg_box.setText("vui lòng nhập mật khẩu!")
             self.msg_box.exec()
+            
+        phone_number = self.Phone_HS.text()
+        if len(phone_number) != 10 or not phone_number.startswith('0'):
+            self.msg_box.setText("Số điện thoại không hợp lệ!")
+            self.msg_box.exec()
             return
         
         # Check credentials
-        if Phone == "1234567890" and password == "admin":
+        if Phone == "0987654321" and password == "admin":
             self.close()
             self.HocSinhClicked()
         else:
