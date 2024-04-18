@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
+    <width>370</width>
     <height>775</height>
    </rect>
   </property>
@@ -607,7 +607,7 @@ border-radius: 50px;</string>
       <x>190</x>
       <y>510</y>
       <width>51</width>
-      <height>21</height>
+      <height>25</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_9">
@@ -1130,7 +1130,7 @@ color: black;
 border-radius: 10px;</string>
        </property>
        <property name="text">
-        <string>x</string>
+        <string>*</string>
        </property>
       </widget>
      </item>
@@ -2271,7 +2271,7 @@ border-radius: 10px;</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_z_5">
+   <widget class="QPushButton" name="button_shift">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -2297,7 +2297,7 @@ border-radius:10px;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_z_6">
+   <widget class="QPushButton" name="button_alpha">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -2323,7 +2323,7 @@ border-radius:10px;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_z_7">
+   <widget class="QPushButton" name="button_menu">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -2349,7 +2349,7 @@ border-radius:10px;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_z_8">
+   <widget class="QPushButton" name="button_on">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -2386,7 +2386,7 @@ border-radius:10px;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_41">
      <item row="4" column="1">
-      <widget class="QPushButton" name="button_z_9">
+      <widget class="QPushButton" name="button_alpha_2">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -2406,7 +2406,7 @@ border-radius: 50px;</string>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QPushButton" name="button_float_5">
+      <widget class="QPushButton" name="button_shift_2">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -2438,7 +2438,7 @@ border-radius: 50px;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_42">
      <item row="4" column="1">
-      <widget class="QPushButton" name="button_z_10">
+      <widget class="QPushButton" name="button_setup">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -2453,12 +2453,12 @@ color: #9d8a54;
 border-radius: 50px;</string>
        </property>
        <property name="text">
-        <string>ALPHA</string>
+        <string>SETUP</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QPushButton" name="button_float_6">
+      <widget class="QPushButton" name="button_menu_btn">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -2473,7 +2473,7 @@ color: WHITE;
 border-radius: 50px;</string>
        </property>
        <property name="text">
-        <string>SHIFT</string>
+        <string>MENU</string>
        </property>
       </widget>
      </item>
@@ -2490,7 +2490,7 @@ border-radius: 50px;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_43">
      <item row="4" column="0">
-      <widget class="QPushButton" name="button_float_7">
+      <widget class="QPushButton" name="button_on_btn">
        <property name="font">
         <font>
          <pointsize>8</pointsize>
@@ -2515,7 +2515,7 @@ border-radius: 50px;</string>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>80</y>
+      <y>70</y>
       <width>201</width>
       <height>41</height>
      </rect>
@@ -2542,7 +2542,7 @@ border-radius: 50px;</string>
     <property name="geometry">
      <rect>
       <x>269</x>
-      <y>30</y>
+      <y>20</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -2578,7 +2578,7 @@ border-radius: 50px;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>35</pointsize>
+      <pointsize>24</pointsize>
      </font>
     </property>
     <property name="cursor">
@@ -2599,9 +2599,9 @@ color: black;</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>130</y>
+      <y>150</y>
       <width>371</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -2732,7 +2732,7 @@ border-radius: 50px;</string>
      <rect>
       <x>70</x>
       <y>360</y>
-      <width>51</width>
+      <width>56</width>
       <height>23</height>
      </rect>
     </property>
@@ -2773,7 +2773,7 @@ color: #9c5b6f;
 border-radius: 50px;</string>
        </property>
        <property name="text">
-        <string>=</string>
+        <string>＝</string>
        </property>
       </widget>
      </item>
@@ -2991,7 +2991,7 @@ border-radius: 50px;</string>
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>20</y>
+      <y>10</y>
       <width>141</width>
       <height>61</height>
      </rect>
@@ -3010,7 +3010,7 @@ border-radius: 50px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>20</y>
       <width>93</width>
       <height>38</height>
      </rect>
@@ -3039,8 +3039,8 @@ border-radius: 50px;</string>
    <widget class="QPushButton" name="button_uien">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>80</y>
+      <x>270</x>
+      <y>60</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -3068,8 +3068,8 @@ border-radius: 50px;</string>
    <widget class="QPushButton" name="button_an">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>80</y>
+      <x>10</x>
+      <y>60</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -3092,6 +3092,34 @@ border-radius: 50px;</string>
     </property>
     <property name="text">
      <string>Ân</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="feature_label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>110</y>
+      <width>371</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ForbiddenCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#d0e6da ;
+color: black;</string>
+    </property>
+    <property name="text">
+     <string>Feature</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>
