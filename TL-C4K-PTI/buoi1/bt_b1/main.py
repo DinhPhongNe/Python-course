@@ -13,7 +13,6 @@ class Calc(QMainWindow):
         super().__init__()
         uic.loadUi("calc.ui", self)
         
-        
         # dòng số 1 trong app
         self.button_0.clicked.connect(self.button_onclick)
         self.button_dots.clicked.connect(self.button_onclick)
@@ -146,6 +145,8 @@ class Calc(QMainWindow):
         # dòng số 10 trong app
 
 
+
+        
     def button_onclick(self):
         button = self.sender()
         current_text = self.main_label.text()
@@ -154,7 +155,16 @@ class Calc(QMainWindow):
             current_text = ""
         
         if button.text() == "=":
-            self.calc()
+            try:
+                result = str(eval(current_text))
+                self.main_label.setText(result)
+                self.main_label_2.setText(current_text + button.text())
+            
+            except ZeroDivisionError:
+                self.main_label.setText("Error: Division by Zero")
+            except Exception as e:
+                self.main_label.setText("Error: Invalid expression")
+                
         elif button.text() == "DEL":
             if len(current_text) > 0:
                 current_text = current_text[:-1]
@@ -167,7 +177,6 @@ class Calc(QMainWindow):
         else:
             self.main_label.setText(current_text + button.text())
             self.main_label_2.setText(current_text + button.text())
-
             
     def off(self):
         window.close()
@@ -222,15 +231,25 @@ class Calc(QMainWindow):
             self.main_label.setText("Error: Invalid equation")
             
     def calc(self):
+        # Get the equation from the main_label
         equation = self.main_label.text()
-        if 'x' in equation:
-            x_value, ok = QInputDialog.getInt(self, "Enter X value", "X:")
+
+        # Split the equation to separate the expression and the variable x
+        parts = equation.split("x")
+
+        # Check if the equation is in the correct format
+        if len(parts) == 2 and parts[0] and parts[1]:
+            # Get the user-provided value for x
+            x_value, ok = QInputDialog.getDouble(self, "Input", "Enter a value for x:", 0)
             if ok:
-                equation_with_x = equation.replace('x', f'*{x_value}')
+                # Replace x with the user-provided value
+                new_equation = parts[0] + "*" + str(x_value) + parts[1]
+
+                # Evaluate the new equation
                 try:
-                    result = eval(equation_with_x)
-                    self.main_label.setText(str(result))
-                    self.main_label_2.setText(equation + "=" + str(result))
+                    result = str(eval(new_equation))
+                    self.main_label.setText(result)
+                    self.main_label_2.setText(equation + "=" + result)
                 except Exception as e:
                     self.main_label.setText("Error: Invalid expression")
         else:

@@ -2194,7 +2194,7 @@ color: #9d8a54;
 border-radius: 50px;</string>
        </property>
        <property name="text">
-        <string>d/dx</string>
+        <string>d∕dx</string>
        </property>
       </widget>
      </item>
@@ -2681,7 +2681,7 @@ border-radius: 50px;</string>
       <x>70</x>
       <y>410</y>
       <width>56</width>
-      <height>21</height>
+      <height>30</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_39">
