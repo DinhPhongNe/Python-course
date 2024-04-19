@@ -74,7 +74,7 @@ class Calc(QMainWindow):
         self.button_mPlus.clicked.connect(self.button_onclick)
         self.button_RECALL.clicked.connect(self.button_onclick)
         self.button_x.clicked.connect(self.button_onclick)
-        self.button_abs.clicked.connect(self.button_onclick)
+        self.button_abs.clicked.connect(self.absolute)
         self.button_comma.clicked.connect(self.button_onclick)
         self.button_y.clicked.connect(self.button_onclick)
         self.button_fact.clicked.connect(self.button_onclick)
@@ -86,9 +86,9 @@ class Calc(QMainWindow):
         self.button_OpenClose.clicked.connect(self.button_onclick)
         self.button_timer.clicked.connect(self.button_onclick)
         self.button_xMinus1.clicked.connect(self.button_onclick)
-        self.button_sin.clicked.connect(self.button_onclick)
-        self.button_cos.clicked.connect(self.button_onclick)
-        self.button_tan.clicked.connect(self.button_onclick)
+        self.button_sin.clicked.connect(self.sin)
+        self.button_cos.clicked.connect(self.cos)
+        self.button_tan.clicked.connect(self.tan)
         self.button_log.clicked.connect(self.button_onclick)
         self.button_a.clicked.connect(self.button_onclick)
         self.button_fact_2.clicked.connect(self.button_onclick)
@@ -147,6 +147,24 @@ class Calc(QMainWindow):
 
 
         
+    def calculate_expression(self, expression):
+        while "(" in expression:
+            start = expression.rfind("(")
+            end = expression.find(")", start)
+            if start == -1 or end == -1:
+                return "Error: Invalid expression"
+            sub_expression = expression[start + 1:end]
+            result = str(eval(sub_expression))
+            expression = expression[:start] + result + expression[end + 1:]
+        try:
+            final_result = str(eval(expression))
+            self.main_label.setText(final_result)
+            self.main_label_2.setText(expression + " = " + final_result)
+        except ZeroDivisionError:
+            self.main_label.setText("Error: Division by zero")
+        except Exception as e:
+            self.main_label.setText("Error: Invalid expression")
+
     def button_onclick(self):
         button = self.sender()
         current_text = self.main_label.text()
@@ -155,16 +173,7 @@ class Calc(QMainWindow):
             current_text = ""
         
         if button.text() == "=":
-            try:
-                result = str(eval(current_text))
-                self.main_label.setText(result)
-                self.main_label_2.setText(current_text + button.text())
-            
-            except ZeroDivisionError:
-                self.main_label.setText("Error: Division by Zero")
-            except Exception as e:
-                self.main_label.setText("Error: Invalid expression")
-                
+            self.calculate_expression(current_text)
         elif button.text() == "DEL":
             if len(current_text) > 0:
                 current_text = current_text[:-1]
@@ -173,10 +182,10 @@ class Calc(QMainWindow):
         elif button.text() == "AC":
             self.main_label.setText("0")
             self.main_label_2.setText("")
-                
         else:
             self.main_label.setText(current_text + button.text())
             self.main_label_2.setText(current_text + button.text())
+
             
     def off(self):
         window.close()
@@ -234,18 +243,13 @@ class Calc(QMainWindow):
         # Get the equation from the main_label
         equation = self.main_label.text()
 
-        # Split the equation to separate the expression and the variable x
         parts = equation.split("x")
 
-        # Check if the equation is in the correct format
         if len(parts) == 2 and parts[0] and parts[1]:
-            # Get the user-provided value for x
             x_value, ok = QInputDialog.getDouble(self, "Input", "Enter a value for x:", 0)
             if ok:
-                # Replace x with the user-provided value
                 new_equation = parts[0] + "*" + str(x_value) + parts[1]
 
-                # Evaluate the new equation
                 try:
                     result = str(eval(new_equation))
                     self.main_label.setText(result)
@@ -254,6 +258,47 @@ class Calc(QMainWindow):
                     self.main_label.setText("Error: Invalid expression")
         else:
             self.main_label.setText("Error: Invalid equation")
+            
+    def absolute(self):
+        current_text = self.main_label.text()
+        try:
+            num = float(current_text)
+            result = abs(num)
+            self.main_label.setText(str(result))
+            self.main_label_2.setText(f"|{current_text}| = {result}")
+        except ValueError:
+            self.main_label.setText("Error: Invalid input")
+
+    def sin(self):
+        current_text = self.main_label.text()
+        try:
+            num = float(current_text.replace("sin(", "").replace(")", ""))
+            result = math.sin(num)
+            self.main_label.setText(str(result))
+            self.main_label_2.setText(f"sin({current_text}) = {result}")
+        except ValueError:
+            self.main_label.setText("Error: Invalid input")
+
+    def cos(self):
+        current_text = self.main_label.text()
+        try:
+            num = float(current_text.replace("cos(", "").replace(")", ""))
+            result = math.cos(num)
+            self.main_label.setText(str(result))
+            self.main_label_2.setText(f"cos({current_text}) = {result}")
+        except ValueError:
+            self.main_label.setText("Error: Invalid input")
+
+    def tan(self):
+        current_text = self.main_label.text()
+        try:
+            num = float(current_text.replace("tan(", "").replace(")", ""))
+            result = math.tan(num)
+            self.main_label.setText(str(result))
+            self.main_label_2.setText(f"tan({current_text}) = {result}")
+        except ValueError:
+            self.main_label.setText("Error: Invalid input")
+
 
 
 
