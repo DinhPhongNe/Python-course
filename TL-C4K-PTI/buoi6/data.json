@@ -1,0 +1,8 @@
+[
+    {
+        "Name": "Phong",
+        "Age": 14,
+        "Gender": "Male",
+        "Hobbies": ["Coding", "Play game", "Sleep"]
+    }
+]
