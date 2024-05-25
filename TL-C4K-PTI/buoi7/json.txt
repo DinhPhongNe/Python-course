@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Luc lac huyen bi 2",
+        "release_date": "2023-02-23",
+        "rating": 10
+    },
+    {
+        "title": "Doraemon",
+        "release_date": "2023-02-23",
+        "rating": 10
+    },
+    {
+        "title": "Pokem",
+        "release_date": "2023-02-23",
+        "rating": 12
+    },
+    {
+        "title": "Pokem",
+        "release_date": "2023-02-23",
+        "rating": 12
+    },
+    {
+        "title": "Pokem",
+        "release_date": "2023-02-23",
+        "rating": 12
+    }
+]
