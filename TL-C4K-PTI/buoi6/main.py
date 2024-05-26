@@ -18,6 +18,7 @@ with open('C:/Users/PC/Desktop/Python-course/TL-C4K-PTI/buoi6/data.json', 'r', e
 # Tạo một đối tượng của lớp Me với dữ liệu từ JSON
 me_instance = Me(data[0]["Name"], data[0]["Age"], data[0]["Gender"], data[0]["Hobbies"])
 
+
 # In thông tin ra màn hình
 print(f"Name: {me_instance.name}")
 print(f"Age: {me_instance.age}")
