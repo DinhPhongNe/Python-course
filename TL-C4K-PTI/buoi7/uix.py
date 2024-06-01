@@ -6,7 +6,7 @@ from PyQt6 import uic
 class Main(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi("C:/Users/PC/Desktop/Python-course/TL-C4K-PTI/buoi7/main.ui", self)
+        uic.loadUi("main.ui", self)
         
         self.Add.clicked.connect(self.add)
         self.Edit.clicked.connect(self.edit)
@@ -63,3 +63,4 @@ if __name__ == "__main__":
     window = Main()
     window.show()
     sys.exit(app.exec())
+
