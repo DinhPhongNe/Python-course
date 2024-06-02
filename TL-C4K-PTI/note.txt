@@ -1,1 +1,2 @@
 hàm extend khác hàm append
+super: gọi phương thức muốn gọi

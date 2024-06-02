@@ -37,7 +37,7 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_14">
      <item row="0" column="0">
-      <widget class="QTableWidget" name="table">
+      <widget class="QTableWidget" name="student_Infor_table">
        <property name="font">
         <font>
          <family>黑体</family>
@@ -348,9 +348,9 @@ color:black;</string>
    <widget class="QFrame" name="function_frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>-20</x>
       <y>280</y>
-      <width>914</width>
+      <width>951</width>
       <height>56</height>
      </rect>
     </property>
@@ -376,6 +376,37 @@ color:black;</string>
      <property name="bottomMargin">
       <number>10</number>
      </property>
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="search_btn">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0,0,0);
+background-color: rgb(132,232,246);</string>
+         </property>
+         <property name="text">
+          <string>Search</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../#017_Students information system/icons/search.svg</normaloff>../#017_Students information system/icons/search.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="Search_bar"/>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QPushButton" name="add_btn">
        <property name="cursor">
@@ -424,54 +455,6 @@ background-color: rgb(132,232,246);</string>
        <property name="icon">
         <iconset>
          <normaloff>../#017_Students information system/icons/update.svg</normaloff>../#017_Students information system/icons/update.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="select_btn">
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0,0,0);
-background-color: rgb(132,232,246);</string>
-       </property>
-       <property name="text">
-        <string>Select</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../#017_Students information system/icons/select.svg</normaloff>../#017_Students information system/icons/select.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="search_btn">
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0,0,0);
-background-color: rgb(132,232,246);</string>
-       </property>
-       <property name="text">
-        <string>Search</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../#017_Students information system/icons/search.svg</normaloff>../#017_Students information system/icons/search.svg</iconset>
        </property>
        <property name="iconSize">
         <size>

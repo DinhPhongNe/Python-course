@@ -1,0 +1,83 @@
+#
+# Đây là tệp mẹo TipOfTheDay.
+# Giữ mỗi mẹo trên một dòng.
+#
+# Các dòng bắt đầu bằng '#' là dòng chú thích và bị bỏ qua
+# Các dòng trống cũng bị bỏ qua.
+#
+# Bạn có thể sử dụng các macro này trong văn bản:
+# <CR>: chèn nguồn cấp dữ liệu
+# <URL>: theo sau là một liên kết URL
+# <UDESC>: theo sau là mô tả URL
+#
+# Cú pháp sử dụng (nội dung của tip là <tip_text>):
+# ( <tip_text> | <CR> )* [ <URL>văn bản [ <UDESC>văn bản] ]
+#
+# Mẹo ví dụ:
+# ...một số mẹo<CR><CR>thêm dòng...<URL>http://www.bloodshed.net/dev<UDESC>Nhấp để truy cập Bloodshed Software
+#
+# Nhiều macro hơn sẽ được thêm vào khi cần thiết...
+#
+# Lưu ý1: nếu bạn muốn sử dụng ký hiệu và (&), hãy ghép hai cái lại với nhau (&&).
+# Lưu ý2: mỗi mẹo có thể có không quá 255 ký tự.
+# Lưu ý3: macro <CR> được tính là một ký tự, không phải bốn ký tự.
+# Note4: với macro <URL> và <UDESC>, phần còn lại của dòng không hiển thị dưới dạng tip,
+# nên nó không được tính vào giới hạn 255 ký tự.
+# Lưu ý5: Macro <UDESC> là tùy chọn. Nếu bỏ qua, <URL> sẽ được in dưới dạng liên kết.
+# Lưu ý6: Macro <UDESC> nếu tồn tại *phải* tuân theo macro <URL>
+#
+
+#
+# Lời khuyên quan trọng (xuất hiện đầu tiên)
+#
+...bạn không nên tắt những mẹo này?<CR><CR>Các mẹo được trình bày ở đây sẽ cung cấp cho bạn thông tin không có giấy tờ không tìm thấy ở bất kỳ nơi nào khác.<CR>Nếu bạn tắt chúng và muốn xem chúng sau, hãy chọn " Trợ giúp / Mẹo trong ngày"...
+
+...bạn có thể sử dụng WebUpdate để cập nhật môi trường Dev-C++ của mình với các bản sửa lỗi mới nhất và các tính năng mới thú vị?<CR><CR>Chọn "Công cụ / Kiểm tra bản cập nhật / Gói..."
+
+#
+# Mẹo hoàn thành mã
+#
+...tính năng hoàn thành mã sẽ giúp bạn tăng năng suất bằng cách đề xuất tất cả các lệnh có thể có trong ngữ cảnh hiện tại?<CR><CR>Để bật tính năng hoàn thành mã, hãy đi tới "Tùy chọn công cụ / trình chỉnh sửa" rồi bật trình duyệt lớp và mã hoàn thành.
+
+...tính năng hoàn thành mã được kích hoạt khi bạn nhập ".", "->" hoặc "::" trong cửa sổ soạn thảo sau khi hết thời gian chờ do người dùng xác định?<CR><CR>Để xác định thời gian chờ này đi tới "Công cụ/Tùy chọn trình soạn thảo/Trình duyệt lớp/Hoàn thành mã".
+
+...bạn có thể kích hoạt tính năng hoàn thành mã bằng cách nhấn "Ctrl+Space" bất kỳ lúc nào trong cửa sổ soạn thảo?<CR><CR>(Thử nhấn "Ctrl+Shift+Space" trong khi con trỏ ở trong dấu ngoặc đơn đối số của hàm ...)
+
+...nhấp chuột shift vào một mục trong trình duyệt lớp sẽ đưa bạn đến phần khai báo thay vì phần triển khai?<CR>Tất nhiên, bạn cũng có thể sử dụng menu ngữ cảnh cho cùng một chức năng (và hơn thế nữa!)...
+
+...bạn có thể thêm các thư mục tùy chỉnh trong trình duyệt lớp để dễ dàng tìm thấy những gì bạn đang tìm kiếm trong các dự án lớn? Bạn thậm chí có thể lồng các thư mục tùy chỉnh!<CR><CR>Chỉ cần nhấp chuột phải vào trình duyệt lớp học để hiển thị menu ngữ cảnh...
+
+...thông tin thư mục tùy chỉnh của trình duyệt lớp được lưu giữ trong một tệp có tên "classfolders.dcf" trong thư mục gốc của dự án của bạn?<CR><CR>Nếu có sự cố xảy ra và mọi thứ trở nên rối tung, chỉ cần xóa tệp này và lại- mở dự án của bạn!
+
+...có hai chế độ hiển thị cho trình duyệt lớp?<CR>Một chế độ hiển thị cho bạn tất cả các lớp/thành viên/chức năng được phân tích cú pháp của dự án và chế độ còn lại hiển thị cho bạn thông tin liên quan *chỉ* cho tệp hiện đang chỉnh sửa.<CR ><CR>Chỉ cần nhấp chuột phải vào trình duyệt lớp học và chọn "Chế độ xem"...
+
+#
+# Lời khuyên của người quản lý dự án
+#
+...bạn có thể xác định xem bạn sẽ phải bấm một lần hay bấm đúp vào tệp trong trình quản lý dự án để mở tệp đó trong trình chỉnh sửa?<CR><CR>Để xác định điều này, hãy đi tới "Tùy chọn công cụ / môi trường" và bật (hoặc tắt) nút "Nhấp đúp chuột để mở tệp quản lý dự án"...
+
+...bạn có thể xác định các thư mục tùy chỉnh (chỉ cấp cao nhất) trong trình quản lý dự án để sắp xếp các tệp của mình tốt hơn?<CR><CR>Để thực hiện việc này, hãy nhấp chuột phải vào một tệp trong trình quản lý dự án để hiển thị menu ngữ cảnh ...
+
+...nếu bạn đã tạo các thư mục tùy chỉnh trong trình quản lý dự án, bạn có thể kéo && thả tệp để sắp xếp lại chúng không?
+
+#
+# Mẹo về menu tệp
+#
+...bạn có thể lấy thông tin về tệp bạn đang làm việc?<CR><CR>Chọn "Tệp / Thuộc tính" và bạn sẽ nhận được thông tin về kích thước của tệp, số dòng, nhận xét dòng, dòng trống và các tập tin được bao gồm!
+
+...bạn có thể lưu dự án của mình dưới dạng mẫu?<CR><CR>Chọn "Tệp / Mới / Mẫu". Thao tác này sẽ lưu dự án của bạn dưới dạng mẫu Dev-C++ và sẽ có sẵn khi bạn chọn "Tệp / Mới / Dự án".<CR>Bằng cách này, bạn sẽ có cơ sở để bắt đầu viết mã, tùy theo sở thích của mình!
+
+...bạn có thể nhập các dự án MS Visual C++ của mình vào Dev-C++?<CR><CR>Chỉ cần chọn "Tệp / Nhập / Nhập dự án MS Visual C++".<CR>Bạn có thể cần điều chỉnh một chút các tùy chọn dự án sau đang nhập nhưng này, nó đang được tiến hành!
+
+...bạn có thể xuất một tệp nguồn hoặc toàn bộ dự án sang HTML hoặc RTF?<CR>Bằng cách này, bạn có thể tải các nguồn của mình lên một trang web và chia sẻ chúng với mọi người!<CR><CR>Chỉ cần nhấp vào "Tệp / Xuất" và chọn phương thức xuất...
+
+#
+# Chỉnh sửa mẹo thực đơn
+#
+...bạn có thể (bỏ) nhận xét một tập hợp các dòng bằng cách chọn chúng và nhấp vào "Chỉnh sửa / (Bỏ) Nhận xét"?
+
+...bạn có thể (bỏ) thụt lề một tập hợp các dòng bằng cách chọn chúng và nhấp vào "Chỉnh sửa / (Bỏ) thụt lề"?
+
+...bạn có thể sử dụng dấu trang trong trình chỉnh sửa để di chuyển mã nhanh chóng?<CR><CR>Đặt hoặc hủy đặt dấu trang bằng cách nhấp vào "Chỉnh sửa / Chuyển đổi dấu trang" và chọn số dấu trang.<CR>Chuyển đến dấu trang đã đặt bằng cách nhấp vào "Chỉnh sửa / Goto dấu trang" và chọn số dấu trang.
+
+...có một lệnh "Chức năng Goto" mạnh mẽ trong trình đơn "Tìm kiếm"?<CR><CR>Nó hiển thị tất cả các chức năng của tệp và bằng cách nhập một phần tên hàm, danh sách sẽ lọc xuống. Nhấn enter và bạn sẽ đến chức năng này ngay lập tức!<CR>Lưu ý: phải bật duyệt lớp...

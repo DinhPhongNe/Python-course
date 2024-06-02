@@ -4,7 +4,6 @@ from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem
 from PyQt6 import uic
 import random
-import json
 
 class Main(QMainWindow):
     def __init__(self) -> None:
@@ -290,87 +289,7 @@ class Main(QMainWindow):
         self.btvn_upload.hide()
         self.teacher_main.show()
 
-    def regis(self):
-        if not self.register:
-            self.register = uic.loadUi("gui/regis.ui")
-            self.register.female.toggled.connect(lambda: self.btnstate(self.register.female))
-            self.register.male.toggled.connect(lambda: self.btnstate(self.register.male))
-            self.phone_validator = QIntValidator()
-            self.phone_validator.setBottom(0)
-            self.phone_validator.setTop(999999999)
-            self.register.Phone.setValidator(self.phone_validator)
-            self.register.Register_btn.clicked.connect(self.re_register)
-            self.register.return_btn.clicked.connect(self.return_register)
-            self.register.Pass.setEchoMode(QLineEdit.EchoMode.Password)
-            self.register.RePass.setEchoMode(QLineEdit.EchoMode.Password)
 
-        self.register.show()
-        self.hide()
-
-    def re_register(self):
-        Phone = self.register.Phone.text()
-        password = self.register.Pass.text()
-        repass = self.register.RePass.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        if not repass:
-            self.msg_box.setText("vui lòng nhập lại mật khẩu!")
-            self.msg_box.exec()
-            return
-        if password != repass:
-            self.msg_box.setText("mật khẩu không trùng khớp!")
-            self.msg_box.exec()
-            return
-
-        self.register.hide()
-        self.show()
-
-    def return_register(self):
-        self.register.hide()
-        self.show()
-
-    def btnstate(self, btn):
-        if btn.text() == "Nữ":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
-        if btn.text() == "Nam":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
-
-    def Login_hs(self):
-        if not self.student_login:
-            self.student_login = uic.loadUi("gui/login-hs.ui")
-            self.student_login.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked)
-            self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
-
-        self.student_login.show()
-        self.hide()
-
-    def HocSinhClicked(self):
-        Phone = self.student_login.PhoneHS.text()
-        password = self.student_login.PassHS.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        
-        self.GiaoVienClicked()
-
-    def goback_hs_Clicked(self):
-        self.student_login.hide()
-        self.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
