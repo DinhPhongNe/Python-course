@@ -1,7 +1,22 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIntValidator
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout
+from PyQt6.QtWidgets import (
+    QMainWindow,
+    QApplication,
+    QMessageBox,
+    QLineEdit,
+    QPushButton,
+    QTableWidget,
+    QTableWidgetItem,
+    QTabWidget,
+    QComboBox,
+    QWidget,
+    QVBoxLayout,
+    QLabel,
+    QDialog,
+    QGridLayout,
+)
 from PyQt6 import uic
 import random
 import json
@@ -17,7 +32,7 @@ class Main(QMainWindow):
         self.GiaoVien_btn.clicked.connect(self.Login_tc)
         self.Register_btn.clicked.connect(self.regis)
         self.quit_btn.clicked.connect(self.quit)
-        
+
         self.teacher_login = None
         self.student_login = None
         self.register = None
@@ -25,12 +40,19 @@ class Main(QMainWindow):
         self.student_main = None
         self.renewpass = None
         self.btvn_upload = None
-
+        self.nhap_diem_dialog = None
+        self.sua_thong_tin_dialog = None
+        self.sua_diem_dialog = None
+        self.chon_hoc_sinh_dialog = None
+        
         self.msg_box = QMessageBox()
         self.msg_box.setWindowTitle("Lỗi")
         self.msg_box.setIcon(QMessageBox.Icon.Warning)
         self.msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
-        
+
+        self.data = {}
+        self.load_data()  # Load dữ liệu từ file JSON
+
     def quit(self):
         window.close()
 
@@ -87,6 +109,7 @@ class Main(QMainWindow):
             self.teacher_main.clear_btn.clicked.connect(self.clear_information)
             self.teacher_main.btvn_upload_btn.clicked.connect(self.upload_btvn)
 
+            # Get references to table widgets
             self.table = self.teacher_main.findChild(QTabWidget, "Semester_tab")
             self.table_HK1 = self.teacher_main.findChild(QTableWidget, "student_Infor_table_HK1")
             self.table_HK2 = self.teacher_main.findChild(QTableWidget, "student_Infor_table_HK2")
@@ -96,11 +119,13 @@ class Main(QMainWindow):
             self.xem_cn = self.teacher_main.findChild(QComboBox, "xem_diem_mon_cn")
             self.search_bar = self.teacher_main.findChild(QLineEdit, "Search_bar")
 
+            # Set up table widgets
             self.setup_table(self.table_HK1, "Học kỳ 1")
             self.setup_table(self.table_HK2, "Học kỳ 2")
             self.setup_table(self.table_CN, "Cả năm")
             self.fill_tables()
 
+            # Connect combo box signals
             self.xem_hk1.currentTextChanged.connect(lambda text: self.show_column(self.table_HK1, text))
             self.xem_hk2.currentTextChanged.connect(lambda text: self.show_column(self.table_HK2, text))
             self.xem_cn.currentTextChanged.connect(lambda text: self.show_column(self.table_CN, text))
@@ -110,15 +135,13 @@ class Main(QMainWindow):
 
     def load_data(self):
         try:
-            with open("test.json", "r", encoding="utf-8") as f:
+            with open("data.json", "r", encoding="utf-8") as f:
                 self.data = json.load(f)
         except FileNotFoundError:
             self.data = {"Danh_sach_hoc_sinh": []}
-        except Exception as e:
-            print(f"Lỗi khi đọc file test.json: {e}") 
 
     def save_data(self):
-        with open("test.json", "w", encoding="utf-8") as f:
+        with open("data.json", "w", encoding="utf-8") as f:
             json.dump(self.data, f, indent=4, ensure_ascii=False)
 
     def setup_table(self, table, semester):
@@ -220,11 +243,11 @@ class Main(QMainWindow):
 
     def show_column(self, table, subject):
         for column in range(table.columnCount()):
-            if column >= 4:
+            if column >= 4:  # Start from column 4 (TX1)
                 table.setColumnHidden(column, True)
 
         if subject:
-            column_index = 4
+            column_index = 4  # Start from column 4 (TX1)
             for i, item in enumerate(
                 [
                     "Toán",
@@ -241,7 +264,7 @@ class Main(QMainWindow):
                     column_index += i
                     break
 
-            table.setColumnHidden(column_index, False)
+            table.setColumnHidden(column_index, False)  # Show only selected subject
             table.setColumnHidden(column_index + 1, False)
             table.setColumnHidden(column_index + 2, False)
             table.setColumnHidden(column_index + 3, False)
@@ -683,157 +706,6 @@ class Main(QMainWindow):
         if current_row != -1:
             del self.data["Danh_sach_hoc_sinh"][current_row]
             self.fill_tables()
-
-    def GiaoVienMain_Return(self):
-        self.teacher_main.hide()
-        self.show()
-
-    def goback_tc_Clicked(self):
-        self.teacher_login.hide()
-        self.show()
-
-    def renew(self):
-        if not self.renewpass:
-            self.renewpass = uic.loadUi("gui/renewpass.ui")
-            self.renewpass.renew_btn.clicked.connect(self.renew_Clicked)
-            self.renewpass.return_btn.clicked.connect(self.renew_Return)
-            self.phone_validator = QIntValidator()
-            self.phone_validator.setBottom(0)
-            self.phone_validator.setTop(999999999)
-            self.renewpass.PhoneRC.setValidator(self.phone_validator)
-            self.renewpass.PassRC.setEchoMode(QLineEdit.EchoMode.Password)
-            self.renewpass.RePassRC.setEchoMode(QLineEdit.EchoMode.Password)
-        
-        self.renewpass.show()
-        self.hide()
-
-    def renew_Clicked(self):
-        Phone = self.renewpass.PhoneRC.text()
-        password = self.renewpass.PassRC.text()
-        repass = self.renewpass.RePassRC.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        if not repass:
-            self.msg_box.setText("vui lòng nhập lại mật khẩu!")
-            self.msg_box.exec()
-            return
-        if password != repass:
-            self.msg_box.setText("mật khẩu không trùng khớp!")
-            self.msg_box.exec()
-            return
-
-        self.renewpass.hide()
-        self.show()
-
-    def renew_Return(self):
-        self.renewpass.hide()
-        self.teacher_login.show()
-        
-    def upload_btvn(self):
-        if not self.btvn_upload:
-            self.btvn_upload = uic.loadUi("gui/btvn-upload.ui")
-            self.btvn_upload.renew_btn.clicked.connect(self.upload_click)
-            self.btvn_upload.return_btn.clicked.connect(self.return_upload)
-
-        self.btvn_upload.show()
-        self.hide()
-        
-    def upload_click(self):
-        self.btvn_upload.hide()
-        self.teacher_main.show()
-
-    def return_upload(self):
-        self.btvn_upload.hide()
-        self.teacher_main.show()
-
-    def regis(self):
-        if not self.register:
-            self.register = uic.loadUi("gui/regis.ui")
-            self.register.female.toggled.connect(lambda: self.btnstate(self.register.female))
-            self.register.male.toggled.connect(lambda: self.btnstate(self.register.male))
-            self.phone_validator = QIntValidator()
-            self.phone_validator.setBottom(0)
-            self.phone_validator.setTop(999999999)
-            self.register.Phone.setValidator(self.phone_validator)
-            self.register.Register_btn.clicked.connect(self.re_register)
-            self.register.return_btn.clicked.connect(self.return_register)
-            self.register.Pass.setEchoMode(QLineEdit.EchoMode.Password)
-            self.register.RePass.setEchoMode(QLineEdit.EchoMode.Password)
-
-        self.register.show()
-        self.hide()
-
-    def re_register(self):
-        Phone = self.register.Phone.text()
-        password = self.register.Pass.text()
-        repass = self.register.RePass.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        if not repass:
-            self.msg_box.setText("vui lòng nhập lại mật khẩu!")
-            self.msg_box.exec()
-            return
-        if password != repass:
-            self.msg_box.setText("mật khẩu không trùng khớp!")
-            self.msg_box.exec()
-            return
-
-        self.register.hide()
-        self.show()
-
-    def return_register(self):
-        self.register.hide()
-        self.show()
-
-    def btnstate(self, btn):
-        if btn.text() == "Nữ":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
-        if btn.text() == "Nam":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
-
-    def Login_hs(self):
-        if not self.student_login:
-            self.student_login = uic.loadUi("gui/login-hs.ui")
-            self.student_login.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked)
-            self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
-
-        self.student_login.show()
-        self.hide()
-
-    def HocSinhClicked(self):
-        Phone = self.student_login.PhoneHS.text()
-        password = self.student_login.PassHS.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        
-        self.GiaoVienClicked()
-
-    def goback_hs_Clicked(self):
-        self.student_login.hide()
-        self.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
