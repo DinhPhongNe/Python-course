@@ -12,6 +12,9 @@
   
 # ===-- Tu Luan --===
 
+import json
+from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QListWidget, QPushButton, QListWidgetItem
+
 class Homework:
     def __init__(self, name, priority, completed=False):
         self.name = name
@@ -31,12 +34,22 @@ class Homework:
     def status(self):
         return "Đã hoàn thành" if self.completed else "Chưa hoàn thành"
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'priority': self.priority,
+            'completed': self.completed
+        }
+
 class HomeworkList:
     def __init__(self):
         self.items = []
 
     def add_homework(self, item):
         self.items.append(item)
+
+    def to_list(self):
+        return [item.to_dict() for item in self.items]
 
     def all_finished(self):
         unfinished_homeworks = [homework.name for homework in self.items if not homework.completed]
@@ -46,30 +59,3 @@ class HomeworkList:
                 print(homework_name)
         else:
             print("All finished")
-
-# Thang mức độ quan trọng
-# 1 - mức độ quan trọng thấp
-# 2 - mức độ quan trọng trung bình
-# 3 - mức độ quan trọng cao
-#------------------------------------
-homework1 = Homework("cắt dán", 1)
-homework2 = Homework("làm văn", 3)
-homework3 = Homework("làm toán", 3, True) # => test nếu True
-homework4 = Homework("Lập trình Gamemaker", 1, True)
-homework5 = Homework("Lập trình App Producer", 3)
-homework6 = Homework("Đi ngủ", 4, True)  # => test nếu mức độ quan trọng trên 3
-
-
-homework_list = HomeworkList()
-homework_list.add_homework(homework1)
-homework_list.add_homework(homework2)
-homework_list.add_homework(homework3)
-homework_list.add_homework(homework4)
-homework_list.add_homework(homework5)
-homework_list.add_homework(homework6)
-
-# In danh sách bài tập
-for homework in homework_list.items:
-    print(f"Bài tập: {homework.name} \nMức độ quan trọng: {homework.do_quan_trong()} \nHoàn thành: {homework.status()} \n-----------------")
-
-homework_list.all_finished()
