@@ -17,7 +17,7 @@ class Main(QMainWindow):
         self.GiaoVien_btn.clicked.connect(self.Login_tc)
         self.Register_btn.clicked.connect(self.regis)
         self.quit_btn.clicked.connect(self.quit)
-        
+
         self.teacher_login = None
         self.student_login = None
         self.register = None
@@ -25,12 +25,17 @@ class Main(QMainWindow):
         self.student_main = None
         self.renewpass = None
         self.btvn_upload = None
+        self.chon_hoc_sinh_dialog = None
+        self.nhap_diem_dialog = None
+        self.sua_thong_tin_dialog = None
+        self.sua_diem_dialog = None
+        self.load_data()
 
         self.msg_box = QMessageBox()
         self.msg_box.setWindowTitle("Lỗi")
         self.msg_box.setIcon(QMessageBox.Icon.Warning)
         self.msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
-        
+
     def quit(self):
         window.close()
 
@@ -219,36 +224,34 @@ class Main(QMainWindow):
                     pass
 
     def show_column(self, table, subject):
-        for column in range(table.columnCount()):
-            if column >= 4:
+            # Ẩn các cột liên quan đến điểm môn học (từ cột "TX1" đến "ĐTBM")
+            for column in range(4, 11):  # Thay đổi vòng lặp từ 4 đến 10
                 table.setColumnHidden(column, True)
 
-        if subject:
-            column_index = 4
-            for i, item in enumerate(
-                [
-                    "Toán",
-                    "Văn",
-                    "Anh",
-                    "Khoa học tự nhiên",
-                    "Lịch sử - địa lý",
-                    "Tin học",
-                    "Công nghệ",
-                    "Giáo dục công dân",
-                ]
-            ):
-                if item == subject:
-                    column_index += i
-                    break
+            if subject:
+                column_index = 4
+                for i, item in enumerate(
+                    [
+                        "Toán",
+                        "Văn",
+                        "Anh",
+                        "Khoa học tự nhiên",
+                        "Lịch sử - địa lý",
+                        "Tin học",
+                        "Công nghệ",
+                        "Giáo dục công dân",
+                    ]
+                ):
+                    if item == subject:
+                        column_index += i
+                        break
 
-            table.setColumnHidden(column_index, False)
-            table.setColumnHidden(column_index + 1, False)
-            table.setColumnHidden(column_index + 2, False)
-            table.setColumnHidden(column_index + 3, False)
-            table.setColumnHidden(column_index + 4, False)
-            table.setColumnHidden(column_index + 5, False)
-            table.setColumnHidden(column_index + 6, False)
+            # Hiển thị các cột liên quan đến môn học được chọn
+            for column in range(column_index, column_index + 7):  # Thay đổi vòng lặp
+                table.setColumnHidden(column, False)
 
+            # Hiển thị cột "ĐTBM"
+            table.setColumnHidden(10, False)
     def search(self):
         text = self.search_bar.text().strip().lower()
         for row in range(self.table_HK1.rowCount()):
@@ -302,6 +305,7 @@ class Main(QMainWindow):
             self.nhap_diem_dialog.setWindowTitle("Nhập điểm")
 
             layout = QVBoxLayout()
+            self.nhap_diem_dialog.setLayout(layout)  # Thiết lập layout cho dialog trước
 
             label_hk = QLabel("Chọn học kỳ:")
             self.combo_hk = QComboBox()
@@ -314,15 +318,14 @@ class Main(QMainWindow):
             self.create_nhap_diem_form("Học kỳ 1")
             layout.addLayout(self.grid_layout)
 
-            self.nhap_diem_dialog.setLayout(layout)
         self.nhap_diem_dialog.show()
 
     def update_nhap_diem_dialog(self, text):
         self.grid_layout.deleteLater()
-        self.grid_layout = QGridLayout()
+        self.grid_layout = QGridLayout()  # Tạo layout mới 
         self.create_nhap_diem_form(text)
-        self.nhap_diem_dialog.layout().addLayout(self.grid_layout, 2, 0)
-
+        self.nhap_diem_dialog.layout().addLayout(self.grid_layout)
+        
     def create_nhap_diem_form(self, hoc_ki):
         self.grid_layout = QGridLayout()
         self.grid_layout.addWidget(QLabel("Môn học:"), 0, 0)
@@ -362,7 +365,7 @@ class Main(QMainWindow):
         self.luu_btn.clicked.connect(self.nhap_diem_luu)
         self.grid_layout.addWidget(self.luu_btn, 7, 0, 1, 2)
 
-        self.nhap_diem_dialog.layout().addLayout(self.grid_layout, 2, 0)
+        self.nhap_diem_dialog.layout().addLayout(self.grid_layout)
 
     def nhap_diem_luu(self):
         selected_student_index = self.chon_hs_combo.currentIndex()
@@ -397,7 +400,8 @@ class Main(QMainWindow):
         student["Điểm trong năm"][hoc_ki][mon_hoc]["HK1" if hoc_ki == "Học kỳ 1" else "HK2"] = hk
 
         dtbm = self.calculate_dtbm(tx1, tx2, tx3, tx4, gk, hk)
-        student["Điểm trong năm"][hoc_ki][mon_hoc]["ĐTBM"] = f"{dtbm:.2f}"
+        if dtbm is not None:
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["ĐTBM"] = f"{dtbm:.2f}"
 
         # Cập nhật table tương ứng
         if hoc_ki == "Học kỳ 1":
@@ -829,7 +833,7 @@ class Main(QMainWindow):
             self.msg_box.exec()
             return
         
-        self.GiaoVienClicked()
+        self.HocSinhClicked()
 
     def goback_hs_Clicked(self):
         self.student_login.hide()
