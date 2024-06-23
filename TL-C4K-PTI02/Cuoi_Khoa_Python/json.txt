@@ -1,7 +1,6 @@
 {
     "Danh_sach_hoc_sinh": [
         {
-            "UID": "88041",
             "Số thứ tự": "41",
             "Họ": "Võ",
             "Tên": "Đình Phong",

@@ -127,10 +127,9 @@ class Main(QMainWindow):
             json.dump(self.data, f, indent=4, ensure_ascii=False)
 
     def setup_table(self, table, semester):
-        table.setColumnCount(12)
+        table.setColumnCount(11)
         table.setHorizontalHeaderLabels(
             [
-                "UID",
                 "Số thứ tự",
                 "Họ",
                 "Tên",
@@ -155,7 +154,6 @@ class Main(QMainWindow):
         table.setColumnWidth(8, 40)
         table.setColumnWidth(9, 40)
         table.setColumnWidth(10, 50)
-        table.setColumnWidth(11, 50)
 
         table.setAlternatingRowColors(True)
         table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
@@ -169,17 +167,14 @@ class Main(QMainWindow):
         self.table_CN.setRowCount(len(self.data["Danh_sach_hoc_sinh"]))
 
         for row, student in enumerate(self.data["Danh_sach_hoc_sinh"]):
-            self.table_HK1.setItem(row, 0, QTableWidgetItem(student.get("UID", "")))
             self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
             self.table_HK1.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
 
-            self.table_HK2.setItem(row, 0, QTableWidgetItem(student.get("UID", "")))
             self.table_HK2.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_HK2.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
             self.table_HK2.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
 
-            self.table_CN.setItem(row, 0, QTableWidgetItem(student.get("UID", "")))
             self.table_CN.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_CN.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
             self.table_CN.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
@@ -225,7 +220,7 @@ class Main(QMainWindow):
 
     def show_column(self, table, subject):
             # Ẩn các cột liên quan đến điểm môn học (từ cột "TX1" đến "ĐTBM")
-            for column in range(4, 11):  # Thay đổi vòng lặp từ 4 đến 10
+            for column in range(10, 16):  # Thay đổi vòng lặp từ 10 đến 17
                 table.setColumnHidden(column, True)
 
             if subject:
@@ -247,11 +242,12 @@ class Main(QMainWindow):
                         break
 
             # Hiển thị các cột liên quan đến môn học được chọn
-            for column in range(column_index, column_index + 7):  # Thay đổi vòng lặp
+            for column in range(column_index, column_index + 8):  # Thay đổi vòng lặp
                 table.setColumnHidden(column, False)
 
             # Hiển thị cột "ĐTBM"
             table.setColumnHidden(10, False)
+
     def search(self):
         text = self.search_bar.text().strip().lower()
         for row in range(self.table_HK1.rowCount()):
@@ -456,10 +452,6 @@ class Main(QMainWindow):
             self.sua_thong_tin_dialog.setWindowTitle("Sửa thông tin học sinh")
             layout = QGridLayout()
 
-            layout.addWidget(QLabel("UID:"), 0, 0)
-            self.uid = QLineEdit(student["UID"])
-            layout.addWidget(self.uid, 0, 1)
-
             layout.addWidget(QLabel("Số thứ tự:"), 1, 0)
             self.stt = QLineEdit(student["Số thứ tự"])
             layout.addWidget(self.stt, 1, 1)
@@ -483,16 +475,10 @@ class Main(QMainWindow):
         current_row = self.table.currentRow()
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
-            new_uid = self.uid.text()
             new_stt = self.stt.text()
             new_ho = self.ho.text()
             new_ten = self.ten.text()
-
-            if new_uid:
-                student["UID"] = new_uid
-                self.table_HK1.setItem(current_row, 0, QTableWidgetItem(new_uid))
-                self.table_HK2.setItem(current_row, 0, QTableWidgetItem(new_uid))
-                self.table_CN.setItem(current_row, 0, QTableWidgetItem(new_uid))
+            
             if new_stt:
                 student["Số thứ tự"] = new_stt
                 self.table_HK1.setItem(current_row, 1, QTableWidgetItem(new_stt))
@@ -641,7 +627,6 @@ class Main(QMainWindow):
 
     def add_information(self):
         new_student = {
-            "UID": "",
             "Số thứ tự": "",
             "Họ": "",
             "Tên": "",
@@ -743,8 +728,8 @@ class Main(QMainWindow):
     def upload_btvn(self):
         if not self.btvn_upload:
             self.btvn_upload = uic.loadUi("gui/btvn-upload.ui")
-            self.btvn_upload.renew_btn.clicked.connect(self.upload_click)
-            self.btvn_upload.return_btn.clicked.connect(self.return_upload)
+            self.btvn_upload.pushButton.clicked.connect(self.upload_click)
+            #self.btvn_upload.return_btn.clicked.connect(self.return_upload)
 
         self.btvn_upload.show()
         self.hide()
@@ -813,7 +798,7 @@ class Main(QMainWindow):
 
     def Login_hs(self):
         if not self.student_login:
-            self.student_login = uic.loadUi("gui/login-hs.ui")
+            self.student_login = uic.loadUi("gui/login-student.ui")
             self.student_login.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked)
             self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
 
@@ -821,8 +806,8 @@ class Main(QMainWindow):
         self.hide()
 
     def HocSinhClicked(self):
-        Phone = self.student_login.PhoneHS.text()
-        password = self.student_login.PassHS.text()
+        Phone = self.student_login.Phone_HS.text()
+        password = self.student_login.Pass_HS.text()
         
         if not Phone:
             self.msg_box.setText("vui lòng nhập số điện thoại!")
