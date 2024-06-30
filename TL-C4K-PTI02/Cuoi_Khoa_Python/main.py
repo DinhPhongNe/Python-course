@@ -93,6 +93,7 @@ class Main(QMainWindow):
             self.teacher_main.btvn_upload_btn.clicked.connect(self.upload_btvn)
 
             self.table = self.teacher_main.findChild(QTabWidget, "Semester_tab")
+            self.tab_widget = self.teacher_main.findChild(QTabWidget, "Semester_tab")
             self.table_HK1 = self.teacher_main.findChild(QTableWidget, "student_Infor_table_HK1")
             self.table_HK2 = self.teacher_main.findChild(QTableWidget, "student_Infor_table_HK2")
             self.table_CN = self.teacher_main.findChild(QTableWidget, "student_Infor_table_CN")
@@ -100,6 +101,14 @@ class Main(QMainWindow):
             self.xem_hk2 = self.teacher_main.findChild(QComboBox, "xem_diem_mon_hk2")
             self.xem_cn = self.teacher_main.findChild(QComboBox, "xem_diem_mon_cn")
             self.search_bar = self.teacher_main.findChild(QLineEdit, "Search_bar")
+            
+            self.stt = self.teacher_main.findChild(QLineEdit, "so_thu_tu")    
+            self.ho = self.teacher_main.findChild(QLineEdit, "ho")
+            self.ten = self.teacher_main.findChild(QLineEdit, "ten")        
+            
+            
+            self.tab_widget.currentChanged.connect(self.on_tab_changed)
+            self.on_tab_changed(self.tab_widget.currentIndex())
 
             self.setup_table(self.table_HK1, "Học kỳ 1")
             self.setup_table(self.table_HK2, "Học kỳ 2")
@@ -113,6 +122,15 @@ class Main(QMainWindow):
         self.teacher_main.show()
         self.teacher_login.hide()
 
+    def on_tab_changed(self, index):
+        """Cập nhật self.table dựa trên tab hiện tại."""
+        if index == 0:
+            self.table = self.table_HK1
+        elif index == 1:
+            self.table = self.table_HK2
+        elif index == 2:
+            self.table = self.table_CN
+            
     def load_data(self):
         try:
             with open("test.json", "r", encoding="utf-8") as f:
@@ -167,18 +185,19 @@ class Main(QMainWindow):
         self.table_CN.setRowCount(len(self.data["Danh_sach_hoc_sinh"]))
 
         for row, student in enumerate(self.data["Danh_sach_hoc_sinh"]):
-            self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
-            self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
-            self.table_HK1.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
+            # Thêm thông tin học sinh vào các cột tương ứng (chỉnh sửa chỉ số cột)
+            self.table_HK1.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", ""))) 
+            self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))  
+            self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Tên", ""))) 
 
-            self.table_HK2.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
-            self.table_HK2.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
-            self.table_HK2.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
+            self.table_HK2.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+            self.table_HK2.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
+            self.table_HK2.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
 
-            self.table_CN.setItem(row, 1, QTableWidgetItem(student.get("Số thứ tự", "")))
-            self.table_CN.setItem(row, 2, QTableWidgetItem(student.get("Họ", "")))
-            self.table_CN.setItem(row, 3, QTableWidgetItem(student.get("Tên", "")))
-
+            self.table_CN.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+            self.table_CN.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
+            self.table_CN.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
+            
             for i, subject in enumerate(
                 [
                     "Toán",
@@ -295,6 +314,7 @@ class Main(QMainWindow):
             self.chon_hoc_sinh_dialog.setLayout(layout)
         self.chon_hoc_sinh_dialog.show()
 
+
     def show_nhap_diem_dialog(self):
         if not self.nhap_diem_dialog:
             self.nhap_diem_dialog = QDialog(self)
@@ -316,11 +336,13 @@ class Main(QMainWindow):
 
         self.nhap_diem_dialog.show()
 
+
     def update_nhap_diem_dialog(self, text):
         self.grid_layout.deleteLater()
         self.grid_layout = QGridLayout()  # Tạo layout mới 
         self.create_nhap_diem_form(text)
         self.nhap_diem_dialog.layout().addLayout(self.grid_layout)
+        
         
     def create_nhap_diem_form(self, hoc_ki):
         self.grid_layout = QGridLayout()
@@ -424,25 +446,27 @@ class Main(QMainWindow):
             return None
 
     def show_sua_thong_tin_dialog(self):
-        if not self.sua_thong_tin_dialog:
-            self.sua_thong_tin_dialog = QDialog(self)
-            self.sua_thong_tin_dialog.setWindowTitle("Sửa thông tin")
+        self.sua_thong_tin_dialog = QDialog(self)
+        self.sua_thong_tin_dialog.setWindowTitle("Thêm thông tin học sinh")
+        layout = QGridLayout()
 
-            layout = QVBoxLayout()
+        layout.addWidget(QLabel("Số thứ tự:"), 1, 0)
+        self.stt = self.teacher_main.findChild(QLineEdit, "so_thu_tu") # Sử dụng QLineEdit "so_thu_tu" có sẵn
+        layout.addWidget(self.stt, 1, 1)
 
-            label_sua = QLabel("Bạn muốn sửa thông tin học sinh hay điểm học sinh?")
-            layout.addWidget(label_sua)
+        layout.addWidget(QLabel("Họ:"), 2, 0)
+        self.ho = self.teacher_main.findChild(QLineEdit, "ho")  # Sử dụng QLineEdit "ho" có sẵn
+        layout.addWidget(self.ho, 2, 1)
 
-            button_sua_tt = QPushButton("Sửa thông tin học sinh")
-            button_sua_tt.clicked.connect(self.show_sua_thong_tin_dialog_hoc_sinh)
-            layout.addWidget(button_sua_tt)
+        layout.addWidget(QLabel("Tên:"), 3, 0)
+        self.ten = self.teacher_main.findChild(QLineEdit, "ten")  # Sử dụng QLineEdit "ten" có sẵn
+        layout.addWidget(self.ten, 3, 1)
 
-            button_sua_diem = QPushButton("Sửa điểm học sinh")
-            button_sua_diem.clicked.connect(self.show_sua_diem_dialog)
-            layout.addWidget(button_sua_diem)
+        luu_btn = QPushButton("Lưu")
+        luu_btn.clicked.connect(self._add_information_to_table)
+        layout.addWidget(luu_btn, 4, 0, 1, 2)
 
-            self.sua_thong_tin_dialog.setLayout(layout)
-        self.sua_thong_tin_dialog.show()
+        self.sua_thong_tin_dialog.setLayout(layout)
 
     def show_sua_thong_tin_dialog_hoc_sinh(self):
         current_row = self.table.currentRow()
@@ -452,17 +476,17 @@ class Main(QMainWindow):
             self.sua_thong_tin_dialog.setWindowTitle("Sửa thông tin học sinh")
             layout = QGridLayout()
 
-            layout.addWidget(QLabel("Số thứ tự:"), 1, 0)
+            layout.addWidget(QLabel("Số thứ tự:"), 0, 0)
             self.stt = QLineEdit(student["Số thứ tự"])
-            layout.addWidget(self.stt, 1, 1)
+            layout.addWidget(self.stt, -1, 1)
 
-            layout.addWidget(QLabel("Họ:"), 2, 0)
+            layout.addWidget(QLabel("Họ:"), 1, 0)
             self.ho = QLineEdit(student["Họ"])
-            layout.addWidget(self.ho, 2, 1)
+            layout.addWidget(self.ho, 0, 1)
 
-            layout.addWidget(QLabel("Tên:"), 3, 0)
+            layout.addWidget(QLabel("Tên:"), 2, 0)
             self.ten = QLineEdit(student["Tên"])
-            layout.addWidget(self.ten, 3, 1)
+            layout.addWidget(self.ten, 1, 1)
 
             luu_btn = QPushButton("Lưu")
             luu_btn.clicked.connect(self.update_thong_tin_hoc_sinh)
@@ -626,14 +650,29 @@ class Main(QMainWindow):
                 self.sua_diem_dialog.close()
 
     def add_information(self):
+        # Kiểm tra xem người dùng đã nhập đủ thông tin hay chưa
+        if not self.stt.text() or not self.ho.text() or not self.ten.text():
+            self.msg_box.setText("Vui lòng nhập đầy đủ thông tin!")
+            self.msg_box.exec()
+            return
+        # Thêm thông tin học sinh mới vào dữ liệu
         new_student = {
-            "Số thứ tự": "",
-            "Họ": "",
-            "Tên": "",
+            "Số thứ tự": self.stt.text(),
+            "Họ": self.ho.text(),
+            "Tên": self.ten.text(),
             "Điểm trong năm": {},
         }
         self.data["Danh_sach_hoc_sinh"].append(new_student)
+        
+        # Cập nhật lại bảng sau khi thêm
         self.fill_tables()
+
+        # Xóa nội dung trong các QLineEdit
+        self.stt.clear()
+        self.ho.clear()
+        self.ten.clear()
+
+
 
     def clear_information(self):
         self.msg_box.setText(

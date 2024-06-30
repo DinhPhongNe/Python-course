@@ -235,7 +235,7 @@ border-radius: 20px;</string>
        <property name="verticalSpacing">
         <number>15</number>
        </property>
-       <item row="1" column="0">
+       <item row="0" column="0">
         <widget class="QLabel" name="label_19">
          <property name="font">
           <font>
@@ -250,7 +250,16 @@ border-radius: 20px;</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="ten">
+         <property name="styleSheet">
+          <string notr="true">color: black;
+background-color:rgb(220,220,220);
+border-radius:5px;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
         <widget class="QLineEdit" name="so_thu_tu">
          <property name="styleSheet">
           <string notr="true">color: black;
@@ -262,16 +271,7 @@ border-radius:5px;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="ten">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_21">
          <property name="styleSheet">
           <string notr="true">color: rgb(0,0,0);</string>
@@ -281,7 +281,7 @@ border-radius:5px;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item row="1" column="2">
         <widget class="QLineEdit" name="ho">
          <property name="styleSheet">
           <string notr="true">color: black;
@@ -290,35 +290,13 @@ border-radius:5px;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_20">
          <property name="styleSheet">
           <string notr="true">color: rgb(0,0,0);</string>
          </property>
          <property name="text">
           <string>Họ</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_22">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0,0,0);</string>
-         </property>
-         <property name="text">
-          <string>UID</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="UID_inp">
-         <property name="styleSheet">
-          <string notr="true">color: black;
-background-color:rgb(220,220,220);
-border-radius:5px;</string>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly</set>
          </property>
         </widget>
        </item>
@@ -493,11 +471,6 @@ color:black;</string>
       </row>
       <column>
        <property name="text">
-        <string>UID</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>Số thứ tự</string>
        </property>
        <property name="font">
@@ -571,16 +544,11 @@ color:black;</string>
        <property name="text">
         <string>88041</string>
        </property>
-      </item>
-      <item row="0" column="1">
-       <property name="text">
-        <string>41</string>
-       </property>
        <property name="textAlignment">
         <set>AlignLeading|AlignVCenter</set>
        </property>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="1">
        <property name="text">
         <string>Võ</string>
        </property>
@@ -588,7 +556,7 @@ color:black;</string>
         <set>AlignLeading|AlignVCenter</set>
        </property>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="2">
        <property name="text">
         <string>Đình Phong</string>
        </property>
