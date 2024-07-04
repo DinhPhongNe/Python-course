@@ -464,7 +464,6 @@ class Main(QMainWindow):
         else:
             return
 
-        # Directly calculate column_index based on subject
         subject_order = [
             "Toán",
             "Văn",
@@ -476,15 +475,31 @@ class Main(QMainWindow):
             "Giáo dục công dân",
         ]
         if mon_hoc in subject_order:
-            column_index = 4 + subject_order.index(mon_hoc)  # 4 is the starting index for grades
+            column_index = 4 + subject_order.index(mon_hoc)
 
-            if hoc_ki in student["Điểm trong năm"]:
+            # Check if semester and subject exist
+            if (
+                hoc_ki in student["Điểm trong năm"]
+                and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            ):
                 for j, grade_type in enumerate(
-                    ["TX1", "TX2", "TX3", "TX4", "GK1" if hoc_ki == "Học kỳ 1" else "GK2", "HK1" if hoc_ki == "Học kỳ 1" else "HK2", "ĐTBM"]
+                    [
+                        "TX1",
+                        "TX2",
+                        "TX3",
+                        "TX4",
+                        "GK1" if hoc_ki == "Học kỳ 1" else "GK2",
+                        "HK1" if hoc_ki == "Học kỳ 1" else "HK2",
+                        "ĐTBM",
+                    ]
                 ):
+                    # Create subject key if it doesn't exist
+                    if grade_type not in student["Điểm trong năm"][hoc_ki][mon_hoc]:
+                        student["Điểm trong năm"][hoc_ki][mon_hoc][grade_type] = ""
+                    
                     table.setItem(
                         row_index,
-                        column_index + j,  # Use j to get correct column for grade_type
+                        column_index + j,
                         QTableWidgetItem(
                             str(student["Điểm trong năm"][hoc_ki][mon_hoc].get(grade_type, ""))
                         ),
