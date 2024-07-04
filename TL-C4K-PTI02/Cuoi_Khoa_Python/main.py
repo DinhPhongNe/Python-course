@@ -17,6 +17,9 @@ class Main(QMainWindow):
         self.GiaoVien_btn.clicked.connect(self.Login_tc)
         self.Register_btn.clicked.connect(self.regis)
         self.quit_btn.clicked.connect(self.quit)
+        
+        self.chon_hs_combo = QComboBox()
+        self.load_data()
 
         self.teacher_login = None
         self.student_login = None
@@ -130,6 +133,9 @@ class Main(QMainWindow):
             self.table = self.table_HK2
         elif index == 2:
             self.table = self.table_CN
+        
+        # Cập nhật lại combobox môn học cho tab hiện tại
+        self.update_subject_combobox()
             
     def load_data(self):
         try:
@@ -180,12 +186,19 @@ class Main(QMainWindow):
             table.horizontalHeaderItem(i).setTextAlignment(Qt.AlignmentFlag.AlignCenter)
 
     def fill_tables(self):
-        self.table_HK1.setRowCount(len(self.data["Danh_sach_hoc_sinh"]))
-        self.table_HK2.setRowCount(len(self.data["Danh_sach_hoc_sinh"]))
-        self.table_CN.setRowCount(len(self.data["Danh_sach_hoc_sinh"]))
+        self.table_HK1.setRowCount(0)  # Xóa dữ liệu cũ trước khi thêm mới
+        self.table_HK2.setRowCount(0)
+        self.table_CN.setRowCount(0)
+        
+        
 
         for row, student in enumerate(self.data["Danh_sach_hoc_sinh"]):
             # Thêm thông tin học sinh vào các cột tương ứng (chỉnh sửa chỉ số cột)
+            row_position = self.table_HK1.rowCount()
+            self.table_HK1.insertRow(row_position)
+            self.table_HK2.insertRow(row_position)
+            self.table_CN.insertRow(row_position)
+            
             self.table_HK1.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", ""))) 
             self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))  
             self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Tên", ""))) 
@@ -238,34 +251,35 @@ class Main(QMainWindow):
                     pass
 
     def show_column(self, table, subject):
-            # Ẩn các cột liên quan đến điểm môn học (từ cột "TX1" đến "ĐTBM")
-            for column in range(10, 16):  # Thay đổi vòng lặp từ 10 đến 17
-                table.setColumnHidden(column, True)
+        # Ẩn các cột liên quan đến điểm môn học (từ cột "TX1" đến "ĐTBM")
+        for column in range(10, 16): 
+            table.setColumnHidden(column, True)
 
-            if subject:
-                column_index = 4
-                for i, item in enumerate(
-                    [
-                        "Toán",
-                        "Văn",
-                        "Anh",
-                        "Khoa học tự nhiên",
-                        "Lịch sử - địa lý",
-                        "Tin học",
-                        "Công nghệ",
-                        "Giáo dục công dân",
-                    ]
-                ):
-                    if item == subject:
-                        column_index += i
-                        break
+        column_index = 4  # Gán giá trị mặc định cho column_index 
 
-            # Hiển thị các cột liên quan đến môn học được chọn
-            for column in range(column_index, column_index + 8):  # Thay đổi vòng lặp
-                table.setColumnHidden(column, False)
+        if subject:
+            for i, item in enumerate(
+                [
+                    "Toán",
+                    "Văn",
+                    "Anh",
+                    "Khoa học tự nhiên",
+                    "Lịch sử - địa lý",
+                    "Tin học",
+                    "Công nghệ",
+                    "Giáo dục công dân",
+                ]
+            ):
+                if item == subject:
+                    column_index += i
+                    break
 
-            # Hiển thị cột "ĐTBM"
-            table.setColumnHidden(10, False)
+        # Hiển thị các cột liên quan đến môn học được chọn
+        for column in range(column_index, column_index + 8):
+            table.setColumnHidden(column, False)
+
+        # Hiển thị cột "ĐTBM"
+        table.setColumnHidden(10, False)
 
     def search(self):
         text = self.search_bar.text().strip().lower()
@@ -302,6 +316,7 @@ class Main(QMainWindow):
             self.chon_hoc_sinh_dialog.setWindowTitle("Chọn học sinh")
 
             layout = QVBoxLayout()
+            # Gán giá trị cho thuộc tính chon_hs_combo
             self.chon_hs_combo = QComboBox()
             for student in self.data["Danh_sach_hoc_sinh"]:
                 self.chon_hs_combo.addItem(f"{student.get('Họ', '')} {student.get('Tên', '')}")
@@ -399,6 +414,11 @@ class Main(QMainWindow):
         gk = self.gk.text()
         hk = self.hk.text()
 
+        # Cập nhật table tương ứng
+        self.update_table_after_nhap_diem(hoc_ki, selected_student_index, mon_hoc)
+        self.save_data()
+        self.nhap_diem_dialog.close()
+
         student = self.data["Danh_sach_hoc_sinh"][selected_student_index]
 
         # Đảm bảo cấu trúc dữ liệu chính xác
@@ -429,6 +449,46 @@ class Main(QMainWindow):
 
         self.save_data()
         self.nhap_diem_dialog.close()
+
+        self.fill_tables()
+
+        self.nhap_diem_dialog.close()
+        
+    def update_table_after_nhap_diem(self, hoc_ki, row_index, mon_hoc):
+        """Cập nhật table sau khi nhập điểm."""
+        student = self.data["Danh_sach_hoc_sinh"][row_index]
+        if hoc_ki == "Học kỳ 1":
+            table = self.table_HK1
+        elif hoc_ki == "Học kỳ 2":
+            table = self.table_HK2
+        else:
+            return
+
+        # Directly calculate column_index based on subject
+        subject_order = [
+            "Toán",
+            "Văn",
+            "Anh",
+            "Khoa học tự nhiên",
+            "Lịch sử - địa lý",
+            "Tin học",
+            "Công nghệ",
+            "Giáo dục công dân",
+        ]
+        if mon_hoc in subject_order:
+            column_index = 4 + subject_order.index(mon_hoc)  # 4 is the starting index for grades
+
+            if hoc_ki in student["Điểm trong năm"]:
+                for j, grade_type in enumerate(
+                    ["TX1", "TX2", "TX3", "TX4", "GK1" if hoc_ki == "Học kỳ 1" else "GK2", "HK1" if hoc_ki == "Học kỳ 1" else "HK2", "ĐTBM"]
+                ):
+                    table.setItem(
+                        row_index,
+                        column_index + j,  # Use j to get correct column for grade_type
+                        QTableWidgetItem(
+                            str(student["Điểm trong năm"][hoc_ki][mon_hoc].get(grade_type, ""))
+                        ),
+                    )
 
     def calculate_dtbm(self, tx1, tx2, tx3, tx4, gk, hk):
         try:
@@ -463,7 +523,7 @@ class Main(QMainWindow):
         layout.addWidget(self.ten, 3, 1)
 
         luu_btn = QPushButton("Lưu")
-        luu_btn.clicked.connect(self._add_information_to_table)
+        luu_btn.clicked.connect(self.add_information_to_table)
         layout.addWidget(luu_btn, 4, 0, 1, 2)
 
         self.sua_thong_tin_dialog.setLayout(layout)
@@ -655,16 +715,44 @@ class Main(QMainWindow):
             self.msg_box.setText("Vui lòng nhập đầy đủ thông tin!")
             self.msg_box.exec()
             return
-        # Thêm thông tin học sinh mới vào dữ liệu
+
+        # Thêm thông tin học sinh mới
         new_student = {
             "Số thứ tự": self.stt.text(),
             "Họ": self.ho.text(),
             "Tên": self.ten.text(),
-            "Điểm trong năm": {},
+            "Điểm trong năm": {
+                "Học kỳ 1": {
+                    "Toán": {},
+                    "Văn": {},
+                    "Anh": {},
+                    "Khoa học tự nhiên": {},
+                    "Lịch sử - địa lý": {},
+                    "Tin học": {},
+                    "Công nghệ": {},
+                    "Giáo dục công dân": {},
+                },
+                "Học kỳ 2": {
+                    "Toán": {},
+                    "Văn": {},
+                    "Anh": {},
+                    "Khoa học tự nhiên": {},
+                    "Lịch sử - địa lý": {},
+                    "Tin học": {},
+                    "Công nghệ": {},
+                    "Giáo dục công dân": {},
+                },
+            },
         }
         self.data["Danh_sach_hoc_sinh"].append(new_student)
-        
-        # Cập nhật lại bảng sau khi thêm
+
+        # Cập nhật combobox chọn học sinh
+        self.chon_hs_combo.addItem(f"{new_student['Họ']} {new_student['Tên']}")
+
+        # Lưu dữ liệu vào file JSON
+        self.save_data()
+
+        # Cập nhật bảng sau khi thêm
         self.fill_tables()
 
         # Xóa nội dung trong các QLineEdit
@@ -672,6 +760,31 @@ class Main(QMainWindow):
         self.ho.clear()
         self.ten.clear()
 
+    def update_subject_combobox(self):
+        """Cập nhật combobox môn học dựa trên tab hiện tại."""
+        if self.table is self.table_HK1:
+            combobox = self.xem_hk1
+        elif self.table is self.table_HK2:
+            combobox = self.xem_hk2
+        elif self.table is self.table_CN:
+            combobox = self.xem_cn
+        else:
+            return
+
+        combobox.clear()
+        combobox.addItem("")
+        combobox.addItems(
+            [
+                "Toán",
+                "Văn",
+                "Anh",
+                "Khoa học tự nhiên",
+                "Lịch sử - địa lý",
+                "Tin học",
+                "Công nghệ",
+                "Giáo dục công dân",
+            ]
+        )
 
 
     def clear_information(self):
