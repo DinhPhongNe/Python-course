@@ -1,6 +1,68 @@
 {
     "Danh_sach_hoc_sinh": [
         {
+            "Số thứ tự": "88012",
+            "Họ": "Lại",
+            "Tên": "La",
+            "Điểm trong năm": {
+                "Học kỳ 1": {
+                    "Toán": {
+                        "TX1": "9",
+                        "TX2": "7",
+                        "TX3": "8",
+                        "TX4": "6",
+                        "GK1": "5",
+                        "HK1": "5",
+                        "ĐTBM": "6.11"
+                    },
+                    "Văn": {
+                        "TX1": "1",
+                        "TX2": "1111111",
+                        "TX3": "111111",
+                        "TX4": "11111111111",
+                        "GK1": "111111",
+                        "HK1": "11111111111",
+                        "ĐTBM": "4938432098.78"
+                    }
+                }
+            }
+        },
+        {
+            "Số thứ tự": "88023",
+            "Họ": "2",
+            "Tên": "3",
+            "Điểm trong năm": {
+                "Học kỳ 1": {
+                    "Toán": {
+                        "TX1": "1",
+                        "TX2": "11",
+                        "TX3": "1111111",
+                        "TX4": "1111111111111",
+                        "GK1": "11111111",
+                        "HK1": "1111111",
+                        "ĐTBM": "123459753087.67"
+                    },
+                    "Văn": {},
+                    "Anh": {},
+                    "Khoa học tự nhiên": {},
+                    "Lịch sử - địa lý": {},
+                    "Tin học": {},
+                    "Công nghệ": {},
+                    "Giáo dục công dân": {}
+                },
+                "Học kỳ 2": {
+                    "Toán": {},
+                    "Văn": {},
+                    "Anh": {},
+                    "Khoa học tự nhiên": {},
+                    "Lịch sử - địa lý": {},
+                    "Tin học": {},
+                    "Công nghệ": {},
+                    "Giáo dục công dân": {}
+                }
+            }
+        },
+        {
             "None": 0,
             "Số thứ tự": "88041",
             "Họ": "Võ",
@@ -147,97 +209,75 @@
                         "HK2": "9",
                         "ĐTBM": "9.0"
                     }
-                }
-            }
-        },
-        {
-            "Số thứ tự": "88012",
-            "Họ": "Lại",
-            "Tên": "La",
-            "Điểm trong năm": {
-                "Học kỳ 1": {
-                    "Toán": {
-                        "TX1": "9",
-                        "TX2": "7",
-                        "TX3": "8",
-                        "TX4": "6",
-                        "GK1": "5",
-                        "HK1": "5",
-                        "ĐTBM": "6.11"
-                    },
-                    "Văn": {
-                        "TX1": "9",
-                        "TX2": "7",
-                        "TX3": "8",
-                        "TX4": "6",
-                        "GK1": "5",
-                        "HK1": "5",
-                        "ĐTBM": "6.11"
-                    }
-                }
-            }
-        },
-        {
-            "Số thứ tự": "1",
-            "Họ": "1",
-            "Tên": "1",
-            "Điểm trong năm": {
-                "Học kỳ 1": {
-                    "Toán": {
-                        "TX1": "1",
-                        "TX2": "1",
-                        "TX3": "2",
-                        "TX4": "2",
-                        "GK1": "3",
-                        "HK1": "3",
-                        "ĐTBM": "2.33"
-                    },
-                    "Văn": {
-                        "TX1": "1",
-                        "TX2": "1",
-                        "TX3": "1",
-                        "TX4": "1",
-                        "GK1": "1",
-                        "HK1": "1",
-                        "ĐTBM": "1.00"
-                    }
-                }
-            }
-        },
-        {
-            "Số thứ tự": "122",
-            "Họ": "22",
-            "Tên": "12",
-            "Điểm trong năm": {
-                "Học kỳ 1": {
-                    "Toán": {
-                        "TX1": "2",
-                        "TX2": "2",
-                        "TX3": "3",
-                        "TX4": "3",
-                        "GK1": "4",
-                        "HK1": "4",
-                        "ĐTBM": "3.33"
-                    },
-                    "Khoa học tự nhiên": {
-                        "TX1": "2",
-                        "TX2": "2",
-                        "TX3": "12",
-                        "TX4": "22",
-                        "GK1": "2",
-                        "HK1": "2",
-                        "ĐTBM": "5.33"
-                    }
                 },
-                "Học kỳ 2": {
-                    "Toán": {
-                        "TX1": "1",
-                        "TX2": "1",
-                        "TX3": "11",
-                        "TX4": "1",
-                        "GK2": "1",
-                        "HK2": "1",
-                        "ĐTBM": "2.11"
+                "Điểm trung bình cả năm": {
+                    "Học kỳ 1": {
+                        "Toán": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Văn": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Anh": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Khoa học tự nhiên": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Lịch sử - địa lý": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Tin học": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Công nghệ": {
+                            "GK1": null,
+                            "HK1": null
+                        },
+                        "Giáo dục công dân": {
+                            "GK1": null,
+                            "HK1": null
+                        }
+                    },
+                    "Học kỳ 2": {
+                        "Toán": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Văn": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Anh": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Khoa học tự nhiên": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Lịch sử - địa lý": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Tin học": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Công nghệ": {
+                            "GK2": null,
+                            "HK2": null
+                        },
+                        "Giáo dục công dân": {
+                            "GK2": null,
+                            "HK2": null
+                        }
                     }
                 }
             }
