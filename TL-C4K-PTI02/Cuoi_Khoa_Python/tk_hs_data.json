@@ -1,0 +1,11 @@
+{
+    "Danh_sach_tai_khoan": [
+        {
+            "id_tai_khoan": 88041,
+            "ten_tai_khoan": "Võ Đình Phong",
+            "MK_tai_khoan": 123,
+            "so_thu_tu": 41,
+            "so_dien_thoai": 9876543210
+        }
+    ]
+}

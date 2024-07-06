@@ -76,6 +76,9 @@ color: #F8F2EC;
 border-style: solid;
 border-radius: 10px;</string>
     </property>
+    <property name="text">
+     <string/>
+    </property>
     <property name="echoMode">
      <enum>QLineEdit::Password</enum>
     </property>
@@ -110,7 +113,7 @@ border-radius: 10px;</string>
      <rect>
       <x>570</x>
       <y>360</y>
-      <width>171</width>
+      <width>191</width>
       <height>31</height>
      </rect>
     </property>
@@ -127,10 +130,10 @@ border-radius: 10px;</string>
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Nhập số điện thoại</string>
+     <string>Nhập số thứ tự/id học sinh</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Phone_HS">
+   <widget class="QLineEdit" name="id_hs">
     <property name="geometry">
      <rect>
       <x>570</x>
@@ -153,6 +156,12 @@ border-radius: 10px;</string>
 color: #F8F2EC;
 border-style: solid;
 border-radius: 10px;</string>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">

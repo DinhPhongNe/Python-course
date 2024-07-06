@@ -36,6 +36,10 @@ class Main(QMainWindow):
         self.sua_diem_dialog = None
         self.xem_bai_tap_dialog = None
         self.load_data()
+        
+        # Khởi tạo current_teacher_table và current_student_table
+        self.current_teacher_table = None
+        self.current_student_table = None
 
         self.msg_box = QMessageBox()
         self.msg_box.setWindowTitle("Lỗi")
@@ -130,14 +134,14 @@ class Main(QMainWindow):
         self.teacher_login.hide()
 
     def on_tab_changed(self, index):
-        """Cập nhật self.table dựa trên tab hiện tại."""
+        """Cập nhật self.current_teacher_table dựa trên tab hiện tại của giáo viên."""
         if index == 0:
-            self.table = self.table_HK1
+            self.current_teacher_table = self.table_HK1
         elif index == 1:
-            self.table = self.table_HK2
+            self.current_teacher_table = self.table_HK2
         elif index == 2:
-            self.table = self.table_CN
-        
+            self.current_teacher_table = self.table_CN
+
         # Cập nhật lại combobox môn học cho tab hiện tại
         self.update_subject_combobox()
             
@@ -648,6 +652,8 @@ class Main(QMainWindow):
             return 0
 
     def show_sua_thong_tin_dialog(self):
+        """Hiển thị hộp thoại để sửa thông tin học sinh."""
+        current_row = self.current_teacher_table.currentRow()
         self.sua_thong_tin_dialog = QDialog(self)
         self.sua_thong_tin_dialog.setWindowTitle("Thêm thông tin học sinh")
         layout = QGridLayout()
@@ -703,7 +709,7 @@ class Main(QMainWindow):
 
     def update_thong_tin_hoc_sinh(self):
         """Cập nhật thông tin học sinh từ hộp thoại sửa."""
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
             student["Số thứ tự"] = self.stt_edit.text()  # Update with edited values
@@ -719,7 +725,7 @@ class Main(QMainWindow):
             self.sua_thong_tin_dialog.close()
             
     def show_sua_diem_dialog(self):
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
             self.sua_diem_dialog = QDialog(self)
@@ -741,7 +747,7 @@ class Main(QMainWindow):
             self.sua_diem_dialog.show()
 
     def update_sua_diem_dialog(self, text):
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
             self.grid_layout_sua.deleteLater()
@@ -770,7 +776,7 @@ class Main(QMainWindow):
         self.update_sua_diem_form_mon_hoc("Toán")
 
     def update_sua_diem_form_mon_hoc(self, mon_hoc):
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
             hoc_ki = self.combo_hk_sua.currentText()
@@ -810,7 +816,7 @@ class Main(QMainWindow):
             self.grid_layout_sua.addWidget(luu_btn_sua, 7, 0, 1, 2)
 
     def update_diem_hoc_sinh(self):
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
             
@@ -925,12 +931,12 @@ class Main(QMainWindow):
         self.ten.clear()
 
     def update_subject_combobox(self):
-        """Cập nhật combobox môn học dựa trên tab hiện tại."""
-        if self.table is self.table_HK1:
+        """Cập nhật combobox môn học dựa trên tab hiện tại của giáo viên."""
+        if self.current_teacher_table is self.table_HK1: # Sử dụng current_teacher_table
             combobox = self.xem_hk1
-        elif self.table is self.table_HK2:
+        elif self.current_teacher_table is self.table_HK2:
             combobox = self.xem_hk2
-        elif self.table is self.table_CN:
+        elif self.current_teacher_table is self.table_CN:
             combobox = self.xem_cn
         else:
             return
@@ -984,7 +990,7 @@ class Main(QMainWindow):
         self.fill_tables()
 
     def delete_information(self):
-        current_row = self.table.currentRow()
+        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
         if current_row != -1:
             # Remove student from data dictionary
             del self.data["Danh_sach_hoc_sinh"][current_row]
@@ -1269,29 +1275,227 @@ class Main(QMainWindow):
     def Login_hs(self):
         if not self.student_login:
             self.student_login = uic.loadUi("gui/login-student.ui")
-            self.student_login.HocSinhLogin_btn.clicked.connect(self.HocSinhClicked)
-            self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
+            self.student_login.HocSinhLogin_btn.clicked.connect(self.check_login_hs)
+            self.student_login.goback_hs_btn.clicked.connect(self.goback_tc_Clicked)
+            self.student_login.id_hs.setValidator(self.phone_validator) # Giả sử ID là số, bạn có thể thay đổi validator nếu cần
 
         self.student_login.show()
         self.hide()
+    
+    def check_login_hs(self):
+        """Kiểm tra thông tin đăng nhập của học sinh."""
+        id_tai_khoan = self.student_login.id_hs.text()
+        mat_khau = self.student_login.pass_HS.text()
 
-    def HocSinhClicked(self):
-        Phone = self.student_login.Phone_HS.text()
-        password = self.student_login.Pass_HS.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
+        try:
+            with open("tk_hs_data.json", "r", encoding="utf-8") as f:
+                tk_hs_data = json.load(f)
+        except FileNotFoundError:
+            self.msg_box.setText("Không tìm thấy file tk_hs_data.json!")
             self.msg_box.exec()
             return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        
-        self.HocSinhClicked()
 
-    def goback_hs_Clicked(self):
-        self.student_login.hide()
+        for tai_khoan in tk_hs_data.get("Danh_sach_tai_khoan", []):
+            if (
+                str(tai_khoan.get("id_tai_khoan", "")) == id_tai_khoan
+                and str(tai_khoan.get("MK_tai_khoan", "")) == mat_khau
+            ):
+                self.student_login.hide()
+                self.HocSinhClicked(tai_khoan)  # Truyền thông tin tài khoản
+                return
+
+        self.msg_box.setText("Sai ID tài khoản hoặc mật khẩu!")
+        self.msg_box.exec()
+
+    def HocSinhClicked(self, tai_khoan):
+        """Hiển thị giao diện chính của học sinh."""
+
+        # Luôn khởi tạo các thành phần UI
+        self.student_main = uic.loadUi("gui/main-st.ui")
+        self.tab_widget_hs = self.student_main.findChild(QTabWidget, "Semester_tab_hs")
+        self.table_HK1_hs = self.student_main.findChild(QTableWidget, "student_Infor_table_HK1_hs")
+        self.table_HK2_hs = self.student_main.findChild(QTableWidget, "student_Infor_table_HK2_hs")
+        self.table_CN_hs = self.student_main.findChild(QTableWidget, "student_Infor_table_CN_hs")
+        self.xem_hk1_hs = self.student_main.findChild(QComboBox, "xem_diem_mon_hk1_hs")
+        self.xem_hk2_hs = self.student_main.findChild(QComboBox, "xem_diem_mon_hk2_hs")
+        self.xem_cn_hs = self.student_main.findChild(QComboBox, "xem_diem_mon_cn_hs")
+
+        self.student_main.ten_hoc_sinh.setText(tai_khoan.get("ten_tai_khoan", ""))
+        self.student_main.so_thu_tu_hs.setText(str(tai_khoan.get("so_thu_tu", "")))
+        self.student_main.id_tai_khoan.setText(str(tai_khoan.get("id_tai_khoan", "")))
+        self.student_main.logOut_btn_tc.clicked.connect(self.HocSinhMain_Return)
+        self.student_main.xem_bai_tap_hs.clicked.connect(self.show_xem_bai_tap_dialog_hs)
+        
+        self.tab_widget_hs.currentChanged.connect(self.on_tab_changed_hs)
+        self.on_tab_changed_hs(self.tab_widget_hs.currentIndex()) 
+
+        self.setup_table(self.table_HK1_hs, "Học kỳ 1")
+        self.setup_table(self.table_HK2_hs, "Học kỳ 2")
+        self.setup_table(self.table_CN_hs, "Cả năm")
+        self.fill_tables_hs(tai_khoan)
+        self.load_data()
+        
+        self.xem_hk1_hs.currentTextChanged.connect(lambda text: self.show_column(self.table_HK1_hs, text))
+        self.xem_hk2_hs.currentTextChanged.connect(lambda text: self.show_column(self.table_HK2_hs, text))
+        self.xem_cn_hs.currentTextChanged.connect(lambda text: self.show_column(self.table_CN_hs, text))
+
+        self.student_main.show()
+        
+    def on_tab_changed_hs(self, index):
+        """Cập nhật self.current_student_table dựa trên tab hiện tại của học sinh."""
+        if index == 0:
+            self.current_student_table = self.table_HK1_hs
+        elif index == 1:
+            self.current_student_table = self.table_HK2_hs
+        elif index == 2:
+            self.current_student_table = self.table_CN_hs
+
+        # Cập nhật lại combobox môn học cho tab hiện tại
+        self.update_subject_combobox_hs()
+        
+    def update_subject_combobox_hs(self):
+        """Cập nhật combobox môn học dựa trên tab hiện tại của học sinh."""
+        if self.current_student_table is self.table_HK1_hs:  # Sử dụng current_student_table
+            combobox = self.xem_hk1_hs
+        elif self.current_student_table is self.table_HK2_hs:
+            combobox = self.xem_hk2_hs
+        elif self.current_student_table is self.table_CN_hs:
+            combobox = self.xem_cn_hs
+        else:
+            return
+
+        combobox.clear()
+        combobox.addItem("")
+        combobox.addItems(
+            [
+                "Toán",
+                "Văn",
+                "Anh",
+                "Khoa học tự nhiên",
+                "Lịch sử - địa lý",
+                "Tin học",
+                "Công nghệ",
+                "Giáo dục công dân",
+            ]
+        )
+        
+    def fill_tables_hs(self, tai_khoan):
+        """Điền dữ liệu vào bảng điểm của học sinh."""
+        self.table_HK1_hs.setRowCount(0)
+        self.table_HK2_hs.setRowCount(0)
+        self.table_CN_hs.setRowCount(0)
+        
+        # Lấy id_tai_khoan từ thông tin tài khoản
+        student_id = tai_khoan.get("id_tai_khoan")
+
+        # Tìm học sinh theo id_tai_khoan
+        for student in self.data["Danh_sach_hoc_sinh"]:
+            if student.get("Số thứ tự") == str(student_id):
+                # Thêm thông tin học sinh vào các cột tương ứng
+                row_position = self.table_HK1_hs.rowCount()
+                self.table_HK1_hs.insertRow(row_position)
+                self.table_HK2_hs.insertRow(row_position)
+                self.table_CN_hs.insertRow(row_position)
+
+                self.table_HK1_hs.setItem(0, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+                self.table_HK1_hs.setItem(0, 1, QTableWidgetItem(student.get("Họ", "")))
+                self.table_HK1_hs.setItem(0, 2, QTableWidgetItem(student.get("Tên", "")))
+
+                self.table_HK2_hs.setItem(0, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+                self.table_HK2_hs.setItem(0, 1, QTableWidgetItem(student.get("Họ", "")))
+                self.table_HK2_hs.setItem(0, 2, QTableWidgetItem(student.get("Tên", "")))
+
+                self.table_CN_hs.setItem(0, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+                self.table_CN_hs.setItem(0, 1, QTableWidgetItem(student.get("Họ", "")))
+                self.table_CN_hs.setItem(0, 2, QTableWidgetItem(student.get("Tên", "")))
+
+                for i, subject in enumerate(
+                    [
+                        "Toán",
+                        "Văn",
+                        "Anh",
+                        "Khoa học tự nhiên",
+                        "Lịch sử - địa lý",
+                        "Tin học",
+                        "Công nghệ",
+                        "Giáo dục công dân",
+                    ]
+                ):
+                    for semester_key, table in [
+                        ("Học kỳ 1", self.table_HK1_hs),
+                        ("Học kỳ 2", self.table_HK2_hs),
+                    ]:
+                        if (
+                            semester_key in student.get("Điểm trong năm", {})
+                            and subject in student["Điểm trong năm"][semester_key]
+                        ):
+                            for j, grade_type in enumerate(
+                                [
+                                    "TX1",
+                                    "TX2",
+                                    "TX3",
+                                    "TX4",
+                                    "GK1" if semester_key == "Học kỳ 1" else "GK2",
+                                    "HK1" if semester_key == "Học kỳ 1" else "HK2",
+                                    "ĐTBM",
+                                ]
+                            ):
+                                table.setItem(
+                                    0,  # Luôn là hàng 0 vì chỉ có 1 học sinh
+                                    i + 3 + j,
+                                    QTableWidgetItem(
+                                        str(
+                                            student["Điểm trong năm"][semester_key][
+                                                subject
+                                            ].get(grade_type, "")
+                                        )
+                                    ),
+                                )
+
+                    try:
+                        gk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("GK1", "0")
+                        gk1 = float(gk1_str) if gk1_str else 0.0
+                        hk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("HK1", "0")
+                        hk1 = float(hk1_str) if hk1_str else 0.0
+                        gk2_str = student["Điểm trong năm"]["Học kỳ 2"][subject].get("GK2", "0")
+                        gk2 = float(gk2_str) if gk2_str else 0.0
+                        hk2_str = student["Điểm trong năm"]["Học kỳ 2"][subject].get("HK2", "0")
+                        hk2 = float(hk2_str) if hk2_str else 0.0
+
+                        dtbm_cn = (gk1 + hk1 + (gk2 + hk2) * 2) / 6
+
+                        self.table_CN_hs.setItem(0, i * 5 + 3, QTableWidgetItem(str(gk1) if gk1 else ""))
+                        self.table_CN_hs.setItem(0, i * 5 + 4, QTableWidgetItem(str(hk1) if hk1 else ""))
+                        self.table_CN_hs.setItem(0, i * 5 + 5, QTableWidgetItem(str(gk2) if gk2 else ""))
+                        self.table_CN_hs.setItem(0, i * 5 + 6, QTableWidgetItem(str(hk2) if hk2 else ""))
+                        self.table_CN_hs.setItem(0, i * 5 + 7, QTableWidgetItem(f"{dtbm_cn:.2f}"))
+                    except KeyError:
+                        for col in range(5):
+                            self.table_CN_hs.setItem(0, i * 5 + 3 + col, QTableWidgetItem(""))
+                break  # Đã tìm thấy học sinh, thoát khỏi vòng lặp
+
+    def show_xem_bai_tap_dialog_hs(self):
+        """Hiển thị hộp thoại xem bài tập cho học sinh (chỉ xem và tải về)."""
+        if not self.xem_bai_tap_dialog:
+            self.xem_bai_tap_dialog = QDialog(self)
+            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập")
+
+            layout = QVBoxLayout()
+            self.btvn_list = QListWidget()
+            self.update_btvn_list()  # Hiển thị danh sách file bài tập
+            layout.addWidget(self.btvn_list)
+
+            # Chỉ có nút tải về
+            download_btn = QPushButton("Tải Về")
+            download_btn.clicked.connect(self.download_btvn)
+            layout.addWidget(download_btn)
+
+            self.xem_bai_tap_dialog.setLayout(layout)
+
+        self.xem_bai_tap_dialog.show()
+
+    def HocSinhMain_Return(self):
+        self.student_main.hide()
         self.show()
 
 if __name__ == "__main__":
