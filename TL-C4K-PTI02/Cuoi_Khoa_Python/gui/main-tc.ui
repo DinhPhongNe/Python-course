@@ -1616,7 +1616,7 @@ color: #F8F2EC;</string>
     <property name="geometry">
      <rect>
       <x>1090</x>
-      <y>200</y>
+      <y>230</y>
       <width>251</width>
       <height>91</height>
      </rect>
@@ -1687,7 +1687,7 @@ color: #F8F2EC;</string>
     <property name="geometry">
      <rect>
       <x>1090</x>
-      <y>100</y>
+      <y>30</y>
       <width>251</width>
       <height>91</height>
      </rect>
@@ -1843,6 +1843,77 @@ background-color: rgb(132,232,246);</string>
     <property name="flat">
      <bool>false</bool>
     </property>
+   </widget>
+   <widget class="QFrame" name="info_frame_9">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>130</y>
+      <width>251</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255,255,255);
+border-radius: 20px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_31">
+     <property name="leftMargin">
+      <number>30</number>
+     </property>
+     <property name="topMargin">
+      <number>20</number>
+     </property>
+     <property name="rightMargin">
+      <number>30</number>
+     </property>
+     <property name="bottomMargin">
+      <number>20</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>20</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="xem_bai_tap">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift</family>
+         <pointsize>16</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 10px;
+font: 600 16pt &quot;Bahnschrift&quot;;
+background-color:rgb(129, 201, 255);
+color: #F8F2EC;</string>
+       </property>
+       <property name="text">
+        <string>Xem bài tập đã giao</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

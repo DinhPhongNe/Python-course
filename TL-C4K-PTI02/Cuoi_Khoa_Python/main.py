@@ -1,10 +1,12 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIntValidator
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog
 from PyQt6 import uic
 import random
 import json
+import os
+import shutil
 
 class Main(QMainWindow):
     def __init__(self) -> None:
@@ -32,6 +34,7 @@ class Main(QMainWindow):
         self.nhap_diem_dialog = None
         self.sua_thong_tin_dialog = None
         self.sua_diem_dialog = None
+        self.xem_bai_tap_dialog = None
         self.load_data()
 
         self.msg_box = QMessageBox()
@@ -93,6 +96,7 @@ class Main(QMainWindow):
             self.teacher_main.delete_btn.clicked.connect(self.delete_information)
             self.teacher_main.search_btn.clicked.connect(self.search)
             self.teacher_main.clear_btn.clicked.connect(self.clear_information)
+            self.teacher_main.xem_bai_tap.clicked.connect(self.show_xem_bai_tap_dialog)
             self.teacher_main.btvn_upload_btn.clicked.connect(self.upload_btvn)
 
             self.table = self.teacher_main.findChild(QTabWidget, "Semester_tab")
@@ -140,19 +144,19 @@ class Main(QMainWindow):
     def load_data(self):
         """Load data from JSON file and sort students."""
         try:
-            with open("test.json", "r", encoding="utf-8") as f:
+            with open("diem_database.json", "r", encoding="utf-8") as f:
                 self.data = json.load(f)
         except FileNotFoundError:
             self.data = {"Danh_sach_hoc_sinh": []}
         except Exception as e:
-            print(f"Lỗi khi đọc file test.json: {e}")
+            print(f"Lỗi khi đọc file diem_database.json: {e}")
 
         self.sort_students()  # Sort students after loading data
 
     def save_data(self):
         """Sort students before saving data to JSON file."""
         self.sort_students()
-        with open("test.json", "w", encoding="utf-8") as f:
+        with open("diem_database.json", "w", encoding="utf-8") as f:
             json.dump(self.data, f, indent=4, ensure_ascii=False)
 
     def sort_students(self):
@@ -160,9 +164,13 @@ class Main(QMainWindow):
         self.data["Danh_sach_hoc_sinh"].sort(key=lambda student: int(student["Số thứ tự"]))
 
     def setup_table(self, table, semester):
-        table.setColumnCount(11)
-        table.setHorizontalHeaderLabels(
-            [
+        """Thiết lập bảng, bao gồm cả bảng điểm trung bình cả năm."""
+        if semester == "Cả năm":
+            column_count = 8  # STT, Họ, Tên, GK1, HK1, GK2, HK2, ĐTBCN
+            header_labels = ["STT", "Họ", "Tên", "GK1", "HK1", "GK2", "HK2", "ĐTBCN"]
+        else:
+            column_count = 11
+            header_labels = [
                 "Số thứ tự",
                 "Họ",
                 "Tên",
@@ -175,7 +183,10 @@ class Main(QMainWindow):
                 "ĐTB",
                 "Điểm TB môn cả năm",
             ]
-        )
+
+        table.setColumnCount(column_count)
+        table.setHorizontalHeaderLabels(header_labels)
+        
         table.setColumnWidth(0, 50)
         table.setColumnWidth(1, 50)
         table.setColumnWidth(2, 80)
@@ -200,25 +211,32 @@ class Main(QMainWindow):
         self.table_CN.setRowCount(0) 
         
 
+    def fill_tables(self):
+        """Điền dữ liệu vào bảng, bao gồm cả bảng điểm trung bình cả năm."""
+        self.table_HK1.setRowCount(0)
+        self.table_HK2.setRowCount(0)
+        self.table_CN.setRowCount(0)
+
         for row, student in enumerate(self.data["Danh_sach_hoc_sinh"]):
-            # Thêm thông tin học sinh vào các cột tương ứng (chỉnh sửa chỉ số cột)
+            # Thêm thông tin học sinh vào các cột tương ứng
             row_position = self.table_HK1.rowCount()
             self.table_HK1.insertRow(row_position)
             self.table_HK2.insertRow(row_position)
             self.table_CN.insertRow(row_position)
-            
-            self.table_HK1.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", ""))) 
-            self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))  
-            self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Tên", ""))) 
+
+            self.table_HK1.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
+            self.table_HK1.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
+            self.table_HK1.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
 
             self.table_HK2.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_HK2.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
             self.table_HK2.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
 
+            # Điền số thứ tự, họ và tên vào table_CN
             self.table_CN.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_CN.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
             self.table_CN.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
-            
+
             for i, subject in enumerate(
                 [
                     "Toán",
@@ -231,6 +249,7 @@ class Main(QMainWindow):
                     "Giáo dục công dân",
                 ]
             ):
+                # Điền điểm cho học kỳ 1 và 2
                 for semester_key, table in [
                     ("Học kỳ 1", self.table_HK1),
                     ("Học kỳ 2", self.table_HK2),
@@ -252,7 +271,7 @@ class Main(QMainWindow):
                         ):
                             table.setItem(
                                 row,
-                                i + 4 + j,
+                                i + 3 + j,
                                 QTableWidgetItem(
                                     str(
                                         student["Điểm trong năm"][semester_key][
@@ -262,45 +281,40 @@ class Main(QMainWindow):
                                 ),
                             )
 
-            # Cập nhật cột Điểm TB môn cả năm
-            if "Điểm trung bình cả năm" in student:
-                for i, subject in enumerate(
-                    [
-                        "Toán",
-                        "Văn",
-                        "Anh",
-                        "Khoa học tự nhiên",
-                        "Lịch sử - địa lý",
-                        "Tin học",
-                        "Công nghệ",
-                        "Giáo dục công dân",
-                    ]
-                ):
-                    try:
-                        dtbm_hk1 = float(
-                            student["Điểm trong năm"]["Học kỳ 1"][subject]["ĐTBM"]
-                        )
-                        dtbm_hk2 = float(
-                            student["Điểm trong năm"]["Học kỳ 2"][subject]["ĐTBM"]
-                        )
-                        dtbm_cn = (dtbm_hk1 + (dtbm_hk2 * 2)) / 3
-                        self.table_CN.setItem(
-                            row, i + 4, QTableWidgetItem(f"{dtbm_cn:.2f}")
-                        )
-                    except KeyError:
-                        self.table_CN.setItem(row, i + 4, QTableWidgetItem(""))
+                # Điền điểm trung bình cả năm, bắt đầu từ cột 3
+                try:
+                    # Lấy giá trị chuỗi và chuyển đổi sang float, xử lý trường hợp chuỗi rỗng
+                    gk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("GK1", "0")
+                    gk1 = float(gk1_str) if gk1_str else 0.0
+                    hk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("HK1", "0")
+                    hk1 = float(hk1_str) if hk1_str else 0.0
+                    gk2_str = student["Điểm trong năm"]["Học kỳ 2"][subject].get("GK2", "0")
+                    gk2 = float(gk2_str) if gk2_str else 0.0
+                    hk2_str = student["Điểm trong năm"]["Học kỳ 2"][subject].get("HK2", "0")
+                    hk2 = float(hk2_str) if hk2_str else 0.0
+
+                    dtbm_cn = (gk1 + hk1 + (gk2 + hk2) * 2) / 6  # Tính ĐTBCN
+
+                    self.table_CN.setItem(row, i * 5 + 3, QTableWidgetItem(str(gk1) if gk1 else ""))
+                    self.table_CN.setItem(row, i * 5 + 4, QTableWidgetItem(str(hk1) if hk1 else ""))
+                    self.table_CN.setItem(row, i * 5 + 5, QTableWidgetItem(str(gk2) if gk2 else ""))
+                    self.table_CN.setItem(row, i * 5 + 6, QTableWidgetItem(str(hk2) if hk2 else ""))
+                    self.table_CN.setItem(row, i * 5 + 7, QTableWidgetItem(f"{dtbm_cn:.2f}"))
+                except KeyError:
+                    # Xử lý trường hợp thiếu điểm
+                    for col in range(5):
+                        self.table_CN.setItem(row, i * 5 + 3 + col, QTableWidgetItem(""))
                         
                         
     def show_column(self, table, subject):
-        # Ẩn các cột liên quan đến điểm môn học (từ cột "TX1" đến "ĐTBM")
-        for column in range(10, 16): 
-            table.setColumnHidden(column, True)
+        if table == self.table_CN:
+            # Ẩn tất cả các cột điểm trong bảng table_CN
+            for i in range(3, table.columnCount()):
+                table.setColumnHidden(i, True)
 
-        column_index = 4  # Gán giá trị mặc định cho column_index 
-
-        if subject:
-            for i, item in enumerate(
-                [
+            # Hiển thị các cột điểm tương ứng với môn học được chọn
+            if subject:
+                column_index = 3 + 5 * [
                     "Toán",
                     "Văn",
                     "Anh",
@@ -309,18 +323,28 @@ class Main(QMainWindow):
                     "Tin học",
                     "Công nghệ",
                     "Giáo dục công dân",
-                ]
-            ):
-                if item == subject:
-                    column_index += i
-                    break
+                ].index(subject)
+                for i in range(column_index, column_index + 5):
+                    table.setColumnHidden(i, False)
+        else:
+            # Ẩn tất cả các cột điểm trong bảng table_HK1 và table_HK2
+            for column in range(3, table.columnCount()):
+                table.setColumnHidden(column, True)
 
-        # Hiển thị các cột liên quan đến môn học được chọn
-        for column in range(column_index, column_index + 8):
-            table.setColumnHidden(column, False)
-
-        # Hiển thị cột "ĐTBM"
-        table.setColumnHidden(10, False)
+            # Hiển thị các cột điểm tương ứng với môn học được chọn
+            if subject:
+                column_index = 3 + [
+                    "Toán",
+                    "Văn",
+                    "Anh",
+                    "Khoa học tự nhiên",
+                    "Lịch sử - địa lý",
+                    "Tin học",
+                    "Công nghệ",
+                    "Giáo dục công dân",
+                ].index(subject) * 7
+                for i in range(column_index, column_index + 7):
+                    table.setColumnHidden(i, False)
 
     def search(self):
         text = self.search_bar.text().strip().lower()
@@ -621,7 +645,7 @@ class Main(QMainWindow):
         except ValueError:
             self.msg_box.setText("Vui lòng nhập số cho điểm.")
             self.msg_box.exec()
-            return None
+            return 0
 
     def show_sua_thong_tin_dialog(self):
         self.sua_thong_tin_dialog = QDialog(self)
@@ -1026,15 +1050,163 @@ class Main(QMainWindow):
     def upload_btvn(self):
         if not self.btvn_upload:
             self.btvn_upload = uic.loadUi("gui/btvn-upload.ui")
-            self.btvn_upload.pushButton.clicked.connect(self.upload_click)
+            self.btvn_upload.clickTo_Upload.clicked.connect(self.upload_click)
             #self.btvn_upload.return_btn.clicked.connect(self.return_upload)
 
         self.btvn_upload.show()
         self.hide()
         
     def upload_click(self):
+        options = QFileDialog.Option.DontUseNativeDialog
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Chọn file bài tập",
+            "",
+            "All Files (*);;PDF Files (*.pdf);;Word Documents (*.docx);;PowerPoint Presentations (*.pptx)",
+            options=options,
+        )
+
+        if file_path:
+            folder_path = "btvn"
+            if not os.path.exists(folder_path):
+                os.mkdir(folder_path)
+
+            file_name = os.path.basename(file_path)
+            destination_path = os.path.join(folder_path, file_name)
+
+            try:
+                # Sao chép file vào thư mục "btvn"
+                os.replace(file_path, destination_path)
+                self.msg_box.setWindowTitle("Thông báo")
+                self.msg_box.setIcon(QMessageBox.Icon.Information)
+                self.msg_box.setText("Tải lên bài tập thành công!")
+                self.msg_box.exec()
+
+                # Cập nhật danh sách file bài tập trong QDialog xem bài tập
+                if self.xem_bai_tap_dialog:
+                    self.update_btvn_list()
+
+            except Exception as e:
+                self.msg_box.setText(f"Lỗi khi tải lên: {e}")
+                self.msg_box.exec()
+
         self.btvn_upload.hide()
         self.teacher_main.show()
+        
+    def update_btvn_list(self):
+        self.btvn_list.clear()
+        folder_path = "btvn"
+        if os.path.exists(folder_path):
+            file_list = os.listdir(folder_path)
+            if file_list:
+                for file_name in file_list:
+                    self.btvn_list.addItem(file_name)
+            else:
+                self.btvn_list.addItem("Hiện tại không có bài tập")
+                
+    def delete_btvn(self):
+        selected_item = self.btvn_list.currentItem()
+        if selected_item and selected_item.text() != "Hiện tại không có bài tập":
+            file_name = selected_item.text()
+            folder_path = "btvn"
+            file_path = os.path.join(folder_path, file_name)
+
+            confirm_box = QMessageBox()
+            confirm_box.setWindowTitle("Xác nhận xóa")
+            confirm_box.setText(f"Bạn có chắc muốn xóa {file_name}?")
+            confirm_box.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            
+            result = confirm_box.exec()
+            if result == QMessageBox.StandardButton.Yes:
+                try:
+                    os.remove(file_path)
+                    self.update_btvn_list()  # Cập nhật danh sách sau khi xóa
+                    self.msg_box.setWindowTitle("Thông báo")
+                    self.msg_box.setIcon(QMessageBox.Icon.Information)
+                    self.msg_box.setText("Xóa bài tập thành công!")
+                    self.msg_box.exec()
+                except Exception as e:
+                    self.msg_box.setText(f"Lỗi khi xóa: {e}")
+                    self.msg_box.exec()
+
+    def rename_btvn(self):
+        selected_item = self.btvn_list.currentItem()
+        if selected_item and selected_item.text() != "Hiện tại không có bài tập":
+            old_file_name = selected_item.text()
+            folder_path = "btvn"
+            old_file_path = os.path.join(folder_path, old_file_name)
+
+            new_file_name, ok = QInputDialog.getText(
+                self, "Đổi tên bài tập", "Nhập tên mới:", text=old_file_name
+            )
+            if ok and new_file_name:
+                new_file_path = os.path.join(folder_path, new_file_name)
+                try:
+                    os.rename(old_file_path, new_file_path)
+                    self.update_btvn_list()  # Cập nhật danh sách sau khi đổi tên
+                    self.msg_box.setWindowTitle("Thông báo")
+                    self.msg_box.setIcon(QMessageBox.Icon.Information)
+                    self.msg_box.setText("Đổi tên bài tập thành công!")
+                    self.msg_box.exec()
+                except Exception as e:
+                    self.msg_box.setText(f"Lỗi khi đổi tên: {e}")
+                    self.msg_box.exec()
+                
+    def download_btvn(self):
+        selected_item = self.btvn_list.currentItem()
+        if selected_item:
+            file_name = selected_item.text()
+            folder_path = "btvn"
+            file_path = os.path.join(folder_path, file_name)
+
+            options = QFileDialog.Option.DontUseNativeDialog
+            save_path, _ = QFileDialog.getSaveFileName(
+                self,
+                "Lưu Bài Tập",
+                file_name,
+                "All Files (*);;PDF Files (*.pdf);;Word Documents (*.docx);;PowerPoint Presentations (*.pptx)",
+                options=options,
+            )
+
+            if save_path:
+                try:
+                    # Sao chép file từ thư mục "btvn" đến vị trí lưu
+                    shutil.copy2(file_path, save_path)  # Sử dụng shutil.copy2()
+                    self.msg_box.setWindowTitle("Thông báo")
+                    self.msg_box.setIcon(QMessageBox.Icon.Information)
+                    self.msg_box.setText("Tải xuống bài tập thành công!")
+                    self.msg_box.exec()
+                except Exception as e:
+                    self.msg_box.setText(f"Lỗi khi tải xuống: {e}")
+                    self.msg_box.exec()
+        
+    def show_xem_bai_tap_dialog(self):
+        if not self.xem_bai_tap_dialog:
+            self.xem_bai_tap_dialog = QDialog(self)
+            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập")
+
+            layout = QVBoxLayout()
+            self.btvn_list = QListWidget()
+            self.update_btvn_list()  # Hiển thị danh sách file bài tập
+            layout.addWidget(self.btvn_list)
+
+            # Thêm nút xóa
+            delete_btn = QPushButton("Xóa")
+            delete_btn.clicked.connect(self.delete_btvn)
+            layout.addWidget(delete_btn)
+
+            # Thêm nút chỉnh sửa tên
+            rename_btn = QPushButton("Chỉnh Sửa Tên")
+            rename_btn.clicked.connect(self.rename_btvn)
+            layout.addWidget(rename_btn)
+
+            download_btn = QPushButton("Tải Về")
+            download_btn.clicked.connect(self.download_btvn)
+            layout.addWidget(download_btn)
+
+            self.xem_bai_tap_dialog.setLayout(layout)
+
+        self.xem_bai_tap_dialog.show()
 
     def return_upload(self):
         self.btvn_upload.hide()
