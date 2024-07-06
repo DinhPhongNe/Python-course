@@ -311,44 +311,35 @@ class Main(QMainWindow):
                         
                         
     def show_column(self, table, subject):
-        if table == self.table_CN:
-            # Ẩn tất cả các cột điểm trong bảng table_CN
-            for i in range(3, table.columnCount()):
-                table.setColumnHidden(i, True)
+        """Hiển thị cột điểm của môn học được chọn và ẩn các cột khác."""
 
-            # Hiển thị các cột điểm tương ứng với môn học được chọn
-            if subject:
-                column_index = 3 + 5 * [
-                    "Toán",
-                    "Văn",
-                    "Anh",
-                    "Khoa học tự nhiên",
-                    "Lịch sử - địa lý",
-                    "Tin học",
-                    "Công nghệ",
-                    "Giáo dục công dân",
-                ].index(subject)
-                for i in range(column_index, column_index + 5):
-                    table.setColumnHidden(i, False)
-        else:
-            # Ẩn tất cả các cột điểm trong bảng table_HK1 và table_HK2
-            for column in range(3, table.columnCount()):
-                table.setColumnHidden(column, True)
+        # Xác định số cột điểm cho mỗi môn
+        columns_per_subject = 5 if table == self.table_CN else 7
 
-            # Hiển thị các cột điểm tương ứng với môn học được chọn
-            if subject:
-                column_index = 3 + [
-                    "Toán",
-                    "Văn",
-                    "Anh",
-                    "Khoa học tự nhiên",
-                    "Lịch sử - địa lý",
-                    "Tin học",
-                    "Công nghệ",
-                    "Giáo dục công dân",
-                ].index(subject) * 7
-                for i in range(column_index, column_index + 7):
-                    table.setColumnHidden(i, False)
+        # Duyệt qua tất cả các môn học
+        for i, subject_name in enumerate(
+            [
+                "Toán",
+                "Văn",
+                "Anh",
+                "Khoa học tự nhiên",
+                "Lịch sử - địa lý",
+                "Tin học",
+                "Công nghệ",
+                "Giáo dục công dân",
+            ]
+        ):
+            # Tính toán chỉ số cột bắt đầu và kết thúc cho môn học hiện tại
+            start_column = 15 + i * columns_per_subject
+            end_column = start_column + columns_per_subject
+
+            # Ẩn hoặc hiện các cột dựa trên môn học được chọn
+            if subject == subject_name:
+                for column in range(start_column, end_column):
+                    table.setColumnHidden(column, False)
+            else:
+                for column in range(start_column, end_column):
+                    table.setColumnHidden(column, True)
 
     def search(self):
         text = self.search_bar.text().strip().lower()
