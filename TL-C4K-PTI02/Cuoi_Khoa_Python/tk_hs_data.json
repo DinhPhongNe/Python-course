@@ -5,7 +5,20 @@
             "ten_tai_khoan": "Võ Đình Phong",
             "MK_tai_khoan": 123,
             "so_thu_tu": 41,
-            "so_dien_thoai": 9876543210
+            "so_dien_thoai": 9876543210,
+            "birthday": "27-04-2006",
+            "age": 16,
+            "gender": "male"
+        },
+        {
+            "id_tai_khoan": "88055",
+            "ten_tai_khoan": "ÔI MÁ ƠI",
+            "MK_tai_khoan": "123456",
+            "so_thu_tu": "88055",
+            "so_dien_thoai": "0987655432",
+            "birthday": "24-05-2012",
+            "age": "12",
+            "gender": "Nam"
         }
     ]
 }

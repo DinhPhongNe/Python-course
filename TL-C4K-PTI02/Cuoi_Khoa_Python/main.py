@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIntValidator
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox
 from PyQt6 import uic
 import random
 import json
@@ -1227,45 +1227,157 @@ class Main(QMainWindow):
     def regis(self):
         if not self.register:
             self.register = uic.loadUi("gui/register.ui")
-            #self.register.female.toggled.connect(lambda: self.btnstate(self.register.female))
-            #self.register.male.toggled.connect(lambda: self.btnstate(self.register.male))
-            self.phone_validator = QIntValidator()
-            self.phone_validator.setBottom(0)
-            self.phone_validator.setTop(999999999)
-            self.register.Phone.setValidator(self.phone_validator)
-            self.register.Register_btn.clicked.connect(self.re_register)
-            self.register.return_btn.clicked.connect(self.return_register)
-            self.register.Pass.setEchoMode(QLineEdit.EchoMode.Password)
-            self.register.RePass.setEchoMode(QLineEdit.EchoMode.Password)
+            self.Phone_reg = self.register.findChild(QLineEdit, "Phone_reg")
+            self.Phone_reg.setValidator(self.phone_validator)
+            self.pass_reg = self.register.findChild(QLineEdit, "pass_reg")
+            self.re_pass_reg = self.register.findChild(QLineEdit, "re_pass_reg")
+            self.vai_tro = self.register.findChild(QComboBox, "vai_tro")
+            self.vai_tro.addItems(["Giáo viên", "Học sinh"])
+            self.register_btn = self.register.findChild(QPushButton, "register_btn")
+            self.register_btn.clicked.connect(self.re_register)
+            self.goback_reg = self.register.findChild(QPushButton, "goback_reg")
+            self.goback_reg.clicked.connect(self.return_register)
+            self.pass_reg.setEchoMode(QLineEdit.EchoMode.Password)
+            self.re_pass_reg.setEchoMode(QLineEdit.EchoMode.Password)
 
         self.register.show()
         self.hide()
 
     def re_register(self):
-        Phone = self.register.Phone.text()
-        password = self.register.Pass.text()
-        repass = self.register.RePass.text()
-        
-        if not Phone:
-            self.msg_box.setText("vui lòng nhập số điện thoại!")
-            self.msg_box.exec()
-            return
-        if not password:
-            self.msg_box.setText("vui lòng nhập mật khẩu!")
-            self.msg_box.exec()
-            return
-        if not repass:
-            self.msg_box.setText("vui lòng nhập lại mật khẩu!")
+        phone = self.Phone_reg.text()
+        password = self.pass_reg.text()
+        repass = self.re_pass_reg.text()
+        vai_tro = self.vai_tro.currentText()
+
+        if not all([phone, password, repass]):
+            self.msg_box.setText("Vui lòng điền đầy đủ thông tin!")
             self.msg_box.exec()
             return
         if password != repass:
-            self.msg_box.setText("mật khẩu không trùng khớp!")
+            self.msg_box.setText("Mật khẩu không khớp!")
             self.msg_box.exec()
             return
 
-        self.register.hide()
-        self.show()
+        # Hiển thị dialog để nhập thêm thông tin
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Thông tin bổ sung")
+        layout = QGridLayout(dialog)
 
+        name_label = QLabel("Tên:")
+        name_edit = QLineEdit(dialog)
+        layout.addWidget(name_label, 0, 0)
+        layout.addWidget(name_edit, 0, 1)
+
+        age_label = QLabel("Tuổi:")
+        age_edit = QLineEdit(dialog)
+        age_edit.setValidator(QIntValidator())
+        layout.addWidget(age_label, 1, 0)
+        layout.addWidget(age_edit, 1, 1)
+
+        birthday_label = QLabel("Ngày sinh (dd-mm-yyyy):")
+        birthday_edit = QLineEdit(dialog)
+        layout.addWidget(birthday_label, 2, 0)
+        layout.addWidget(birthday_edit, 2, 1)
+
+        gender_label = QLabel("Giới tính:")
+        gender_combo = QComboBox(dialog)
+        gender_combo.addItems(["Nam", "Nữ"])
+        layout.addWidget(gender_label, 3, 0)
+        layout.addWidget(gender_combo, 3, 1)
+
+        button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, dialog)
+        button_box.accepted.connect(dialog.accept)
+        button_box.rejected.connect(dialog.reject)
+        layout.addWidget(button_box, 4, 0, 1, 2)
+
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            ten_tai_khoan = name_edit.text()
+            age = age_edit.text()
+            birthday = birthday_edit.text()
+            gender = gender_combo.currentText()
+
+            if vai_tro == "Giáo viên":
+                self.luu_tai_khoan_giao_vien(phone, password, ten_tai_khoan, age, birthday, gender)
+            elif vai_tro == "Học sinh":
+                so_thu_tu = self.random_so_thu_tu()
+                self.luu_tai_khoan_hoc_sinh(so_thu_tu, ten_tai_khoan, password, phone, birthday, age, gender)
+            else:
+                self.msg_box.setText("Vui lòng chọn vai trò!")
+                self.msg_box.exec()
+                return
+
+        self.restart_app()
+
+    def luu_tai_khoan_giao_vien(self, phone, password, ten_tai_khoan, age, birthday, gender):
+        try:
+            with open("tk_tc_data.json", "r", encoding="utf-8") as f:
+                tk_tc_data = json.load(f)
+        except FileNotFoundError:
+            tk_tc_data = {"Danh_sach_tai_khoan_teacher": []}
+
+        new_id = 1
+        if tk_tc_data["Danh_sach_tai_khoan_teacher"]:
+            new_id = max(int(tk['id_tai_khoan']) for tk in tk_tc_data["Danh_sach_tai_khoan_teacher"]) + 1
+
+        new_teacher = {
+            "id_tai_khoan": str(new_id),
+            "ten_tai_khoan": ten_tai_khoan,
+            "MK_tai_khoan": password,
+            "so_dien_thoai": phone,
+            "birthday": birthday,
+            "age": age,
+            "gender": gender,
+        }
+        tk_tc_data["Danh_sach_tai_khoan_teacher"].append(new_teacher)
+
+        with open("tk_tc_data.json", "w", encoding="utf-8") as f:
+            json.dump(tk_tc_data, f, indent=4, ensure_ascii=False)
+
+        self.msg_box.setText("Đăng ký tài khoản giáo viên thành công!")
+        self.msg_box.exec()
+        self.restart_app()
+        
+    def luu_tai_khoan_hoc_sinh(self, so_thu_tu, ten_tai_khoan, password, phone, birthday, age, gender):
+        try:
+            with open("tk_hs_data.json", "r", encoding="utf-8") as f:
+                tk_hs_data = json.load(f)
+        except FileNotFoundError:
+            tk_hs_data = {"Danh_sach_tai_khoan": []}
+
+        new_student = {
+            "id_tai_khoan": so_thu_tu,
+            "ten_tai_khoan": ten_tai_khoan,
+            "MK_tai_khoan": password,
+            "so_thu_tu": so_thu_tu,
+            "so_dien_thoai": phone,
+            "birthday": birthday,
+            "age": age,
+            "gender": gender,
+        }
+        tk_hs_data["Danh_sach_tai_khoan"].append(new_student)
+
+        with open("tk_hs_data.json", "w", encoding="utf-8") as f:
+            json.dump(tk_hs_data, f, indent=4, ensure_ascii=False)
+
+        self.msg_box.setText("Đăng ký tài khoản học sinh thành công!")
+        self.msg_box.exec()
+        self.restart_app()
+
+    def random_so_thu_tu(self):
+        so_thu_tu = random.randint(88001, 88099)
+        try:
+            with open("tk_hs_data.json", "r", encoding="utf-8") as f:
+                tk_hs_data = json.load(f)
+            while so_thu_tu in [int(tk['id_tai_khoan']) for tk in tk_hs_data.get("Danh_sach_tai_khoan", [])]:
+                so_thu_tu = random.randint(88001, 88099)
+        except FileNotFoundError:
+            pass
+        return str(so_thu_tu)
+    
+    def restart_app(self):
+        """Khởi động lại ứng dụng."""
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        
     def return_register(self):
         self.register.hide()
         self.show()
@@ -1480,7 +1592,7 @@ class Main(QMainWindow):
                                     "ĐTBM",
                                 ]
                             ):
-                                column_index = 3 + j
+                                column_index = 3 + j * 7
                                 table_hs.setItem(
                                     row_position,
                                     column_index,
@@ -1557,7 +1669,7 @@ class Main(QMainWindow):
             ]
         ):
             # Tính toán chỉ số cột bắt đầu và kết thúc cho môn học hiện tại
-            start_column = 3 + i * columns_per_subject  # Bắt đầu từ cột 3 (sau STT, Họ, Tên)
+            start_column = 15 + i * columns_per_subject  # Bắt đầu từ cột 3 (sau STT, Họ, Tên)
             end_column = start_column + columns_per_subject
 
             # Ẩn hoặc hiện các cột dựa trên môn học được chọn
