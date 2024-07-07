@@ -35,12 +35,40 @@ class Main(QMainWindow):
         self.sua_thong_tin_dialog = None
         self.sua_diem_dialog = None
         self.xem_bai_tap_dialog = None
-        self.load_data()
+        
+        
+        # Khởi tạo các widget cho hộp thoại "Nhập điểm" một lần duy nhất
+        self.nhap_diem_dialog = None
+        self.combo_hk = None
+        self.combo_mon = None
+        self.tx1 = None
+        self.tx2 = None
+        self.tx3 = None
+        self.tx4 = None
+        self.gk = None
+        self.hk = None
+        self.luu_btn = None
+        self.grid_layout = None
+
+        # Khởi tạo các widget cho hộp thoại "Sửa điểm" một lần duy nhất
+        self.sua_diem_dialog = None
+        self.combo_hk_sua = None
+        self.combo_mon_sua = None
+        self.tx1_sua = None
+        self.tx2_sua = None
+        self.tx3_sua = None
+        self.tx4_sua = None
+        self.gk_sua = None
+        self.hk_sua = None
+        self.luu_btn_sua = None
+        self.grid_layout_sua = None
         
         # Khởi tạo current_teacher_table và current_student_table
         self.current_teacher_table = None
         self.current_student_table = None
-
+        self.load_data()
+        
+        
         self.msg_box = QMessageBox()
         self.msg_box.setWindowTitle("Lỗi")
         self.msg_box.setIcon(QMessageBox.Icon.Warning)
@@ -87,7 +115,6 @@ class Main(QMainWindow):
         else:
             self.msg_box.setText("Số điện thoại hoặc mật khẩu sai")
             self.msg_box.exec()
-            
         
     def GiaoVienClicked(self):
         if not self.teacher_main:
@@ -165,7 +192,7 @@ class Main(QMainWindow):
 
     def sort_students(self):
         """Sort students based on their "Số thứ tự" in ascending order."""
-        self.data["Danh_sach_hoc_sinh"].sort(key=lambda student: int(student["Số thứ tự"]))
+        self.data["Danh_sach_hoc_sinh"].sort(key=lambda student: int(student.get("Số thứ tự", 0)))
 
     def setup_table(self, table, semester):
         """Thiết lập bảng, bao gồm cả bảng điểm trung bình cả năm."""
@@ -210,13 +237,7 @@ class Main(QMainWindow):
             table.horizontalHeaderItem(i).setTextAlignment(Qt.AlignmentFlag.AlignCenter)
 
     def fill_tables(self):
-        self.table_HK1.setRowCount(0)
-        self.table_HK2.setRowCount(0)
-        self.table_CN.setRowCount(0) 
-        
-
-    def fill_tables(self):
-        """Điền dữ liệu vào bảng, bao gồm cả bảng điểm trung bình cả năm."""
+        """Điền dữ liệu từ self.data vào bảng."""
         self.table_HK1.setRowCount(0)
         self.table_HK2.setRowCount(0)
         self.table_CN.setRowCount(0)
@@ -236,7 +257,6 @@ class Main(QMainWindow):
             self.table_HK2.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
             self.table_HK2.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
 
-            # Điền số thứ tự, họ và tên vào table_CN
             self.table_CN.setItem(row, 0, QTableWidgetItem(student.get("Số thứ tự", "")))
             self.table_CN.setItem(row, 1, QTableWidgetItem(student.get("Họ", "")))
             self.table_CN.setItem(row, 2, QTableWidgetItem(student.get("Tên", "")))
@@ -273,9 +293,10 @@ class Main(QMainWindow):
                                 "ĐTBM",
                             ]
                         ):
+                            column_index = 3 + j + i * 7  # 7 cột cho mỗi môn học trong table_HK1 và table_HK2
                             table.setItem(
                                 row,
-                                i + 3 + j,
+                                column_index,
                                 QTableWidgetItem(
                                     str(
                                         student["Điểm trong năm"][semester_key][
@@ -284,10 +305,8 @@ class Main(QMainWindow):
                                     )
                                 ),
                             )
-
-                # Điền điểm trung bình cả năm, bắt đầu từ cột 3
+                # Điền điểm trung bình cả năm
                 try:
-                    # Lấy giá trị chuỗi và chuyển đổi sang float, xử lý trường hợp chuỗi rỗng
                     gk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("GK1", "0")
                     gk1 = float(gk1_str) if gk1_str else 0.0
                     hk1_str = student["Điểm trong năm"]["Học kỳ 1"][subject].get("HK1", "0")
@@ -297,7 +316,7 @@ class Main(QMainWindow):
                     hk2_str = student["Điểm trong năm"]["Học kỳ 2"][subject].get("HK2", "0")
                     hk2 = float(hk2_str) if hk2_str else 0.0
 
-                    dtbm_cn = (gk1 + hk1 + (gk2 + hk2) * 2) / 6  # Tính ĐTBCN
+                    dtbm_cn = (gk1 + hk1 + (gk2 + hk2) * 2) / 6
 
                     self.table_CN.setItem(row, i * 5 + 3, QTableWidgetItem(str(gk1) if gk1 else ""))
                     self.table_CN.setItem(row, i * 5 + 4, QTableWidgetItem(str(hk1) if hk1 else ""))
@@ -305,7 +324,6 @@ class Main(QMainWindow):
                     self.table_CN.setItem(row, i * 5 + 6, QTableWidgetItem(str(hk2) if hk2 else ""))
                     self.table_CN.setItem(row, i * 5 + 7, QTableWidgetItem(f"{dtbm_cn:.2f}"))
                 except KeyError:
-                    # Xử lý trường hợp thiếu điểm
                     for col in range(5):
                         self.table_CN.setItem(row, i * 5 + 3 + col, QTableWidgetItem(""))
                         
@@ -389,14 +407,13 @@ class Main(QMainWindow):
             self.chon_hoc_sinh_dialog.setLayout(layout)
         self.chon_hoc_sinh_dialog.show()
 
-
     def show_nhap_diem_dialog(self):
         if not self.nhap_diem_dialog:
             self.nhap_diem_dialog = QDialog(self)
             self.nhap_diem_dialog.setWindowTitle("Nhập điểm")
 
             layout = QVBoxLayout()
-            self.nhap_diem_dialog.setLayout(layout)  # Thiết lập layout cho dialog trước
+            self.nhap_diem_dialog.setLayout(layout)
 
             label_hk = QLabel("Chọn học kỳ:")
             self.combo_hk = QComboBox()
@@ -411,16 +428,23 @@ class Main(QMainWindow):
 
         self.nhap_diem_dialog.show()
 
-
     def update_nhap_diem_dialog(self, text):
         self.grid_layout.deleteLater()
         self.grid_layout = QGridLayout()  # Tạo layout mới 
         self.create_nhap_diem_form(text)
-        self.nhap_diem_dialog.layout().addLayout(self.grid_layout)
-        
+        self.nhap_diem_dialog.layout().addLayout(self.grid_layout)    
         
     def create_nhap_diem_form(self, hoc_ki):
-        self.grid_layout = QGridLayout()
+        # Xóa layout cũ nếu có
+        if self.grid_layout is not None:
+            while self.grid_layout.count():
+                item = self.grid_layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+        else:
+            self.grid_layout = QGridLayout()
+
         self.grid_layout.addWidget(QLabel("Môn học:"), 0, 0)
         self.combo_mon = QComboBox()
         self.combo_mon.addItems(
@@ -457,10 +481,10 @@ class Main(QMainWindow):
         self.luu_btn = QPushButton("Lưu")
         self.luu_btn.clicked.connect(self.nhap_diem_luu)
         self.grid_layout.addWidget(self.luu_btn, 7, 0, 1, 2)
-
-        self.nhap_diem_dialog.layout().addLayout(self.grid_layout)
+        
 
     def nhap_diem_luu(self):
+        """Lưu điểm đã nhập vào self.data và cập nhật bảng."""
         selected_student_index = self.chon_hs_combo.currentIndex()
         if selected_student_index == -1:
             return
@@ -473,11 +497,6 @@ class Main(QMainWindow):
         tx4 = self.tx4.text()
         gk = self.gk.text()
         hk = self.hk.text()
-
-        # Cập nhật table tương ứng
-        self.update_table_after_nhap_diem(hoc_ki, selected_student_index, mon_hoc)
-        self.save_data()
-        self.nhap_diem_dialog.close()
 
         student = self.data["Danh_sach_hoc_sinh"][selected_student_index]
 
@@ -501,37 +520,10 @@ class Main(QMainWindow):
         if dtbm is not None:
             student["Điểm trong năm"][hoc_ki][mon_hoc]["ĐTBM"] = f"{dtbm:.2f}"
 
-        # Cập nhật table tương ứng
-        if hoc_ki == "Học kỳ 1":
-            self.table_HK1.setItem(selected_student_index, 10, QTableWidgetItem(f"{dtbm:.2f}"))
-        elif hoc_ki == "Học kỳ 2":
-            self.table_HK2.setItem(selected_student_index, 10, QTableWidgetItem(f"{dtbm:.2f}"))
-            
-        hoc_ki = self.combo_hk.currentText()
-        mon_hoc = self.combo_mon.currentText()
-        if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki]:
-            try:
-                dtbm_hk1 = float(student["Điểm trong năm"]["Học kỳ 1"][mon_hoc]["ĐTBM"])
-                dtbm_hk2 = float(student["Điểm trong năm"]["Học kỳ 2"][mon_hoc]["ĐTBM"])
-                dtbm_cn = (dtbm_hk1 + (dtbm_hk2 * 2)) / 3
-                column_index = 4 + [
-                    "Toán",
-                    "Văn",
-                    "Anh",
-                    "Khoa học tự nhiên",
-                    "Lịch sử - địa lý",
-                    "Tin học",
-                    "Công nghệ",
-                    "Giáo dục công dân",
-                ].index(mon_hoc)
-                self.table_CN.setItem(selected_student_index, column_index, QTableWidgetItem(f"{dtbm_cn:.2f}"))
-            except KeyError:
-                pass
-            
-        # Cập nhật điểm trung bình cả năm
-        self.update_diem_trung_binh_ca_nam(selected_student_index, mon_hoc)
-        self.save_data()  # Lưu dữ liệu JSON đã cập nhật
-        self.fill_tables()  # Làm mới tất cả các bảng
+        # Lưu dữ liệu JSON đã cập nhật
+        self.save_data()
+
+        self.fill_tables()  # Cập nhật tất cả các bảng
         self.nhap_diem_dialog.close()
         
     def update_diem_trung_binh_ca_nam(self, student_index, subject):
@@ -716,12 +708,11 @@ class Main(QMainWindow):
             self.sua_thong_tin_dialog.close()
             
     def show_sua_diem_dialog(self):
-        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
-        if current_row != -1:
-            student = self.data["Danh_sach_hoc_sinh"][current_row]
+        if not self.sua_diem_dialog:
             self.sua_diem_dialog = QDialog(self)
             self.sua_diem_dialog.setWindowTitle("Sửa điểm học sinh")
             layout = QGridLayout()
+            self.sua_diem_dialog.setLayout(layout)  
 
             layout.addWidget(QLabel("Chọn học kỳ:"), 0, 0)
             self.combo_hk_sua = QComboBox()
@@ -730,23 +721,28 @@ class Main(QMainWindow):
             layout.addWidget(self.combo_hk_sua, 0, 1)
 
             self.grid_layout_sua = QGridLayout()
-            self.create_sua_diem_form("Học kỳ 1", student)
-
+            self.create_sua_diem_form("Học kỳ 1")
             layout.addLayout(self.grid_layout_sua, 1, 0, 1, 2)
 
-            self.sua_diem_dialog.setLayout(layout)
-            self.sua_diem_dialog.show()
+        self.sua_diem_dialog.show()
 
     def update_sua_diem_dialog(self, text):
-        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
+        current_row = self.current_teacher_table.currentRow()
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
-            self.grid_layout_sua.deleteLater()
-            self.grid_layout_sua = QGridLayout()
             self.create_sua_diem_form(text, student)
-            self.sua_diem_dialog.layout().addLayout(self.grid_layout_sua, 1, 0, 1, 2)
 
-    def create_sua_diem_form(self, hoc_ki, student):
+    def create_sua_diem_form(self, hoc_ki, student=None):  # Thêm tham số student
+        # Xóa layout cũ nếu có
+        if self.grid_layout_sua is not None:
+            while self.grid_layout_sua.count():
+                item = self.grid_layout_sua.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+        else:
+            self.grid_layout_sua = QGridLayout()
+
         self.grid_layout_sua.addWidget(QLabel("Môn học:"), 0, 0)
         self.combo_mon_sua = QComboBox()
         self.combo_mon_sua.addItems(
@@ -761,79 +757,107 @@ class Main(QMainWindow):
                 "Giáo dục công dân",
             ]
         )
-        self.combo_mon_sua.currentTextChanged.connect(self.update_sua_diem_form_mon_hoc)
+        self.combo_mon_sua.currentTextChanged.connect(
+            lambda text: self.update_sua_diem_form_mon_hoc(text, student)
+        )  # Truyền student khi cập nhật môn học
         self.grid_layout_sua.addWidget(self.combo_mon_sua, 0, 1)
 
-        self.update_sua_diem_form_mon_hoc("Toán")
+        self.update_sua_diem_form_mon_hoc("Toán", student)  # Truyền student khi khởi tạo
 
-    def update_sua_diem_form_mon_hoc(self, mon_hoc):
-        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
-        if current_row != -1:
-            student = self.data["Danh_sach_hoc_sinh"][current_row]
-            hoc_ki = self.combo_hk_sua.currentText()
-            self.grid_layout_sua.addWidget(QLabel("TX1:"), 1, 0)
-            self.tx1_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["TX1"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.tx1_sua, 1, 1)
-            self.grid_layout_sua.addWidget(QLabel("TX2:"), 2, 0)
-            self.tx2_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["TX2"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.tx2_sua, 2, 1)
-            self.grid_layout_sua.addWidget(QLabel("TX3:"), 3, 0)
-            self.tx3_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["TX3"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.tx3_sua, 3, 1)
-            self.grid_layout_sua.addWidget(QLabel("TX4:"), 4, 0)
-            self.tx4_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["TX4"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.tx4_sua, 4, 1)
-            self.grid_layout_sua.addWidget(QLabel("GK:"), 5, 0)
-            self.gk_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["GK1" if hoc_ki == "Học kỳ 1" else "GK2"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.gk_sua, 5, 1)
-            self.grid_layout_sua.addWidget(QLabel("HK:"), 6, 0)
-            self.hk_sua = QLineEdit(
-                student["Điểm trong năm"][hoc_ki][mon_hoc]["HK1" if hoc_ki == "Học kỳ 1" else "HK2"] if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki] else ""
-            )
-            self.grid_layout_sua.addWidget(self.hk_sua, 6, 1)
-            
-            luu_btn_sua = QPushButton("Lưu")
-            luu_btn_sua.clicked.connect(self.update_diem_hoc_sinh)
-            self.grid_layout_sua.addWidget(luu_btn_sua, 7, 0, 1, 2)
+    def update_sua_diem_form_mon_hoc(self, mon_hoc, student=None):  # Thêm tham số student
+        if student is None:
+            return
+
+        current_row = self.current_teacher_table.currentRow()
+        if current_row == -1:
+            return
+        
+        hoc_ki = self.combo_hk_sua.currentText()
+
+        self.grid_layout_sua.addWidget(QLabel("TX1:"), 1, 0)
+        self.tx1_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX1"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.tx1_sua, 1, 1)
+        self.grid_layout_sua.addWidget(QLabel("TX2:"), 2, 0)
+        self.tx2_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX2"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.tx2_sua, 2, 1)
+        self.grid_layout_sua.addWidget(QLabel("TX3:"), 3, 0)
+        self.tx3_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX3"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.tx3_sua, 3, 1)
+        self.grid_layout_sua.addWidget(QLabel("TX4:"), 4, 0)
+        self.tx4_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX4"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.tx4_sua, 4, 1)
+        self.grid_layout_sua.addWidget(QLabel("GK:"), 5, 0)
+        self.gk_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["GK1" if hoc_ki == "Học kỳ 1" else "GK2"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.gk_sua, 5, 1)
+        self.grid_layout_sua.addWidget(QLabel("HK:"), 6, 0)
+        self.hk_sua = QLineEdit(
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["HK1" if hoc_ki == "Học kỳ 1" else "HK2"]
+            if hoc_ki in student["Điểm trong năm"]
+            and mon_hoc in student["Điểm trong năm"][hoc_ki]
+            else ""
+        )
+        self.grid_layout_sua.addWidget(self.hk_sua, 6, 1)
+
+        luu_btn_sua = QPushButton("Lưu")
+        luu_btn_sua.clicked.connect(self.update_diem_hoc_sinh)
+        self.grid_layout_sua.addWidget(luu_btn_sua, 7, 0, 1, 2)
 
     def update_diem_hoc_sinh(self):
-        current_row = self.current_teacher_table.currentRow() # Sử dụng current_teacher_table
+        current_row = self.current_teacher_table.currentRow()
         if current_row != -1:
             student = self.data["Danh_sach_hoc_sinh"][current_row]
-            
+
         hoc_ki = self.combo_hk_sua.currentText()
         mon_hoc = self.combo_mon_sua.currentText()
         if hoc_ki in student["Điểm trong năm"] and mon_hoc in student["Điểm trong năm"][hoc_ki]:
-            try:
-                dtbm_hk1 = float(student["Điểm trong năm"]["Học kỳ 1"][mon_hoc]["ĐTBM"])
-                dtbm_hk2 = float(student["Điểm trong năm"]["Học kỳ 2"][mon_hoc]["ĐTBM"])
-                dtbm_cn = (dtbm_hk1 + (dtbm_hk2 * 2)) / 3
-                column_index = 4 + [
-                    "Toán",
-                    "Văn",
-                    "Anh",
-                    "Khoa học tự nhiên",
-                    "Lịch sử - địa lý",
-                    "Tin học",
-                    "Công nghệ",
-                    "Giáo dục công dân",
-                ].index(mon_hoc)
-                self.table_CN.setItem(current_row, column_index, QTableWidgetItem(f"{dtbm_cn:.2f}"))
-            except KeyError:
-                pass
-        self.save_data() # Save updated JSON data
-        self.sua_diem_dialog.close()
+            # Cập nhật điểm trong self.data
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX1"] = self.tx1_sua.text()
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX2"] = self.tx2_sua.text()
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX3"] = self.tx3_sua.text()
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["TX4"] = self.tx4_sua.text()
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["GK1" if hoc_ki == "Học kỳ 1" else "GK2"] = self.gk_sua.text()
+            student["Điểm trong năm"][hoc_ki][mon_hoc]["HK1" if hoc_ki == "Học kỳ 1" else "HK2"] = self.hk_sua.text()
 
+            # Tính toán lại điểm trung bình môn
+            dtbm = self.calculate_dtbm(self.tx1_sua.text(), self.tx2_sua.text(), self.tx3_sua.text(),
+                                       self.tx4_sua.text(), self.gk_sua.text(), self.hk_sua.text())
+            if dtbm is not None:
+                student["Điểm trong năm"][hoc_ki][mon_hoc]["ĐTBM"] = f"{dtbm:.2f}"
+            
+            # Cập nhật điểm trung bình cả năm
+            self.update_diem_trung_binh_ca_nam(current_row, mon_hoc)
+
+            # Cập nhật lại bảng
+            self.fill_tables()
+        
+        self.save_data()  # Lưu dữ liệu JSON đã cập nhật
+        self.sua_diem_dialog.close()
+        
     def add_information(self):
         # Kiểm tra xem người dùng đã nhập đủ thông tin hay chưa
         if not self.stt.text() or not self.ho.text() or not self.ten.text():
@@ -904,8 +928,6 @@ class Main(QMainWindow):
         }
 
         self.data["Danh_sach_hoc_sinh"].append(new_student)
-        
-
 
         # Cập nhật combobox chọn học sinh
         self.chon_hs_combo.addItem(f"{new_student['Họ']} {new_student['Tên']}")
@@ -946,7 +968,6 @@ class Main(QMainWindow):
                 "Giáo dục công dân",
             ]
         )
-
 
     def clear_information(self):
         self.msg_box.setText(
@@ -998,6 +1019,10 @@ class Main(QMainWindow):
 
     def goback_tc_Clicked(self):
         self.teacher_login.hide()
+        self.show()
+        
+    def goback_hs_Clicked(self):
+        self.student_login.hide()
         self.show()
 
     def renew(self):
@@ -1211,9 +1236,9 @@ class Main(QMainWindow):
 
     def regis(self):
         if not self.register:
-            self.register = uic.loadUi("gui/regis.ui")
-            self.register.female.toggled.connect(lambda: self.btnstate(self.register.female))
-            self.register.male.toggled.connect(lambda: self.btnstate(self.register.male))
+            self.register = uic.loadUi("gui/register.ui")
+            #self.register.female.toggled.connect(lambda: self.btnstate(self.register.female))
+            #self.register.male.toggled.connect(lambda: self.btnstate(self.register.male))
             self.phone_validator = QIntValidator()
             self.phone_validator.setBottom(0)
             self.phone_validator.setTop(999999999)
@@ -1255,19 +1280,19 @@ class Main(QMainWindow):
         self.register.hide()
         self.show()
 
-    def btnstate(self, btn):
-        if btn.text() == "Nữ":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
-        if btn.text() == "Nam":
-            if btn.isChecked():
-                print(btn.text() + " is selected")
+    # def btnstate(self, btn):
+    #     if btn.text() == "Nữ":
+    #         if btn.isChecked():
+    #             print(btn.text() + " is selected")
+    #     if btn.text() == "Nam":
+    #         if btn.isChecked():
+    #             print(btn.text() + " is selected")
 
     def Login_hs(self):
         if not self.student_login:
             self.student_login = uic.loadUi("gui/login-student.ui")
             self.student_login.HocSinhLogin_btn.clicked.connect(self.check_login_hs)
-            self.student_login.goback_hs_btn.clicked.connect(self.goback_tc_Clicked)
+            self.student_login.goback_hs_btn.clicked.connect(self.goback_hs_Clicked)
             self.student_login.id_hs.setValidator(self.phone_validator) # Giả sử ID là số, bạn có thể thay đổi validator nếu cần
 
         self.student_login.show()
