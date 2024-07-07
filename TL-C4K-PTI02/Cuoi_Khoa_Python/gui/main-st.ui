@@ -200,7 +200,7 @@ color: #F8F2EC;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QTabWidget" name="Semester_tab">
+   <widget class="QTabWidget" name="Semester_tab_hs">
     <property name="geometry">
      <rect>
       <x>-10</x>
@@ -210,13 +210,13 @@ color: #F8F2EC;</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="semester_1_tab">
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
-     <widget class="QTableWidget" name="student_Infor_table_HK1">
+     <widget class="QTableWidget" name="student_Infor_table_HK1_hs">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -504,7 +504,7 @@ color: #F8F2EC;</string>
        <string>Vui lòng chọn cột điểm môn mà thầy/cô muốn xem:</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="xem_diem_mon_hk1">
+     <widget class="QComboBox" name="xem_diem_mon_hk1_hs">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -595,7 +595,7 @@ color: #F8F2EC;</string>
      <attribute name="title">
       <string>Tab 2</string>
      </attribute>
-     <widget class="QTableWidget" name="student_Infor_table_HK2">
+     <widget class="QTableWidget" name="student_Infor_table_HK2_hs">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -825,7 +825,7 @@ color: #F8F2EC;</string>
        <string>Vui lòng chọn cột điểm môn mà em muốn xem:</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="xem_diem_mon_hk2">
+     <widget class="QComboBox" name="xem_diem_mon_hk2_hs">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -916,7 +916,7 @@ color: #F8F2EC;</string>
      <attribute name="title">
       <string>Page</string>
      </attribute>
-     <widget class="QTableWidget" name="student_Infor_table_CN">
+     <widget class="QTableWidget" name="student_Infor_table_CN_hs">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1176,7 +1176,7 @@ color: #F8F2EC;</string>
        <string>Cột điểm môn:</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="xem_diem_mon_cn">
+     <widget class="QComboBox" name="xem_diem_mon_cn_hs_2">
       <property name="geometry">
        <rect>
         <x>490</x>
