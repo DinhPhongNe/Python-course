@@ -11,13 +11,23 @@
             "gender": "male"
         },
         {
-            "id_tai_khoan": "88055",
-            "ten_tai_khoan": "ÔI MÁ ƠI",
-            "MK_tai_khoan": "123456",
-            "so_thu_tu": "88055",
-            "so_dien_thoai": "0987655432",
-            "birthday": "24-05-2012",
-            "age": "12",
+            "id_tai_khoan": 88040,
+            "ten_tai_khoan": "abcd",
+            "MK_tai_khoan": "12345",
+            "so_thu_tu": 88040,
+            "so_dien_thoai": 889900776,
+            "birthday": "25-06-2012",
+            "age": 12,
+            "gender": "Nam"
+        },
+        {
+            "id_tai_khoan": 88046,
+            "ten_tai_khoan": "11",
+            "MK_tai_khoan": "12345",
+            "so_thu_tu": 88046,
+            "so_dien_thoai": 123445111,
+            "birthday": "3-12-1992",
+            "age": 23,
             "gender": "Nam"
         }
     ]

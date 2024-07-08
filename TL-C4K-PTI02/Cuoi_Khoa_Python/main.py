@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QFileSystemWatcher
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox
 from PyQt6 import uic
@@ -66,6 +66,7 @@ class Main(QMainWindow):
         # Khởi tạo current_teacher_table và current_student_table
         self.current_teacher_table = None
         self.current_student_table = None
+        self.current_user = None
         self.load_data()
         
         
@@ -73,6 +74,15 @@ class Main(QMainWindow):
         self.msg_box.setWindowTitle("Lỗi")
         self.msg_box.setIcon(QMessageBox.Icon.Warning)
         self.msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
+
+        # Khởi tạo QFileSystemWatcher
+        self.file_watcher = QFileSystemWatcher(self)
+        self.file_watcher.addPath("btvn")  # Theo dõi folder "btvn"
+        self.file_watcher.directoryChanged.connect(self.show_new_assignment_notification)
+
+        # Lưu thời gian lần đăng nhập cuối cùng của học sinh
+        self.last_login_time = None
+
 
     def quit(self):
         window.close()
@@ -1298,15 +1308,27 @@ class Main(QMainWindow):
 
             if vai_tro == "Giáo viên":
                 self.luu_tai_khoan_giao_vien(phone, password, ten_tai_khoan, age, birthday, gender)
+                # Lưu thông tin tài khoản mới và chuyển đến giao diện đăng nhập
+                self.new_account_info = {"PhoneTC": phone, "PassTC": password}
+                self.return_register()  # Ẩn giao diện đăng ký
+                self.Login_tc()  # Hiển thị giao diện đăng nhập
+                self.PhoneTC.setText(phone)  # Điền số điện thoại
+                self.PassTC.setText(password)  # Điền mật khẩu
+                self.check_login()  # Mô phỏng thao tác nhấn nút đăng nhập
             elif vai_tro == "Học sinh":
                 so_thu_tu = self.random_so_thu_tu()
                 self.luu_tai_khoan_hoc_sinh(so_thu_tu, ten_tai_khoan, password, phone, birthday, age, gender)
+                # Lưu thông tin tài khoản mới và chuyển đến giao diện đăng nhập
+                self.new_account_info = {"id_hs": so_thu_tu, "pass_HS": password}
+                self.return_register()  # Ẩn giao diện đăng ký
+                self.Login_hs()  # Hiển thị giao diện đăng nhập
+                self.student_login.id_hs.setText(str(so_thu_tu))  # Điền ID
+                self.student_login.pass_HS.setText(password)  # Điền mật khẩu
+                self.check_login_hs()  # Mô phỏng thao tác nhấn nút đăng nhập
             else:
                 self.msg_box.setText("Vui lòng chọn vai trò!")
                 self.msg_box.exec()
                 return
-
-        self.restart_app()
 
     def luu_tai_khoan_giao_vien(self, phone, password, ten_tai_khoan, age, birthday, gender):
         try:
@@ -1320,12 +1342,12 @@ class Main(QMainWindow):
             new_id = max(int(tk['id_tai_khoan']) for tk in tk_tc_data["Danh_sach_tai_khoan_teacher"]) + 1
 
         new_teacher = {
-            "id_tai_khoan": str(new_id),
+            "id_tai_khoan": str(new_id),  # Lưu dưới dạng string
             "ten_tai_khoan": ten_tai_khoan,
             "MK_tai_khoan": password,
-            "so_dien_thoai": phone,
+            "so_dien_thoai": str(phone),  # Lưu dưới dạng string
             "birthday": birthday,
-            "age": age,
+            "age": str(age),  # Lưu dưới dạng string
             "gender": gender,
         }
         tk_tc_data["Danh_sach_tai_khoan_teacher"].append(new_teacher)
@@ -1335,8 +1357,7 @@ class Main(QMainWindow):
 
         self.msg_box.setText("Đăng ký tài khoản giáo viên thành công!")
         self.msg_box.exec()
-        self.restart_app()
-        
+
     def luu_tai_khoan_hoc_sinh(self, so_thu_tu, ten_tai_khoan, password, phone, birthday, age, gender):
         try:
             with open("tk_hs_data.json", "r", encoding="utf-8") as f:
@@ -1344,14 +1365,17 @@ class Main(QMainWindow):
         except FileNotFoundError:
             tk_hs_data = {"Danh_sach_tai_khoan": []}
 
+        # Chuyển đổi so_thu_tu thành int trước khi sử dụng
+        so_thu_tu = int(so_thu_tu) 
+
         new_student = {
-            "id_tai_khoan": so_thu_tu,
+            "id_tai_khoan": str(so_thu_tu),  # Lưu dưới dạng string
             "ten_tai_khoan": ten_tai_khoan,
             "MK_tai_khoan": password,
-            "so_thu_tu": so_thu_tu,
-            "so_dien_thoai": phone,
+            "so_thu_tu": str(so_thu_tu),  # Lưu dưới dạng string
+            "so_dien_thoai": str(phone),  # Lưu dưới dạng string
             "birthday": birthday,
-            "age": age,
+            "age": str(age),  # Lưu dưới dạng string
             "gender": gender,
         }
         tk_hs_data["Danh_sach_tai_khoan"].append(new_student)
@@ -1361,34 +1385,21 @@ class Main(QMainWindow):
 
         self.msg_box.setText("Đăng ký tài khoản học sinh thành công!")
         self.msg_box.exec()
-        self.restart_app()
 
     def random_so_thu_tu(self):
         so_thu_tu = random.randint(88001, 88099)
         try:
             with open("tk_hs_data.json", "r", encoding="utf-8") as f:
                 tk_hs_data = json.load(f)
-            while so_thu_tu in [int(tk['id_tai_khoan']) for tk in tk_hs_data.get("Danh_sach_tai_khoan", [])]:
+            while so_thu_tu in [tk['id_tai_khoan'] for tk in tk_hs_data.get("Danh_sach_tai_khoan", [])]:
                 so_thu_tu = random.randint(88001, 88099)
         except FileNotFoundError:
             pass
-        return str(so_thu_tu)
-    
-    def restart_app(self):
-        """Khởi động lại ứng dụng."""
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        return so_thu_tu  # Trả về số nguyên
         
     def return_register(self):
         self.register.hide()
         self.show()
-
-    # def btnstate(self, btn):
-    #     if btn.text() == "Nữ":
-    #         if btn.isChecked():
-    #             print(btn.text() + " is selected")
-    #     if btn.text() == "Nam":
-    #         if btn.isChecked():
-    #             print(btn.text() + " is selected")
 
     def Login_hs(self):
         if not self.student_login:
@@ -1419,11 +1430,35 @@ class Main(QMainWindow):
                 and str(tai_khoan.get("MK_tai_khoan", "")) == mat_khau
             ):
                 self.student_login.hide()
+                self.current_user = "student"  # Đặt người dùng hiện tại là học sinh
                 self.HocSinhClicked(tai_khoan)  # Truyền thông tin tài khoản
                 return
 
         self.msg_box.setText("Sai ID tài khoản hoặc mật khẩu!")
         self.msg_box.exec()
+        
+    def show_new_assignment_notification(self, path):
+        """Hiển thị thông báo khi có bài tập mới cho học sinh."""
+        if self.current_user == "student":  # Chỉ hiển thị thông báo cho học sinh
+            msg_box = QMessageBox(self)
+            msg_box.setWindowTitle("Nhắc Nhở")
+            msg_box.setText("Giáo viên đã giao một bài tập/bài giảng cho bạn, bạn hãy đi xem nhé!")
+            msg_box.setIcon(QMessageBox.Icon.Information)
+            msg_box.setStyleSheet("background-color: #F8F2EC; color: #356a9c")
+            msg_box.setStandardButtons(QMessageBox.StandardButton.Close | QMessageBox.StandardButton.Ok)
+            msg_box.exec()
+
+    def check_new_assignments(self):
+        """Kiểm tra bài tập mới và hiển thị thông báo cho học sinh."""
+        if self.current_user == "student":  # Chỉ kiểm tra cho học sinh
+            folder_path = "btvn"
+            if os.path.exists(folder_path):
+                file_list = os.listdir(folder_path)
+                if file_list:
+                    # Lấy thời gian sửa đổi cuối cùng của file mới nhất
+                    newest_file_time = max(os.path.getmtime(os.path.join(folder_path, f)) for f in file_list)
+                    if self.last_login_time is None or newest_file_time > self.last_login_time:
+                        self.show_new_assignment_notification(folder_path)
 
     def HocSinhClicked(self, tai_khoan):
         """Hiển thị giao diện chính của học sinh."""
@@ -1460,6 +1495,11 @@ class Main(QMainWindow):
         self.setup_table(self.table_CN_hs, "Cả năm")
         self.fill_tables_hs(tai_khoan)
         self.load_data()
+        
+        self.check_new_assignments()
+        self.last_login_time = os.path.getmtime(__file__)
+
+        self.student_main.show()
         
         self.xem_hk1_hs.currentTextChanged.connect(lambda text: self.show_column_hs(self.table_HK1_hs, text))
         self.xem_hk2_hs.currentTextChanged.connect(lambda text: self.show_column_hs(self.table_HK2_hs, text))
