@@ -1,12 +1,103 @@
 import sys
-from PyQt6.QtCore import Qt, QFileSystemWatcher
-from PyQt6.QtGui import QIntValidator
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox
-from PyQt6 import uic
 import random
 import json
 import os
 import shutil
+import cv2
+import time
+import vlc
+from PyQt6.QtCore import Qt, QFileSystemWatcher, QTimer
+from PyQt6.QtGui import QIntValidator, QImage, QPixmap
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox, QWidget
+from PyQt6 import uic
+
+class VideoPlayer(QDialog):
+    def __init__(self, file_path, parent=None):
+        super().__init__(parent)
+        self.setWindowFlags(
+            Qt.WindowType.Window
+            | Qt.WindowType.WindowTitleHint
+            | Qt.WindowType.CustomizeWindowHint
+        )
+        self.setWindowTitle("Video Player")
+
+        self.file_path = file_path
+        self.instance = vlc.Instance()
+        self.player = self.instance.media_player_new()
+        self.media = self.instance.media_new(self.file_path)
+        self.player.set_media(self.media)
+
+        self.video_frame = QWidget(self)
+        self.player.set_hwnd(self.video_frame.winId())
+
+        self.stop_button = QPushButton("Dừng xem video", self)
+        self.stop_button.clicked.connect(self.stop_video)
+        self.stop_button.setEnabled(False)  # Vô hiệu hóa nút dừng ban đầu
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.video_frame)
+        layout.addWidget(self.stop_button)
+
+        self.player.play()
+        self.showFullScreen()
+
+        # Timer để kiểm tra thời gian phát video
+        self.check_time_timer = QTimer(self)
+        self.check_time_timer.timeout.connect(self.check_video_time)
+        self.check_time_timer.start(1000)  # Kiểm tra mỗi giây
+        
+    def check_video_time(self):
+        """Kiểm tra thời gian phát video và kích hoạt nút dừng."""
+        # Thời gian đã phát (tính bằng mili giây)
+        current_time = self.player.get_time()  
+        # Thời lượng video (tính bằng mili giây)
+        video_duration = self.media.get_duration() 
+
+        if current_time >= video_duration // 2:
+            self.stop_button.setEnabled(True)  # Kích hoạt nút dừng
+            self.check_time_timer.stop()  # Dừng timer
+
+    def update_video_frame(self):
+        ret, frame = self.cap.read()
+        if ret:
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            h, w, ch = rgb_frame.shape
+            bytes_per_line = ch * w
+            qimage = QImage(rgb_frame.data, w, h, bytes_per_line, QImage.Format.Format_RGB888)
+            self.video_label.setPixmap(QPixmap.fromImage(qimage))
+        else:
+            self.timer.stop()
+
+    def update_watch_timer(self):
+        """Cập nhật thời gian xem và kích hoạt nút dừng."""
+        self.remaining_seconds -= 1
+        if self.remaining_seconds < 0:
+            self.stop_button.setEnabled(True)  # Kích hoạt nút dừng
+            self.watch_timer.stop()
+
+    def get_video_duration(self, file_path):
+        cap = cv2.VideoCapture(file_path)
+        if cap.isOpened():
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+            duration = frame_count / fps
+            cap.release()
+            return int(duration)
+        else:
+            return None
+
+    def stop_video(self):
+        self.player.stop()
+        self.close()
+
+    def closeEvent(self, event):
+        """Hiển thị thông báo khi cố gắng đóng cửa sổ."""
+        if not self.stop_button.isEnabled():  # Kiểm tra nút dừng đã được kích hoạt hay chưa
+            QMessageBox.warning(self, "Thông báo", "Hãy cố gắng xem hết video em nhé!")
+            event.ignore()  # Ngăn chặn việc đóng cửa sổ
+        else:
+            event.accept()  # Cho phép đóng cửa sổ
+            
 
 class Main(QMainWindow):
     def __init__(self) -> None:
@@ -1073,38 +1164,46 @@ class Main(QMainWindow):
         if not self.btvn_upload:
             self.btvn_upload = uic.loadUi("gui/btvn-upload.ui")
             self.btvn_upload.clickTo_Upload.clicked.connect(self.upload_click)
-            #self.btvn_upload.return_btn.clicked.connect(self.return_upload)
+            self.loai_file_combo = QComboBox(self.btvn_upload)  # Thêm combobox chọn loại file
+            self.loai_file_combo.addItems(["Bài tập", "Video bài giảng"])
+            self.btvn_upload.layout().addWidget(self.loai_file_combo)
 
         self.btvn_upload.show()
         self.hide()
         
     def upload_click(self):
         options = QFileDialog.Option.DontUseNativeDialog
+        loai_file = self.loai_file_combo.currentText()
+        if loai_file == "Bài tập":
+            file_filter = "All Files (*);;PDF Files (*.pdf);;Word Documents (*.docx);;PowerPoint Presentations (*.pptx)"
+        elif loai_file == "Video bài giảng":
+            file_filter = "Video Files (*.mp4)"
+        else:
+            file_filter = "All Files (*)"
+
         file_path, _ = QFileDialog.getOpenFileName(
             self,
-            "Chọn file bài tập",
+            "Chọn file",
             "",
-            "All Files (*);;PDF Files (*.pdf);;Word Documents (*.docx);;PowerPoint Presentations (*.pptx)",
+            file_filter,
             options=options,
         )
 
         if file_path:
-            folder_path = "btvn"
+            folder_path = os.path.join("btvn", loai_file)  # Tạo thư mục con theo loại file
             if not os.path.exists(folder_path):
-                os.mkdir(folder_path)
+                os.makedirs(folder_path)
 
             file_name = os.path.basename(file_path)
             destination_path = os.path.join(folder_path, file_name)
 
             try:
-                # Sao chép file vào thư mục "btvn"
                 os.replace(file_path, destination_path)
                 self.msg_box.setWindowTitle("Thông báo")
                 self.msg_box.setIcon(QMessageBox.Icon.Information)
-                self.msg_box.setText("Tải lên bài tập thành công!")
+                self.msg_box.setText("Tải lên thành công!")
                 self.msg_box.exec()
 
-                # Cập nhật danh sách file bài tập trong QDialog xem bài tập
                 if self.xem_bai_tap_dialog:
                     self.update_btvn_list()
 
@@ -1114,17 +1213,27 @@ class Main(QMainWindow):
 
         self.btvn_upload.hide()
         self.teacher_main.show()
+
         
     def update_btvn_list(self):
         self.btvn_list.clear()
-        folder_path = "btvn"
-        if os.path.exists(folder_path):
-            file_list = os.listdir(folder_path)
-            if file_list:
-                for file_name in file_list:
-                    self.btvn_list.addItem(file_name)
-            else:
-                self.btvn_list.addItem("Hiện tại không có bài tập")
+        self.video_list.clear()
+
+        for loai_file in ["Bài tập", "Video bài giảng"]:
+            folder_path = os.path.join("btvn", loai_file)
+            if os.path.exists(folder_path):
+                file_list = os.listdir(folder_path)
+                if file_list:
+                    for file_name in file_list:
+                        if loai_file == "Bài tập":
+                            self.btvn_list.addItem(file_name) # Thêm vào list bài tập
+                        elif loai_file == "Video bài giảng":
+                            self.video_list.addItem(file_name) # Thêm vào list video
+                else:
+                    if loai_file == "Bài tập":
+                        self.btvn_list.addItem("Hiện tại không có bài tập")
+                    elif loai_file == "Video bài giảng":
+                        self.video_list.addItem("Hiện tại không có video bài giảng")
                 
     def delete_btvn(self):
         selected_item = self.btvn_list.currentItem()
@@ -1205,27 +1314,35 @@ class Main(QMainWindow):
     def show_xem_bai_tap_dialog(self):
         if not self.xem_bai_tap_dialog:
             self.xem_bai_tap_dialog = QDialog(self)
-            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập")
+            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập và Video Bài Giảng")
 
             layout = QVBoxLayout()
-            self.btvn_list = QListWidget()
-            self.update_btvn_list()  # Hiển thị danh sách file bài tập
-            layout.addWidget(self.btvn_list)
 
-            # Thêm nút xóa
+            # Bài tập (dạng văn bản)
+            self.btvn_list = QListWidget()
+            layout.addWidget(QLabel("Bài tập:"))
+            layout.addWidget(self.btvn_list)
+            self.btvn_list.itemClicked.connect(self.download_btvn) # Xử lý sự kiện click
+
+            # Các nút "Xóa", "Chỉnh Sửa Tên", "Tải Về" cho bài tập (dạng văn bản)
             delete_btn = QPushButton("Xóa")
             delete_btn.clicked.connect(self.delete_btvn)
             layout.addWidget(delete_btn)
-
-            # Thêm nút chỉnh sửa tên
             rename_btn = QPushButton("Chỉnh Sửa Tên")
             rename_btn.clicked.connect(self.rename_btvn)
             layout.addWidget(rename_btn)
-
             download_btn = QPushButton("Tải Về")
             download_btn.clicked.connect(self.download_btvn)
             layout.addWidget(download_btn)
 
+
+            # Video bài giảng
+            self.video_list = QListWidget()
+            layout.addWidget(QLabel("Video bài giảng:"))
+            layout.addWidget(self.video_list)
+            self.video_list.itemDoubleClicked.connect(self.play_video_hs) # Xử lý sự kiện double click
+
+            self.update_btvn_list()
             self.xem_bai_tap_dialog.setLayout(layout)
 
         self.xem_bai_tap_dialog.show()
@@ -1843,24 +1960,108 @@ class Main(QMainWindow):
                 break  # Đã tìm thấy học sinh, thoát khỏi vòng lặp
 
     def show_xem_bai_tap_dialog_hs(self):
-        """Hiển thị hộp thoại xem bài tập cho học sinh (chỉ xem và tải về)."""
         if not self.xem_bai_tap_dialog:
             self.xem_bai_tap_dialog = QDialog(self)
-            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập")
+            self.xem_bai_tap_dialog.setWindowTitle("Xem Bài Tập và Video Bài Giảng")
 
             layout = QVBoxLayout()
-            self.btvn_list = QListWidget()
-            self.update_btvn_list()  # Hiển thị danh sách file bài tập
-            layout.addWidget(self.btvn_list)
 
-            # Chỉ có nút tải về
+            # Bài tập
+            self.btvn_list = QListWidget()
+            layout.addWidget(QLabel("Bài tập:"))
+            layout.addWidget(self.btvn_list)
             download_btn = QPushButton("Tải Về")
             download_btn.clicked.connect(self.download_btvn)
             layout.addWidget(download_btn)
 
+            # Video bài giảng
+            self.video_list = QListWidget()
+            layout.addWidget(QLabel("Video bài giảng:"))
+            layout.addWidget(self.video_list)
+            self.video_label = QLabel(self)  # QLabel để hiển thị video
+            layout.addWidget(self.video_label)
+            self.video_list.itemDoubleClicked.connect(self.play_video_hs)
+            self.update_btvn_list()
+            self.xem_bai_tap_dialog.setLayout(layout)
+            self.xem_bai_tap_dialog.show()
+
+            self.update_btvn_list()
             self.xem_bai_tap_dialog.setLayout(layout)
 
         self.xem_bai_tap_dialog.show()
+        
+    def play_video_hs(self, item):
+        """Phát video bài giảng trong một cửa sổ riêng biệt."""
+        file_name = item.text()
+        file_path = os.path.join("btvn", "Video bài giảng", file_name)
+        if os.path.exists(file_path):
+            # Tạo instance của VideoPlayer và truyền đường dẫn video
+            self.video_player = VideoPlayer(file_path, self)
+            self.video_player.show()  # Hiển thị cửa sổ video
+
+    def update_video_frame(self):
+        """Cập nhật khung hình video trên QLabel."""
+        ret, frame = self.cap.read()
+        if ret:
+            # Chuyển đổi khung hình OpenCV (BGR) sang RGB
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            # Tạo QImage từ khung hình RGB
+            h, w, ch = rgb_frame.shape
+            bytes_per_line = ch * w
+            qimage = QImage(rgb_frame.data, w, h, bytes_per_line, QImage.Format.Format_RGB888)
+
+            # Hiển thị QImage trên QLabel
+            self.video_label.setPixmap(QPixmap.fromImage(qimage))
+        else:
+            self.timer.stop()  # Dừng timer khi video kết thúc
+
+    def show_watch_time_dialog(self, file_path):
+        """Hiển thị cửa sổ đếm ngược thời gian xem video."""
+        video_duration = self.get_video_duration(file_path)
+        if video_duration is None:
+            return
+
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Thời gian xem video")
+        layout = QVBoxLayout()
+        time_remaining_label = QLabel(dialog)
+        layout.addWidget(time_remaining_label)
+        dialog.setLayout(layout)
+
+        self.remaining_seconds = video_duration // 2  # Thời gian xem tối thiểu (1/2 thời lượng)
+
+        def update_timer():
+            """Cập nhật đồng hồ đếm ngược."""
+            minutes = self.remaining_seconds // 60
+            seconds = self.remaining_seconds % 60
+            time_remaining_label.setText(f"Thời gian còn lại: {minutes:02}:{seconds:02}")
+
+            self.remaining_seconds -= 1
+            if self.remaining_seconds < 0:
+                # Đã xem đủ thời gian
+                timer.stop()
+                dialog.close()
+                QMessageBox.information(self, "Thông báo", "Bạn đã xem đủ thời gian!")
+
+        timer = QTimer(self)
+        timer.timeout.connect(update_timer)
+        timer.start(1000)  # Cập nhật mỗi giây
+        update_timer()  # Cập nhật ngay lập tức
+        dialog.exec()
+
+    def get_video_duration(self, file_path):
+        """Lấy thời lượng video (tính bằng giây)."""
+        cap = cv2.VideoCapture(file_path)
+        if cap.isOpened():
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+            duration = frame_count / fps
+            cap.release()
+            return int(duration)
+        else:
+            return None
+
 
     def HocSinhMain_Return(self):
         self.student_main.hide()
