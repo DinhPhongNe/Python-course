@@ -1,15 +1,14 @@
+from PyQt6.QtCore import Qt, QFileSystemWatcher, QTimer
+from PyQt6.QtGui import QIntValidator, QImage, QPixmap
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox, QWidget
+from PyQt6 import uic
 import sys
 import random
 import json
 import os
 import shutil
 import cv2
-import time
 import vlc
-from PyQt6.QtCore import Qt, QFileSystemWatcher, QTimer
-from PyQt6.QtGui import QIntValidator, QImage, QPixmap
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QTabWidget, QLabel, QComboBox, QDialog, QVBoxLayout, QGridLayout, QListWidget, QFileDialog, QInputDialog, QDialogButtonBox, QWidget
-from PyQt6 import uic
 
 class VideoPlayer(QDialog):
     def __init__(self, file_path, parent=None):
@@ -429,35 +428,30 @@ class Main(QMainWindow):
                         self.table_CN.setItem(row, i * 5 + 3 + col, QTableWidgetItem(""))
                                         
     def show_column(self, table, subject):
-        """Hiển thị cột điểm của môn học được chọn và ẩn các cột khác."""
-
-        # Xác định số cột điểm cho mỗi môn
-        columns_per_subject = 5 if table == self.table_CN else 7
-
-        # Duyệt qua tất cả các môn học
-        for i, subject_name in enumerate(
-            [
-                "Toán",
-                "Văn",
-                "Anh",
-                "Khoa học tự nhiên",
-                "Lịch sử - địa lý",
-                "Tin học",
-                "Công nghệ",
-                "Giáo dục công dân",
-            ]
-        ):
-            # Tính toán chỉ số cột bắt đầu và kết thúc cho môn học hiện tại
-            start_column = 15 + i * columns_per_subject
-            end_column = start_column + columns_per_subject
-
-            # Ẩn hoặc hiện các cột dựa trên môn học được chọn
-            if subject == subject_name:
-                for column in range(start_column, end_column):
-                    table.setColumnHidden(column, False)
-            else:
-                for column in range(start_column, end_column):
-                    table.setColumnHidden(column, True)
+            """Cập nhật dữ liệu cột dựa trên môn học được chọn."""
+            for row in range(table.rowCount()):
+                student = self.data["Danh_sach_hoc_sinh"][row]
+                for semester_key in ["Học kỳ 1", "Học kỳ 2"]:
+                    if semester_key in student.get("Điểm trong năm", {}) and subject in student["Điểm trong năm"][semester_key]:
+                        for j, grade_type in enumerate(
+                            [
+                                "TX1",
+                                "TX2",
+                                "TX3",
+                                "TX4",
+                                "GK1" if semester_key == "Học kỳ 1" else "GK2",
+                                "HK1" if semester_key == "Học kỳ 1" else "HK2",
+                                "ĐTBM",
+                            ]
+                        ):
+                            column_index = 3 + j  # Vị trí cột bắt đầu từ cột 3
+                            table.setItem(
+                                row,
+                                column_index,
+                                QTableWidgetItem(
+                                    str(student["Điểm trong năm"][semester_key][subject].get(grade_type, ""))
+                                ),
+                            )
 
     def search(self):
         text = self.search_bar.text().strip().lower()
@@ -1331,6 +1325,7 @@ class Main(QMainWindow):
             rename_btn = QPushButton("Chỉnh Sửa Tên")
             rename_btn.clicked.connect(self.rename_btvn)
             layout.addWidget(rename_btn)
+            
             download_btn = QPushButton("Tải Về")
             download_btn.clicked.connect(self.download_btvn)
             layout.addWidget(download_btn)
@@ -1807,35 +1802,31 @@ class Main(QMainWindow):
         self.update_subject_combobox_hs()
         
     def show_column_hs(self, table, subject):
-        """Hiển thị cột điểm của môn học được chọn trong giao diện học sinh và ẩn các cột khác."""
-
-        # Xác định số cột điểm cho mỗi môn
-        columns_per_subject = 5 if table == self.table_CN_hs else 7
-
-        # Duyệt qua tất cả các môn học
-        for i, subject_name in enumerate(
-            [
-                "Toán",
-                "Văn",
-                "Anh",
-                "Khoa học tự nhiên",
-                "Lịch sử - địa lý",
-                "Tin học",
-                "Công nghệ",
-                "Giáo dục công dân",
-            ]
-        ):
-            # Tính toán chỉ số cột bắt đầu và kết thúc cho môn học hiện tại
-            start_column = 15 + i * columns_per_subject  # Bắt đầu từ cột 3 (sau STT, Họ, Tên)
-            end_column = start_column + columns_per_subject
-
-            # Ẩn hoặc hiện các cột dựa trên môn học được chọn
-            if subject == subject_name:
-                for column in range(start_column, end_column):
-                    table.setColumnHidden(column, False)
-            else:
-                for column in range(start_column, end_column):
-                    table.setColumnHidden(column, True)
+        """Cập nhật dữ liệu cột dựa trên môn học được chọn (giao diện học sinh)."""
+        student_id = self.student_main.id_tai_khoan.text()  # Lấy ID học sinh
+        for student in self.data["Danh_sach_hoc_sinh"]:
+            if student.get("Số thứ tự") == student_id:  # Tìm học sinh theo ID
+                for semester_key in ["Học kỳ 1", "Học kỳ 2"]:
+                    if semester_key in student.get("Điểm trong năm", {}) and subject in student["Điểm trong năm"][semester_key]:
+                        for j, grade_type in enumerate(
+                            [
+                                "TX1",
+                                "TX2",
+                                "TX3",
+                                "TX4",
+                                "GK1" if semester_key == "Học kỳ 1" else "GK2",
+                                "HK1" if semester_key == "Học kỳ 1" else "HK2",
+                                "ĐTBM",
+                            ]
+                        ):
+                            column_index = 3 + j  # Vị trí cột bắt đầu từ cột 3
+                            table.setItem(
+                                0,  # Luôn là hàng 0 vì chỉ có 1 học sinh
+                                column_index,
+                                QTableWidgetItem(
+                                    str(student["Điểm trong năm"][semester_key][subject].get(grade_type, ""))
+                                ),
+                            )
                     
     def update_subject_combobox_hs(self):
         """Cập nhật combobox môn học dựa trên tab hiện tại của học sinh."""
@@ -1966,7 +1957,6 @@ class Main(QMainWindow):
 
             layout = QVBoxLayout()
 
-            # Bài tập
             self.btvn_list = QListWidget()
             layout.addWidget(QLabel("Bài tập:"))
             layout.addWidget(self.btvn_list)
